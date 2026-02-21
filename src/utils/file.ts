@@ -1,6 +1,6 @@
 import { TreeItem } from "@/components/tree";
 import { BaseDirectory, documentDir, join } from "@tauri-apps/api/path";
-import { DirEntry, exists, mkdir, readDir } from "@tauri-apps/plugin-fs";
+import { exists, mkdir, readDir, writeFile } from "@tauri-apps/plugin-fs";
 
 /**
  * 获取数据目录路径
@@ -20,16 +20,16 @@ export async function getDataDir() {
   return join(await documentDir(), "markdowns");
 }
 
-async function buildFileTree(dirPath: string) {
+async function buildFileTree(dirPath: string): Promise<TreeItem[]> {
   const entries = await readDir(dirPath);
-  const fileTree = [];
+  const fileTree: TreeItem[] = [];
 
   for (const entry of entries) {
     if (entry.isFile) {
-      fileTree.push(entry.name);
+      fileTree.push(entry.name as string);
     } else if (entry.isDirectory) {
       const subTree = await buildFileTree(await join(dirPath, entry.name));
-      fileTree.push([entry.name, ...subTree]);
+      fileTree.push([entry.name, ...subTree] as TreeItem);
     }
   }
 
@@ -43,4 +43,20 @@ export async function getFileTree() {
 
 export function getTreeKey(item: TreeItem) {
   return typeof item === "string" ? item : String(item[0]);
+}
+
+export async function createFile(filePath: string) {
+  const dataDir = await getDataDir();
+  const fullPath = await join(dataDir, filePath);
+  if (!(await exists(fullPath))) {
+    await writeFile(fullPath, new Uint8Array());
+  }
+}
+
+export async function createDirectory(dirPath: string) {
+  const dataDir = await getDataDir();
+  const fullPath = await join(dataDir, dirPath);
+  if (!(await exists(fullPath))) {
+    await mkdir(fullPath);
+  }
 }

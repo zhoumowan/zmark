@@ -1,7 +1,7 @@
 import { ChevronRight, Folder, File } from "lucide-react";
 import { useEditorStore } from "@/stores/editor";
 import { readTextFile } from "@tauri-apps/plugin-fs";
-import { join } from "@tauri-apps/api/path";
+import { join, sep } from "@tauri-apps/api/path";
 import {
   SidebarMenuButton,
   SidebarMenuItem,
@@ -13,6 +13,8 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import { getTreeKey } from "@/utils/file";
+import { useCollapse } from "./collapse-provider";
+import { useEffect, useState } from "react";
 
 export type TreeItem = string | TreeItem[];
 
@@ -23,6 +25,17 @@ interface ITreeProps {
 
 export const Tree = (props: ITreeProps) => {
   const { item, basePath } = props;
+  const [isOpen, setIsOpen] = useState(
+    typeof item !== "string" && (item[0] === "components" || item[0] === "ui")
+  );
+  const { subscribe } = useCollapse();
+
+  useEffect(() => {
+    const unsubscribe = subscribe(() => {
+      setIsOpen(false);
+    });
+    return unsubscribe;
+  }, [subscribe]);
 
   const { curPath, setCurPath, setContent } = useEditorStore();
   if (typeof item === "string") {
@@ -35,7 +48,7 @@ export const Tree = (props: ITreeProps) => {
     };
     return (
       <SidebarMenuButton
-        isActive={curPath.endsWith(item)}
+        isActive={item===curPath.split(sep()).pop()}
         className="data-[active=true]:bg-purple-100"
         onClick={handleClick}
       >
@@ -51,8 +64,9 @@ export const Tree = (props: ITreeProps) => {
   return (
     <SidebarMenuItem>
       <Collapsible
+        open={isOpen}
+        onOpenChange={setIsOpen}
         className="group/collapsible [&[data-state=open]>button>svg:first-child]:rotate-90"
-        defaultOpen={name === "components" || name === "ui"}
       >
         <CollapsibleTrigger asChild>
           <SidebarMenuButton>

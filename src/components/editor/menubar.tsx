@@ -54,7 +54,7 @@ export const MenuBar = ({ editor, onSave }: MenuBarProps) => {
   const altKey = isMac ? "⌥" : "Alt";
 
   return (
-    <div className="sticky top-2 z-10 flex justify-center">
+    <div className="w-full sticky top-2 z-10 flex justify-center">
       <div className="rounded-lg border border-white/60 bg-white/50 p-2 shadow-md backdrop-blur-md">
         <div className="button-group">
           <TooltipProvider>
