@@ -79,7 +79,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar
       variant="floating"
-      className="border-r border-border bg-background"
+      className="border-border bg-background"
       {...props}
     >
       <SidebarHeader className="border-b border-border pb-2">
@@ -99,9 +99,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
-      <SidebarContent className="py-4">
+      <SidebarContent>
         <CollapseProvider>
-          <SidebarGroup className="space-y-4">
+          <SidebarGroup className="space-y-1">
             <div className="flex items-center justify-between px-3">
               <span className="font-medium text-sm">文件</span>
               <ActionButtons
