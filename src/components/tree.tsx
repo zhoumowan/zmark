@@ -1,4 +1,7 @@
 import { ChevronRight, Folder, File } from "lucide-react";
+import { useEditorStore } from "@/stores/editor";
+import { readTextFile } from "@tauri-apps/plugin-fs";
+import { join } from "@tauri-apps/api/path";
 import {
   SidebarMenuButton,
   SidebarMenuItem,
@@ -15,16 +18,26 @@ export type TreeItem = string | TreeItem[];
 
 interface ITreeProps {
   item: TreeItem;
+  basePath: string;
 }
 
 export const Tree = (props: ITreeProps) => {
-  const { item } = props;
+  const { item, basePath } = props;
 
+  const { curPath, setCurPath, setContent } = useEditorStore();
   if (typeof item === "string") {
+    const handleClick = async () => {
+      const path = await join(basePath, item);
+      console.log(path, curPath, item);
+      setCurPath(path);
+      const content = await readTextFile(path);
+      setContent(content);
+    };
     return (
       <SidebarMenuButton
-        isActive={item === "button.tsx"}
-        className="data-[active=true]:bg-transparent"
+        isActive={curPath.endsWith(item)}
+        className="data-[active=true]:bg-purple-100"
+        onClick={handleClick}
       >
         <File />
         {item}
@@ -52,7 +65,11 @@ export const Tree = (props: ITreeProps) => {
           {!isEmpty && (
             <SidebarMenuSub>
               {items.map((subItem) => (
-                <Tree key={getTreeKey(subItem)} item={subItem} />
+                <Tree
+                  key={getTreeKey(subItem)}
+                  item={subItem}
+                  basePath={basePath + "/" + name}
+                />
               ))}
             </SidebarMenuSub>
           )}

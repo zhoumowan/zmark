@@ -8,19 +8,19 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarMenuSub,
-  SidebarMenuSubButton,
-  SidebarMenuSubItem,
 } from "@/components/ui/sidebar";
-import { getFileTree, getTreeKey } from "@/utils/file";
+import { getDataDir, getFileTree, getTreeKey } from "@/utils/file";
 import { useEffect, useState } from "react";
 import { Tree } from "./tree";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const [fileTree, setFileTree] = useState([]);
+  const [basePath, setBasePath] = useState("");
   useEffect(() => {
     const fetchMdFiles = async () => {
       const files = await getFileTree();
+      const dataDir = await getDataDir();
+      setBasePath(dataDir);
       setFileTree(files);
       console.log(files)
     };
@@ -49,7 +49,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <SidebarGroup>
           <SidebarMenu>
             {fileTree.map((item) => (
-              <Tree key={getTreeKey(item)} item={item} />
+              <Tree key={getTreeKey(item)} item={item} basePath={basePath} />
             ))}
           </SidebarMenu>
         </SidebarGroup>
