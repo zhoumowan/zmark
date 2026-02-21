@@ -1,4 +1,5 @@
 import { AppSidebar } from "./components/app-sidebar"
+import Editor from "./components/editor"
 import { SidebarProvider } from "./components/ui/sidebar"
 
 const App = () => {
@@ -6,7 +7,7 @@ const App = () => {
     <SidebarProvider>
       <AppSidebar/>
       <div className="content">
-        <h1>Welcome to Tauri + React</h1>
+        <Editor />
       </div>
     </SidebarProvider>
   )
