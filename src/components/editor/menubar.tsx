@@ -1,38 +1,23 @@
 import type { Editor } from "@tiptap/core";
 import { useEditorState } from "@tiptap/react";
-import { writeTextFile } from "@tauri-apps/plugin-fs";
-
 import { menuBarStateSelector } from "./menubar-state.ts";
-import { useEditorStore } from "@/stores/editor.ts";
-import { toast } from "sonner";
 
-export const MenuBar = ({ editor }: { editor: Editor | null }) => {
+type MenuBarProps = {
+  editor: Editor | null;
+  onSave: () => void;
+};
+
+export const MenuBar = ({ editor, onSave }: MenuBarProps) => {
   if (!editor) return null;
   const editorState = useEditorState({
     editor,
     selector: menuBarStateSelector,
   });
 
-  const { curPath } = useEditorStore();
-
-  if (!editor) {
-    return null;
-  }
-
-  const handleSave = () => {
-    if (curPath) {
-      writeTextFile(curPath, editor.getHTML());
-      toast.success("保存成功",{
-        position:"top-center"
-      });
-      console.log("保存成功")
-    }
-  };
-
   return (
     <div className="control-group">
       <div className="button-group">
-        <button onClick={handleSave}>Save</button>
+        <button onClick={onSave}>Save</button>
         <button
           onClick={() => editor.chain().focus().toggleBold().run()}
           disabled={!editorState.canBold}
