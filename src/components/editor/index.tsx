@@ -14,6 +14,7 @@ import { useEditorStore } from "@/stores/editor.ts";
 import type { EditorStorage } from "@/types.ts";
 import { EmptyEditor } from "./empty-editor.tsx";
 import { MenuBar } from "./menubar.tsx";
+import { UnsupportedFile } from "./unsupported-file.tsx";
 
 const lowlight = createLowlight(common);
 
@@ -54,14 +55,22 @@ export default () => {
   useSaveShortcut(handleSave);
 
   const showEditor = curPath;
+  const isMdFile = curPath.endsWith(".md");
+  const fileName = curPath.split("/").pop() || curPath;
 
   return (
     <div className="flex flex-col h-full">
-      {editor && showEditor ? (
-        <>
-          <MenuBar editor={editor} onSave={handleSave} />
-          <EditorContent editor={editor} className="flex-1 overflow-y-auto" />
-        </>
+      {showEditor ? (
+        isMdFile ? (
+          editor && (
+            <>
+              <MenuBar editor={editor} onSave={handleSave} />
+              <EditorContent editor={editor} className="flex-1 overflow-y-auto" />
+            </>
+          )
+        ) : (
+          <UnsupportedFile fileName={fileName} />
+        )
       ) : (
         <EmptyEditor />
       )}
