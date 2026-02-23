@@ -1,6 +1,7 @@
 export const DEFAULT_HIGHLIGHT_COLOR = "#ffff00";
 export const HIGHLIGHT_COLORS = [
-  { name: "yellow", color: DEFAULT_HIGHLIGHT_COLOR },
+  { name: "default", color: DEFAULT_HIGHLIGHT_COLOR },
+  { name: "yellow", color: "#fef9c3" },
   { name: "green", color: "#dcfce7" },
   { name: "blue", color: "#e0f2fe" },
   { name: "purple", color: "#f3e8ff" },
