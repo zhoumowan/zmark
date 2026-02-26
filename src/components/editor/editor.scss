@@ -23,6 +23,10 @@
   ol {
     list-style-type: decimal;
   }
+  // data-type=taskList padding-x=0
+  [data-type="taskList"] {
+    padding-left: 0;
+  }
 
   /* Heading styles */
   h1,
