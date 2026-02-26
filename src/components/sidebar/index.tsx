@@ -1,6 +1,7 @@
+import { BaseDirectory, watch } from "@tauri-apps/plugin-fs";
 import { GalleryVerticalEndIcon } from "lucide-react";
 import type * as React from "react";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
   Sidebar,
   SidebarContent,
@@ -31,13 +32,14 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     title: string;
     onConfirm: (value: string) => void;
   } | null>(null);
+  const unwatchRef = useRef<(() => void) | null>(null);
 
   const { setPreviewPath, previewPath } = useEditorStore();
 
-  const refreshFileTree = async () => {
+  const refreshFileTree = useCallback(async () => {
     const files = await getFileTree();
     setFileTree(files);
-  };
+  }, []);
 
   useEffect(() => {
     const fetchMdFiles = async () => {
@@ -49,6 +51,38 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     };
     fetchMdFiles();
   }, []);
+
+  useEffect(() => {
+    const setupWatcher = async () => {
+      try {
+        const unwatch = await watch(
+          "markdowns",
+          (event) => {
+            console.log("File system event:", event);
+            refreshFileTree();
+          },
+          {
+            baseDir: BaseDirectory.Document,
+            recursive: true,
+            delayMs: 100,
+          },
+        );
+        unwatchRef.current = unwatch;
+        console.log("File watcher setup successfully");
+      } catch (error) {
+        console.error("Failed to setup file watcher:", error);
+      }
+    };
+
+    setupWatcher();
+
+    return () => {
+      if (unwatchRef.current) {
+        unwatchRef.current();
+        unwatchRef.current = null;
+      }
+    };
+  }, [refreshFileTree]);
 
   const handleCreateFile = () => {
     setDialogConfig({
