@@ -42,7 +42,7 @@ import {
 import { useKeyDisplay } from "@/hooks/use-key-display";
 import { HighlightColorPicker } from "./highlight-picker";
 import { menuBarStateSelector } from "./menubar-state";
-import { useColorHighlight } from "./use-color-highlight";
+import { useColorHighlight } from "../../hooks/use-color-highlight";
 
 type MenuBarProps = {
   editor: Editor;

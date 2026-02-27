@@ -18,7 +18,7 @@ import {
   getDataDir,
   getFileTree,
   getTreeKey,
-} from "@/utils/file";
+} from "@/lib/file";
 import { ThemeToggle } from "../theme-toggle";
 import { ActionButtons } from "./action-buttons";
 import { InputDialog } from "./input-dialog";

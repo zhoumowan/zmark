@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/collapsible";
 import { useEditorStore } from "@/stores/editor";
 import type { TreeItem } from "@/types";
-import { getTreeKey } from "@/utils/file";
+import { getTreeKey } from "@/lib/file";
 import { useCollapse } from "../../provider/collapse-provider";
 import { TruncatedTooltip } from "../common/truncated-tooltip";
 import {

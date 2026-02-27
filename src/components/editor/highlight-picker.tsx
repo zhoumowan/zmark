@@ -1,6 +1,6 @@
 import type { Editor } from "@tiptap/core";
 import { Ban } from "lucide-react";
-import { HIGHLIGHT_COLORS } from "./const";
+import { HIGHLIGHT_COLORS } from "../../consts/highlight";
 
 export const HighlightColorPicker = ({
   editor,

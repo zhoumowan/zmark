@@ -1,5 +1,19 @@
-import { useCallback, useState } from "react";
-import { CollapseContext, useCollapse } from "@/contexts/collapse-context";
+import { createContext, useCallback, useContext, useState } from "react";
+
+interface CollapseContextType {
+  collapseAll: () => void;
+  subscribe: (callback: () => void) => () => void;
+}
+
+const CollapseContext = createContext<CollapseContextType | null>(null);
+
+export const useCollapse = () => {
+  const context = useContext(CollapseContext);
+  if (!context) {
+    throw new Error("useCollapse must be used within a CollapseProvider");
+  }
+  return context;
+};
 
 export function CollapseProvider({ children }: { children: React.ReactNode }) {
   const [listeners, setListeners] = useState<(() => void)[]>([]);
@@ -23,5 +37,3 @@ export function CollapseProvider({ children }: { children: React.ReactNode }) {
     </CollapseContext.Provider>
   );
 }
-
-export { useCollapse };

@@ -1,6 +1,6 @@
 import type { Editor } from "@tiptap/core";
 import { useCallback, useEffect } from "react";
-import { DEFAULT_HIGHLIGHT_COLOR } from "./const";
+import { DEFAULT_HIGHLIGHT_COLOR } from "../consts/highlight";
 
 export const COLOR_HIGHLIGHT_SHORTCUT_KEY = "mod+shift+h";
 

@@ -17,7 +17,7 @@ import { Markdown } from "tiptap-markdown";
 import { useSaveShortcut } from "@/hooks/use-save-shortcut.ts";
 import { useEditorStore } from "@/stores/editor.ts";
 import type { EditorStorage } from "@/types.ts";
-import { DEFAULT_HIGHLIGHT_COLOR } from "./const";
+import { DEFAULT_HIGHLIGHT_COLOR } from "../../consts/highlight.ts";
 import { EmptyEditor } from "./empty-editor.tsx";
 import { MenuBar } from "./menubar.tsx";
 import { UnsupportedFile } from "./unsupported-file.tsx";
