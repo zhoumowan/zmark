@@ -40,9 +40,9 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { useKeyDisplay } from "@/hooks/use-key-display";
-import { useColorHighlight } from "../../hooks/use-color-highlight";
+import { useColorHighlight } from "@/hooks/use-color-highlight";
 import { HighlightColorPicker } from "./highlight-picker";
-import { menuBarStateSelector } from "./menubar-state";
+import { menuBarStateSelector } from "./state";
 
 type MenuBarProps = {
   editor: Editor;
