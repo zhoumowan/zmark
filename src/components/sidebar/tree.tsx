@@ -7,9 +7,9 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
+import { getTreeKey } from "@/lib/file";
 import { useEditorStore } from "@/stores/editor";
 import type { TreeItem } from "@/types";
-import { getTreeKey } from "@/lib/file";
 import { useCollapse } from "../../provider/collapse-provider";
 import { TruncatedTooltip } from "../common/truncated-tooltip";
 import {

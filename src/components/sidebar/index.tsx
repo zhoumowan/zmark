@@ -9,9 +9,6 @@ import {
   SidebarHeader,
   SidebarMenu,
 } from "@/components/ui/sidebar";
-import { CollapseProvider } from "@/provider/collapse-provider";
-import { useEditorStore } from "@/stores/editor";
-import type { TreeItem } from "@/types";
 import {
   createDirectory,
   createFile,
@@ -19,6 +16,9 @@ import {
   getFileTree,
   getTreeKey,
 } from "@/lib/file";
+import { CollapseProvider } from "@/provider/collapse-provider";
+import { useEditorStore } from "@/stores/editor";
+import type { TreeItem } from "@/types";
 import { ThemeToggle } from "../theme-toggle";
 import { ActionButtons } from "./action-buttons";
 import { InputDialog } from "./input-dialog";
