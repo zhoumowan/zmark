@@ -31,6 +31,7 @@ import {
 import { Input } from "../ui/input";
 import { ScrollArea } from "../ui/scroll-area";
 import { useKbStore } from "./kb-store";
+import { Tooltip, TooltipTrigger, TooltipContent } from "../ui/tooltip";
 
 const ChatAvatar = ({ role }: { role: ChatRole }) => {
   const config = CHAT_ROLE_UI_CONFIG[role];
@@ -98,25 +99,42 @@ export const ChatPanel = () => {
     }
   };
 
+  const [open, setOpen] = useState(false);
+
   return (
     <div className="flex flex-col h-full bg-background relative">
       <header className="h-14 border-b flex items-center justify-between px-4 shrink-0">
         <h2 className="font-medium">AI 问答</h2>
         <div className="flex items-center gap-2">
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={clearMessages}
-            title="清空对话"
-          >
-            <Trash2 className="h-4 w-4" />
-          </Button>
-          <Dialog>
-            <DialogTrigger asChild>
-              <Button variant="ghost" size="icon">
-                <Settings className="h-4 w-4" />
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={clearMessages}
+                title="清空对话"
+              >
+                <Trash2 className="h-4 w-4" />
               </Button>
-            </DialogTrigger>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>清空对话</p>
+            </TooltipContent>
+          </Tooltip>
+
+          <Dialog open={open} onOpenChange={setOpen}>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <DialogTrigger asChild>
+                  <Button variant="ghost" size="icon">
+                    <Settings className="h-4 w-4" />
+                  </Button>
+                </DialogTrigger>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>设置 API Key</p>
+              </TooltipContent>
+            </Tooltip>
             <DialogContent>
               <DialogHeader>
                 <DialogTitle>设置 SiliconFlow API Key</DialogTitle>
@@ -134,12 +152,23 @@ export const ChatPanel = () => {
               </div>
               <DialogFooter>
                 <Button
+                  variant="destructive"
+                  onClick={() => {
+                    setTempKey(apiKey);
+                    setOpen(false);
+                  }}
+                >
+                  取消
+                </Button>
+                <Button
+                  variant="secondary"
                   onClick={() => {
                     setApiKey(tempKey);
                     toast.success("API Key 已保存");
+                    setOpen(false);
                   }}
                 >
-                  保存
+                  确认
                 </Button>
               </DialogFooter>
             </DialogContent>

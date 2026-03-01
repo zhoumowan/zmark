@@ -18,6 +18,11 @@ import {
   SidebarGroup,
   SidebarMenu,
 } from "@/components/ui/sidebar";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import type { Document, KnowledgeBase } from "../../types/knowledge-base";
 import { Button } from "../ui/button";
 import { ScrollArea } from "../ui/scroll-area";
@@ -112,13 +117,20 @@ export function KbSidebar({
                   ))}
                 </SelectContent>
               </Select>
-              <Button
-                size="icon"
-                variant="outline"
-                onClick={() => setIsCreating(true)}
-              >
-                <Plus className="h-4 w-4" />
-              </Button>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    size="icon"
+                    variant="ghost"
+                    onClick={() => setIsCreating(true)}
+                  >
+                    <Plus className="h-4 w-4" />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>新建知识库</p>
+                </TooltipContent>
+              </Tooltip>
             </div>
 
             <ScrollArea className="flex-1">
@@ -132,14 +144,21 @@ export function KbSidebar({
                       <FileText className="h-4 w-4 text-muted-foreground shrink-0" />
                       <span className="truncate">{doc.filename}</span>
                     </div>
-                    <Button
-                      size="icon"
-                      variant="ghost"
-                      className="h-8 w-8 opacity-0 group-hover:opacity-100 transition-opacity"
-                      onClick={() => deleteDocument(doc.id)}
-                    >
-                      <Trash2 className="h-4 w-4 text-destructive" />
-                    </Button>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Button
+                          size="icon"
+                          variant="ghost"
+                          className="h-8 w-8 opacity-0 group-hover:opacity-100 transition-opacity"
+                          onClick={() => deleteDocument(doc.id)}
+                        >
+                          <Trash2 className="h-4 w-4 text-destructive" />
+                        </Button>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>删除文档</p>
+                      </TooltipContent>
+                    </Tooltip>
                   </div>
                 ))}
                 {currentKbId && documents.length === 0 && (
@@ -152,6 +171,7 @@ export function KbSidebar({
 
             <div className="mt-2 px-1">
               <Button
+                variant="secondary"
                 className="w-full gap-2"
                 disabled={!currentKbId}
                 onClick={handleAddDocument}
@@ -179,10 +199,12 @@ export function KbSidebar({
             />
           </div>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setIsCreating(false)}>
+            <Button variant="destructive" onClick={() => setIsCreating(false)}>
               取消
             </Button>
-            <Button onClick={handleCreateKb}>创建</Button>
+            <Button variant="secondary" onClick={handleCreateKb}>
+              确认
+            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
