@@ -10,6 +10,9 @@
   body {
     @apply bg-background text-foreground;
   }
+  body[data-scroll-locked] {
+    margin-right: 0 !important;
+  }
 }
 
 @theme inline {

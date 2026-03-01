@@ -104,7 +104,7 @@ export function KbSidebar({
                 <SelectTrigger className="flex-1">
                   <SelectValue placeholder="选择知识库" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent position="popper">
                   {knowledgeBases.map((kb: KnowledgeBase) => (
                     <SelectItem key={kb.id} value={kb.id}>
                       {kb.name}
