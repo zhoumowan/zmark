@@ -1,25 +1,79 @@
+import { FileText, Library } from "lucide-react";
+import { useState } from "react";
 import { Toaster } from "sonner";
 import Editor from "./components/editor";
+import { ChatPanel } from "./components/knowledge-base/chat-panel";
+import { KbSidebar } from "./components/knowledge-base/kb-sidebar";
 import { AppSidebar } from "./components/sidebar";
+import { ThemeToggle } from "./components/theme-toggle";
 import { SidebarProvider } from "./components/ui/sidebar";
 import { TooltipProvider } from "./components/ui/tooltip";
 import { ThemeProvider } from "./provider/theme-provider";
-
 import { useEditorStore } from "./stores/editor";
 
 const App = () => {
   const { curPath } = useEditorStore();
+  const [mode, setMode] = useState<"editor" | "kb">("editor");
+
+  const navItems = [
+    {
+      id: "editor",
+      icon: FileText,
+      title: "编辑器",
+    },
+    {
+      id: "kb",
+      icon: Library,
+      title: "知识库",
+    },
+  ] as const;
+
   return (
     <ThemeProvider>
-      <SidebarProvider>
-        <TooltipProvider>
-          <AppSidebar />
-          <div className="content flex-1">
-            <Editor key={curPath} />
+      <TooltipProvider>
+        <div className="flex h-screen w-full overflow-hidden bg-background">
+          {/* 全局侧边导航栏 */}
+          <div className="flex flex-col border-r bg-muted/30 w-12 items-center py-4 shrink-0 z-50 justify-between">
+            <div className="flex flex-col gap-4 items-center">
+              {navItems.map((item) => (
+                <button
+                  key={item.id}
+                  type="button"
+                  onClick={() => setMode(item.id)}
+                  className={`p-2 rounded-lg transition-colors ${
+                    mode === item.id
+                      ? "bg-[#8A4FFF]! text-white! hover:bg-[#8A4FFF]! hover:text-white!"
+                      : "hover:bg-accent text-muted-foreground hover:text-black"
+                  }`}
+                  title={item.title}
+                >
+                  <item.icon className="h-5 w-5" />
+                </button>
+              ))}
+            </div>
+            <div className="flex flex-col items-center gap-4">
+              <ThemeToggle />
+            </div>
           </div>
-          <Toaster />
-        </TooltipProvider>
-      </SidebarProvider>
+
+          {/* 右侧内容区域 */}
+          <div className="flex-1 flex overflow-hidden relative">
+            <SidebarProvider className="w-full h-full">
+              <div className="flex w-full h-full">
+                {mode === "editor" ? (
+                  <AppSidebar style={{ left: "3rem" }} mode={mode} />
+                ) : (
+                  <KbSidebar style={{ left: "3rem" }} mode={mode} />
+                )}
+                <div className="content flex-1 overflow-hidden relative">
+                  {mode === "editor" ? <Editor key={curPath} /> : <ChatPanel />}
+                </div>
+              </div>
+            </SidebarProvider>
+          </div>
+        </div>
+        <Toaster />
+      </TooltipProvider>
     </ThemeProvider>
   );
 };
