@@ -10,7 +10,13 @@ import { useEffect, useRef, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { toast } from "sonner";
-import type { ChatMessage } from "../../types/knowledge-base";
+import {
+  CHAT_ROLE_UI_CONFIG,
+  type ChatRole,
+  PRELOAD_IMAGES,
+} from "@/consts/chat";
+import { useKbStore } from "@/stores/kb";
+import type { ChatMessage } from "../../types/kb";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Button } from "../ui/button";
 import {
@@ -29,8 +35,6 @@ import {
 import { Input } from "../ui/input";
 import { ScrollArea } from "../ui/scroll-area";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
-import { useKbStore } from "./kb-store";
-import { CHAT_ROLE_UI_CONFIG, ChatRole, PRELOAD_IMAGES } from "@/consts/chat";
 
 const ChatAvatar = ({ role }: { role: ChatRole }) => {
   const config = CHAT_ROLE_UI_CONFIG[role];
@@ -194,7 +198,8 @@ export const ChatPanel = () => {
                   <div className="font-medium text-sm mb-1.5 opacity-90">
                     {CHAT_ROLE_UI_CONFIG[msg.role as ChatRole].label}
                   </div>
-                  {CHAT_ROLE_UI_CONFIG[msg.role as ChatRole].features.showThinking &&
+                  {CHAT_ROLE_UI_CONFIG[msg.role as ChatRole].features
+                    .showThinking &&
                     msg.thinking &&
                     msg.thinking.retrieved_docs.length > 0 && (
                       <Collapsible className="mb-3 border rounded-md bg-muted/30">
@@ -237,7 +242,8 @@ export const ChatPanel = () => {
                     <ReactMarkdown remarkPlugins={[remarkGfm]}>
                       {msg.content}
                     </ReactMarkdown>
-                    {CHAT_ROLE_UI_CONFIG[msg.role as ChatRole].features.showCursor &&
+                    {CHAT_ROLE_UI_CONFIG[msg.role as ChatRole].features
+                      .showCursor &&
                       !msg.content &&
                       isStreaming && (
                         <span className="inline-block w-1.5 h-4 bg-primary animate-pulse ml-1 align-middle rounded-full" />

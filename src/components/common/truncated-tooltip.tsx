@@ -4,7 +4,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import type { TreeItem } from "@/types";
+import type { TreeItem } from "@/types/editor";
 
 export const TruncatedTooltip = ({ content }: { content: TreeItem }) => {
   const ref = useRef<HTMLSpanElement>(null);

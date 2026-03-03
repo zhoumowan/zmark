@@ -5,7 +5,7 @@ import {
   join,
 } from "@tauri-apps/api/path";
 import { exists, mkdir, readDir, stat, writeFile } from "@tauri-apps/plugin-fs";
-import type { TreeItem } from "@/types";
+import type { TreeItem } from "@/types/editor";
 
 /**
  * 获取数据目录路径

@@ -7,16 +7,16 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
-import { getTreeKey } from "@/lib/file";
 import { useEditorStore } from "@/stores/editor";
-import type { TreeItem } from "@/types";
-import { useCollapse } from "../../provider/collapse-provider";
-import { TruncatedTooltip } from "../common/truncated-tooltip";
+import type { TreeItem } from "@/types/editor";
+import { getTreeKey } from "@/utils/file";
+import { useCollapse } from "@/providers/collapse-provider";
+import { TruncatedTooltip } from "../../common/truncated-tooltip";
 import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarMenuSub,
-} from "../ui/sidebar";
+} from "../../ui/sidebar";
 
 interface ITreeProps {
   item: TreeItem;

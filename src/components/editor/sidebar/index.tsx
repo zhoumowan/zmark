@@ -7,16 +7,16 @@ import {
   SidebarGroup,
   SidebarMenu,
 } from "@/components/ui/sidebar";
+import { CollapseProvider } from "@/providers/collapse-provider";
+import { useEditorStore } from "@/stores/editor";
+import type { TreeItem } from "@/types/editor";
 import {
   createDirectory,
   createFile,
   getDataDir,
   getFileTree,
   getTreeKey,
-} from "@/lib/file";
-import { CollapseProvider } from "@/provider/collapse-provider";
-import { useEditorStore } from "@/stores/editor";
-import type { TreeItem } from "@/types";
+} from "@/utils/file";
 import { ActionButtons } from "./action-buttons";
 import { InputDialog } from "./input-dialog";
 import { Tree } from "./tree";

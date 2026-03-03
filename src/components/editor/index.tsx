@@ -14,13 +14,13 @@ import StarterKit from "@tiptap/starter-kit";
 import { common, createLowlight } from "lowlight";
 import { toast } from "sonner";
 import { Markdown } from "tiptap-markdown";
-import { DEFAULT_HIGHLIGHT_COLOR } from "@/consts/highlight.ts";
-import { useSaveShortcut } from "@/hooks/use-save-shortcut.ts";
-import { useEditorStore } from "@/stores/editor.ts";
-import type { EditorStorage } from "@/types.ts";
-import { EmptyEditor } from "./empty-state.tsx";
+import { DEFAULT_HIGHLIGHT_COLOR } from "@/consts/highlight";
+import { useSaveShortcut } from "@/hooks/use-save-shortcut";
+import { useEditorStore } from "@/stores/editor";
+import type { EditorStorage } from "@/types/editor.ts";
+import { EmptyEditor } from "./fallback/empty-state.tsx";
+import { UnsupportedFile } from "./fallback/unsupported-file.tsx";
 import { MenuBar } from "./menubar/index.tsx";
-import { UnsupportedFile } from "./unsupported-file.tsx";
 
 const lowlight = createLowlight(common);
 

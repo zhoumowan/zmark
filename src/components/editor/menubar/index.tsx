@@ -7,9 +7,9 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { useMenuBar } from "@/hooks/use-menu-bar";
 import { HighlightColorPicker } from "./highlight-picker";
 import { MenuButton } from "./menu-button";
-import { useMenuBar } from "../../../hooks/use-menu-bar";
 
 type MenuBarProps = {
   editor: Editor;

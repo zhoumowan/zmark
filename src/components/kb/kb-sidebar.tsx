@@ -23,7 +23,8 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import type { Document, KnowledgeBase } from "../../types/knowledge-base";
+import { useKbStore } from "@/stores/kb";
+import type { Document, KnowledgeBase } from "../../types/kb";
 import { Button } from "../ui/button";
 import { ScrollArea } from "../ui/scroll-area";
 import {
@@ -33,7 +34,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
-import { useKbStore } from "./kb-store";
 
 export function KbSidebar({
   mode,

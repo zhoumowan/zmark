@@ -1,14 +1,14 @@
 import type { Editor } from "@tiptap/core";
 import { useEditorState } from "@tiptap/react";
 import { useState } from "react";
-import { useColorHighlight } from "@/hooks/use-color-highlight";
-import { useKeyDisplay } from "@/hooks/use-key-display";
 import {
   getHistoryActions,
   getMainActions,
   getNodeActions,
-} from "../consts/operations";
-import { menuBarStateSelector } from "../components/editor/menubar/state";
+} from "@/components/editor/menubar/actions";
+import { useColorHighlight } from "@/hooks/use-color-highlight";
+import { useKeyDisplay } from "@/hooks/use-key-display";
+import { menuBarStateSelector } from "@/stores/editor";
 
 export const useMenuBar = (editor: Editor, onSave: () => void) => {
   const { shortcuts } = useKeyDisplay();

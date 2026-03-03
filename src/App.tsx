@@ -1,14 +1,14 @@
 import { FileText, Library } from "lucide-react";
 import { useState } from "react";
 import { Toaster } from "sonner";
+import { ThemeToggle } from "./components/common/theme-toggle";
 import Editor from "./components/editor";
-import { ChatPanel } from "./components/knowledge-base/chat-panel";
-import { KbSidebar } from "./components/knowledge-base/kb-sidebar";
-import { AppSidebar } from "./components/sidebar";
-import { ThemeToggle } from "./components/theme-toggle";
+import { AppSidebar } from "./components/editor/sidebar";
+import { ChatPanel } from "./components/kb/chat-panel";
+import { KbSidebar } from "./components/kb/kb-sidebar";
 import { SidebarProvider } from "./components/ui/sidebar";
 import { TooltipProvider } from "./components/ui/tooltip";
-import { ThemeProvider } from "./provider/theme-provider";
+import { ThemeProvider } from "./providers/theme-provider";
 import { useEditorStore } from "./stores/editor";
 
 const App = () => {

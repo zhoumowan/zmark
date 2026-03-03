@@ -25,8 +25,8 @@ import {
   WrapText,
 } from "lucide-react";
 import type { useKeyDisplay } from "@/hooks/use-key-display";
-import type { MenuBarState } from "../components/editor/menubar/state";
-import type { MenuButtonProps } from "../types/menubar-operations";
+import type { MenuBarState } from "@/stores/editor";
+import type { MenuButtonProps } from "./menu-button";
 
 interface GetActionsParams {
   editor: Editor;

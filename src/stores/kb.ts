@@ -8,7 +8,7 @@ import type {
   Document,
   KnowledgeBase,
   ThinkingProcess,
-} from "../../types/knowledge-base";
+} from "@/types/kb";
 
 interface KbState {
   currentKbId: string | null;
