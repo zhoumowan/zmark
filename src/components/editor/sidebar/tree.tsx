@@ -39,22 +39,26 @@ export const Tree = (props: ITreeProps) => {
 
   const { curPath, setCurPath, setContent, setPreviewPath, previewPath } =
     useEditorStore();
+
+  const separator = sep();
+  const itemName = typeof item === "string" ? item : (item[0] as string);
+  const fullPath = basePath.endsWith(separator)
+    ? `${basePath}${itemName}`
+    : `${basePath}${separator}${itemName}`;
+
   if (typeof item === "string") {
     const handleClick = async () => {
-      const path = await join(basePath, item);
-      setPreviewPath(path);
+      setPreviewPath(fullPath);
     };
 
     const handleDoubleClick = async () => {
-      const path = await join(basePath, item);
-      setCurPath(path);
-      const content = await readTextFile(path);
+      setCurPath(fullPath);
+      const content = await readTextFile(fullPath);
       setContent(content);
     };
 
-    const isActive = curPath.split(sep()).pop() === item;
-    const isPreview =
-      !isActive && !!previewPath && previewPath.split(sep()).pop() === item;
+    const isActive = curPath === fullPath;
+    const isPreview = !isActive && previewPath === fullPath;
 
     return (
       <SidebarMenuButton
@@ -74,11 +78,10 @@ export const Tree = (props: ITreeProps) => {
   const isEmpty = items.length === 0;
 
   const handleClick = async () => {
-    const path = await join(basePath, name as string);
-    setPreviewPath(path);
+    setPreviewPath(fullPath);
   };
 
-  const isPreview = !!previewPath && previewPath.split(sep()).pop() === name;
+  const isPreview = previewPath === fullPath;
 
   return (
     <SidebarMenuItem>
@@ -105,7 +108,7 @@ export const Tree = (props: ITreeProps) => {
                 <Tree
                   key={getTreeKey(subItem)}
                   item={subItem}
-                  basePath={`${basePath}/${name as string}`}
+                  basePath={fullPath}
                 />
               ))}
             </SidebarMenuSub>

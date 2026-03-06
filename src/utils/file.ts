@@ -32,11 +32,16 @@ async function buildFileTree(dirPath: string): Promise<TreeItem[]> {
   const fileTree: TreeItem[] = [];
 
   for (const entry of entries) {
+    const name = entry.name;
+    // 过滤掉隐藏文件（以.开头）和无效文件
+    if (!name || name.startsWith(".") || name === ".DS_Store") {
+      continue;
+    }
     if (entry.isFile) {
-      fileTree.push(entry.name as string);
+      fileTree.push(name);
     } else if (entry.isDirectory) {
-      const subTree = await buildFileTree(await join(dirPath, entry.name));
-      fileTree.push([entry.name, ...subTree] as TreeItem);
+      const subTree = await buildFileTree(await join(dirPath, name));
+      fileTree.push([name, ...subTree] as TreeItem);
     }
   }
 
