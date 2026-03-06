@@ -32,6 +32,7 @@ export const useKeyDisplay = () => {
       formatShortcut(["Mod", "Alt", level.toString()]),
     bulletList: formatShortcut(["Mod", "Shift", "8"]),
     orderedList: formatShortcut(["Mod", "Shift", "7"]),
+    taskList: formatShortcut(["Mod", "Shift", "9"]),
     codeBlock: formatShortcut(["Mod", "Alt", "C"]),
     blockquote: formatShortcut(["Mod", "Shift", "B"]),
     hardBreak: formatShortcut(["Shift", "Enter"]),

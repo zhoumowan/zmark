@@ -12,6 +12,7 @@ import {
   Image,
   Italic,
   List,
+  ListChecks,
   ListOrdered,
   ListX,
   Minus,
@@ -150,6 +151,13 @@ export const getNodeActions = ({
     shortcut: shortcuts.orderedList,
     onClick: () => editor.chain().focus().toggleOrderedList().run(),
     isActive: editorState.isOrderedList,
+  },
+  {
+    icon: ListChecks,
+    label: "任务列表",
+    shortcut: shortcuts.taskList,
+    onClick: () => editor.chain().focus().toggleTaskList().run(),
+    isActive: editorState.isTaskList,
   },
   {
     icon: CodeSquare,

@@ -4,6 +4,7 @@ import {
   Heading2,
   Heading3,
   List,
+  ListChecks,
   ListOrdered,
   Minus,
   Quote,
@@ -162,6 +163,14 @@ export const getSuggestionItems: () => SuggestionItem[] = () => {
       icon: <ListOrdered size={16} />,
       run: ({ editor, range }) => {
         editor.chain().focus().deleteRange(range).toggleOrderedList().run();
+      },
+    },
+    {
+      title: "Task List",
+      description: "Track tasks with checkboxes.",
+      icon: <ListChecks size={16} />,
+      run: ({ editor, range }) => {
+        editor.chain().focus().deleteRange(range).toggleTaskList().run();
       },
     },
     {
