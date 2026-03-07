@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.1.1] - 2026-03-07
+
+### ⚡ Performance
+
+- **Build**: 优化构建配置，解决 Chunk Size Warning，拆分 vendor 包以提升加载性能
+
 ## [1.1.0] - 2026-03-07
 
 ### ✨ New Features

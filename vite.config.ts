@@ -35,4 +35,48 @@ export default defineConfig({
       "@": path.resolve(__dirname, "src"),
     },
   },
+
+  build: {
+    chunkSizeWarningLimit: 1000,
+    rollupOptions: {
+      output: {
+        manualChunks: (id) => {
+          if (id.includes("node_modules")) {
+            if (
+              id.includes("@tiptap") ||
+              id.includes("tiptap") ||
+              id.includes("lowlight") ||
+              id.includes("prosemirror")
+            ) {
+              return "editor";
+            }
+            if (
+              id.includes("react-markdown") ||
+              id.includes("remark") ||
+              id.includes("rehype")
+            ) {
+              return "markdown";
+            }
+            if (id.includes("@supabase")) {
+              return "supabase";
+            }
+            if (id.includes("@tauri-apps")) {
+              return "tauri";
+            }
+            if (
+              id.includes("lucide-react") ||
+              id.includes("radix-ui") ||
+              id.includes("class-variance-authority") ||
+              id.includes("clsx") ||
+              id.includes("tailwind-merge") ||
+              id.includes("sonner")
+            ) {
+              return "ui";
+            }
+            return "vendor";
+          }
+        },
+      },
+    },
+  },
 });
