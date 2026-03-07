@@ -23,7 +23,7 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 8
+          version: 9
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -43,6 +43,21 @@ jobs:
       - name: Install frontend dependencies
         run: pnpm install --no-frozen-lockfile
 
+      - name: Extract Release Notes
+        id: extract_release_notes
+        shell: bash
+        run: |
+          VERSION=${GITHUB_REF#refs/tags/v}
+          NOTES=$(awk "/## \[$VERSION\]/{flag=1; next} /## \[/{flag=0} flag" CHANGELOG.md)
+          
+          if [ -z "$NOTES" ]; then
+            NOTES="See the assets to download this version."
+          fi
+          
+          echo "notes<<EOF" >> $GITHUB_OUTPUT
+          echo "$NOTES" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
       - name: Build Tauri app
         uses: tauri-apps/tauri-action@v0
         env:
@@ -50,6 +65,6 @@ jobs:
         with:
           tagName: v__VERSION__
           releaseName: 'zmark v__VERSION__'
-          releaseBody: 'See the assets to download this version.'
+          releaseBody: ${{ steps.extract_release_notes.outputs.notes }}
           releaseDraft: true
           prerelease: false
