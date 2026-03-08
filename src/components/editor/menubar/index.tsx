@@ -9,6 +9,10 @@ import {
   Heading6,
   Highlighter,
   List,
+  ListChecks,
+  ListOrdered,
+  ListTree,
+  TableOfContents,
 } from "lucide-react";
 import { useRef } from "react";
 import { toast } from "sonner";
@@ -23,21 +27,22 @@ import { handleImageUpload } from "@/utils/file";
 import { HeadingPicker } from "./heading-picker";
 import { HighlightColorPicker } from "./highlight-picker";
 import { LinkPopover } from "./link-popover";
+import { ListPicker } from "./list-picker";
 import { MathPopover } from "./math-popover";
 import { MenuButton } from "./menu-button";
 
 type MenuBarProps = {
   editor: Editor;
-  onSave: () => void;
   isTocOpen: boolean;
   onToggleToc: () => void;
+  hasHeadings: boolean;
 };
 
 export const MenuBar = ({
   editor,
-  onSave,
   isTocOpen,
   onToggleToc,
+  hasHeadings,
 }: MenuBarProps) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -69,12 +74,14 @@ export const MenuBar = ({
     setHighlightPopoverOpen,
     headingPopoverOpen,
     setHeadingPopoverOpen,
-    mainActions,
-    nodeActions,
+    listPopoverOpen,
+    setListPopoverOpen,
     historyActions,
+    textActions,
+    insertActions,
     shortcuts,
     editorState,
-  } = useMenuBar(editor, onSave, handleImageButtonClick);
+  } = useMenuBar(editor, handleImageButtonClick);
 
   // 计算当前应该显示的标题图标
   const getCurrentHeadingIcon = () => {
@@ -85,6 +92,14 @@ export const MenuBar = ({
     if (editorState.isHeading5) return Heading5;
     if (editorState.isHeading6) return Heading6;
     return Heading;
+  };
+
+  // 计算当前应该显示的列表图标
+  const getCurrentListIcon = () => {
+    if (editorState.isOrderedList) return ListOrdered;
+    if (editorState.isTaskList) return ListChecks;
+    if (editorState.isBulletList) return List;
+    return ListTree;
   };
 
   return (
@@ -103,34 +118,9 @@ export const MenuBar = ({
       <div className="rounded-lg border border-border bg-background/95 p-2 shadow-[0_4px_12px_rgba(0,0,0,0.15)] dark:shadow-[0_4px_20px_rgba(255,255,255,0.15)] backdrop-blur-md">
         <div className="button-group">
           <TooltipProvider>
-            {mainActions.map((action) => (
+            {historyActions.map((action) => (
               <MenuButton key={action.label} {...action} />
             ))}
-
-            <LinkPopover editor={editor} shortcut={shortcuts.link} />
-            <MathPopover editor={editor} />
-
-            <Popover
-              open={highlightPopoverOpen}
-              onOpenChange={setHighlightPopoverOpen}
-            >
-              <PopoverTrigger asChild>
-                <MenuButton
-                  icon={Highlighter}
-                  label="高亮"
-                  shortcut={shortcuts.highlight}
-                  disabled={!editorState.canHighlight}
-                  isActive={editorState.isHighlight}
-                />
-              </PopoverTrigger>
-              <PopoverContent className="w-auto p-2">
-                <HighlightColorPicker
-                  editor={editor}
-                  currentColor={editorState.currentHighlightColor}
-                  onClose={() => setHighlightPopoverOpen(false)}
-                />
-              </PopoverContent>
-            </Popover>
 
             <Popover
               open={headingPopoverOpen}
@@ -150,7 +140,11 @@ export const MenuBar = ({
                   }
                 />
               </PopoverTrigger>
-              <PopoverContent className="w-auto p-0" align="center">
+              <PopoverContent
+                className="w-auto p-0"
+                align="center"
+                side="bottom"
+              >
                 <HeadingPicker
                   editor={editor}
                   editorState={editorState}
@@ -159,19 +153,70 @@ export const MenuBar = ({
               </PopoverContent>
             </Popover>
 
-            {nodeActions.map((action) => (
+            {textActions.map((action) => (
               <MenuButton key={action.label} {...action} />
             ))}
 
-            {historyActions.map((action) => (
+            <Popover
+              open={highlightPopoverOpen}
+              onOpenChange={setHighlightPopoverOpen}
+            >
+              <PopoverTrigger asChild>
+                <MenuButton
+                  icon={Highlighter}
+                  label="高亮"
+                  shortcut={shortcuts.highlight}
+                  disabled={!editorState.canHighlight}
+                  isActive={editorState.isHighlight}
+                />
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-2" side="bottom">
+                <HighlightColorPicker
+                  editor={editor}
+                  currentColor={editorState.currentHighlightColor}
+                  onClose={() => setHighlightPopoverOpen(false)}
+                />
+              </PopoverContent>
+            </Popover>
+
+            <LinkPopover editor={editor} shortcut={shortcuts.link} />
+            <MathPopover editor={editor} />
+
+            {insertActions.map((action) => (
               <MenuButton key={action.label} {...action} />
             ))}
+
+            <Popover open={listPopoverOpen} onOpenChange={setListPopoverOpen}>
+              <PopoverTrigger asChild>
+                <MenuButton
+                  icon={getCurrentListIcon()}
+                  label="列表"
+                  isActive={
+                    editorState.isBulletList ||
+                    editorState.isOrderedList ||
+                    editorState.isTaskList
+                  }
+                />
+              </PopoverTrigger>
+              <PopoverContent
+                className="w-auto p-0"
+                align="center"
+                side="bottom"
+              >
+                <ListPicker
+                  editor={editor}
+                  editorState={editorState}
+                  onClose={() => setListPopoverOpen(false)}
+                />
+              </PopoverContent>
+            </Popover>
 
             <MenuButton
-              icon={List}
+              icon={TableOfContents}
               label={isTocOpen ? "隐藏目录" : "显示目录"}
               onClick={onToggleToc}
               isActive={isTocOpen}
+              isVisible={hasHeadings}
             />
           </TooltipProvider>
         </div>

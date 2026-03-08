@@ -14,6 +14,7 @@ export interface MenuButtonProps {
   isActive?: boolean;
   disabled?: boolean;
   className?: string;
+  isVisible?: boolean;
 }
 
 export const MenuButton = React.forwardRef<HTMLButtonElement, MenuButtonProps>(
@@ -26,8 +27,14 @@ export const MenuButton = React.forwardRef<HTMLButtonElement, MenuButtonProps>(
       isActive,
       disabled,
       className,
+      isVisible = true,
       ...props
     } = originalProps;
+
+    if (!isVisible) {
+      return null;
+    }
+
     return (
       <Tooltip>
         <TooltipTrigger asChild>
@@ -42,7 +49,7 @@ export const MenuButton = React.forwardRef<HTMLButtonElement, MenuButtonProps>(
             <Icon size={16} />
           </button>
         </TooltipTrigger>
-        <TooltipContent>
+        <TooltipContent side="bottom">
           <p>
             {label} {shortcut && `(${shortcut})`}
           </p>

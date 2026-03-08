@@ -7,6 +7,7 @@ import { EditorContent, useEditor } from "@tiptap/react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { useSaveShortcut } from "@/hooks/use-save-shortcut";
+import { useTableOfContents } from "@/hooks/use-table-of-contents";
 import { useEditorStore } from "@/stores/editor";
 import type { EditorStorage } from "@/types/editor.ts";
 import { handleImageUpload } from "@/utils/file";
@@ -111,6 +112,8 @@ export default () => {
   const fileName = curPath.split("/").pop() || curPath;
   const [isTocOpen, setIsTocOpen] = useState(true);
 
+  const tocItems = useTableOfContents(editor);
+
   return (
     <div className="flex flex-col h-full">
       {showEditor ? (
@@ -119,16 +122,18 @@ export default () => {
             <>
               <MenuBar
                 editor={editor}
-                onSave={handleSave}
                 isTocOpen={isTocOpen}
                 onToggleToc={() => setIsTocOpen(!isTocOpen)}
+                hasHeadings={tocItems.length > 0}
               />
               <div className="flex flex-1 overflow-hidden relative">
                 <EditorContent
                   editor={editor}
                   className="flex-1 h-full overflow-y-auto"
                 />
-                {isTocOpen && <TableOfContents editor={editor} />}
+                {isTocOpen && (
+                  <TableOfContents editor={editor} items={tocItems} />
+                )}
               </div>
             </>
           )

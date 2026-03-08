@@ -3,21 +3,19 @@ import { useEditorState } from "@tiptap/react";
 import { useState } from "react";
 import {
   getHistoryActions,
-  getMainActions,
-  getNodeActions,
+  getInsertActions,
+  getListActions,
+  getTextActions,
 } from "@/components/editor/menubar/actions";
 import { useColorHighlight } from "@/hooks/use-color-highlight";
 import { useKeyDisplay } from "@/hooks/use-key-display";
 import { menuBarStateSelector } from "@/stores/editor";
 
-export const useMenuBar = (
-  editor: Editor,
-  onSave: () => void,
-  onImageUpload?: () => void,
-) => {
+export const useMenuBar = (editor: Editor, onImageUpload?: () => void) => {
   const { shortcuts } = useKeyDisplay();
   const [highlightPopoverOpen, setHighlightPopoverOpen] = useState(false);
   const [headingPopoverOpen, setHeadingPopoverOpen] = useState(false);
+  const [listPopoverOpen, setListPopoverOpen] = useState(false);
 
   const editorState = useEditorState({
     editor,
@@ -29,7 +27,6 @@ export const useMenuBar = (
   const actionParams = {
     editor,
     editorState,
-    onSave,
     onImageUpload,
     shortcuts,
   };
@@ -39,9 +36,12 @@ export const useMenuBar = (
     setHighlightPopoverOpen,
     headingPopoverOpen,
     setHeadingPopoverOpen,
-    mainActions: getMainActions(actionParams),
-    nodeActions: getNodeActions(actionParams),
+    listPopoverOpen,
+    setListPopoverOpen,
     historyActions: getHistoryActions(actionParams),
+    textActions: getTextActions(actionParams),
+    listActions: getListActions(actionParams),
+    insertActions: getInsertActions(actionParams),
     shortcuts,
     editorState,
   };

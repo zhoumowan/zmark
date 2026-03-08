@@ -63,7 +63,9 @@ export const MathPopover = ({ editor }: { editor: Editor }) => {
           icon={Sigma}
           label="数学公式"
           onClick={() => setIsOpen(true)}
-          isActive={editor.isActive("inlineMath") || editor.isActive("blockMath")}
+          isActive={
+            editor.isActive("inlineMath") || editor.isActive("blockMath")
+          }
         />
       </PopoverTrigger>
       <PopoverContent

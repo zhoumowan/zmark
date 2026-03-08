@@ -10,10 +10,8 @@ import {
   ListOrdered,
   ListX,
   Minus,
-  Pilcrow,
   Quote,
   Redo,
-  Save,
   Strikethrough,
   Subscript,
   Superscript,
@@ -27,29 +25,36 @@ import type { MenuButtonProps } from "./menu-button";
 interface GetActionsParams {
   editor: Editor;
   editorState: MenuBarState;
-  onSave: () => void;
   onImageUpload?: () => void;
   shortcuts: ReturnType<typeof useKeyDisplay>["shortcuts"];
 }
 
-export const getMainActions = ({
+export const getHistoryActions = ({
   editor,
   editorState,
-  onSave,
-  onImageUpload,
   shortcuts,
 }: GetActionsParams): MenuButtonProps[] => [
   {
-    icon: Save,
-    label: "保存",
-    shortcut: shortcuts.save,
-    onClick: onSave,
+    icon: Undo,
+    label: "撤销",
+    shortcut: shortcuts.undo,
+    onClick: () => editor.chain().focus().undo().run(),
+    disabled: !editorState.canUndo,
   },
   {
-    icon: Image,
-    label: "上传图片",
-    onClick: onImageUpload || (() => {}),
+    icon: Redo,
+    label: "重做",
+    shortcut: shortcuts.redo,
+    onClick: () => editor.chain().focus().redo().run(),
+    disabled: !editorState.canRedo,
   },
+];
+
+export const getTextActions = ({
+  editor,
+  editorState,
+  shortcuts,
+}: GetActionsParams): MenuButtonProps[] => [
   {
     icon: Bold,
     label: "加粗",
@@ -74,6 +79,14 @@ export const getMainActions = ({
     disabled: !editorState.canStrike,
   },
   {
+    icon: Code,
+    label: "行内代码",
+    shortcut: shortcuts.code,
+    onClick: () => editor.chain().focus().toggleCode().run(),
+    isActive: editorState.isCode,
+    disabled: !editorState.canCode,
+  },
+  {
     icon: Superscript,
     label: "上标",
     shortcut: shortcuts.superscript,
@@ -90,37 +103,17 @@ export const getMainActions = ({
     disabled: !editorState.canSubscript,
   },
   {
-    icon: Code,
-    label: "代码",
-    shortcut: shortcuts.code,
-    onClick: () => editor.chain().focus().toggleCode().run(),
-    isActive: editorState.isCode,
-    disabled: !editorState.canCode,
-  },
-];
-
-export const getNodeActions = ({
-  editor,
-  editorState,
-  shortcuts,
-}: GetActionsParams): MenuButtonProps[] => [
-  {
     icon: ListX,
     label: "清除格式",
     onClick: () => editor.chain().focus().unsetAllMarks().run(),
   },
-  {
-    icon: WrapText,
-    label: "清除节点",
-    onClick: () => editor.chain().focus().clearNodes().run(),
-  },
-  {
-    icon: Pilcrow,
-    label: "段落",
-    shortcut: shortcuts.paragraph,
-    onClick: () => editor.chain().focus().setParagraph().run(),
-    isActive: editorState.isParagraph,
-  },
+];
+
+export const getListActions = ({
+  editor,
+  editorState,
+  shortcuts,
+}: GetActionsParams): MenuButtonProps[] => [
   {
     icon: List,
     label: "无序列表",
@@ -142,12 +135,18 @@ export const getNodeActions = ({
     onClick: () => editor.chain().focus().toggleTaskList().run(),
     isActive: editorState.isTaskList,
   },
+];
+
+export const getInsertActions = ({
+  editor,
+  editorState,
+  onImageUpload,
+  shortcuts,
+}: GetActionsParams): MenuButtonProps[] => [
   {
-    icon: CodeSquare,
-    label: "代码块",
-    shortcut: shortcuts.codeBlock,
-    onClick: () => editor.chain().focus().toggleCodeBlock().run(),
-    isActive: editorState.isCodeBlock,
+    icon: Image,
+    label: "上传图片",
+    onClick: onImageUpload || (() => {}),
   },
   {
     icon: Quote,
@@ -155,6 +154,13 @@ export const getNodeActions = ({
     shortcut: shortcuts.blockquote,
     onClick: () => editor.chain().focus().toggleBlockquote().run(),
     isActive: editorState.isBlockquote,
+  },
+  {
+    icon: CodeSquare,
+    label: "代码块",
+    shortcut: shortcuts.codeBlock,
+    onClick: () => editor.chain().focus().toggleCodeBlock().run(),
+    isActive: editorState.isCodeBlock,
   },
   {
     icon: Minus,
@@ -166,26 +172,5 @@ export const getNodeActions = ({
     label: "硬换行",
     shortcut: shortcuts.hardBreak,
     onClick: () => editor.chain().focus().setHardBreak().run(),
-  },
-];
-
-export const getHistoryActions = ({
-  editor,
-  editorState,
-  shortcuts,
-}: GetActionsParams): MenuButtonProps[] => [
-  {
-    icon: Undo,
-    label: "撤销",
-    shortcut: shortcuts.undo,
-    onClick: () => editor.chain().focus().undo().run(),
-    disabled: !editorState.canUndo,
-  },
-  {
-    icon: Redo,
-    label: "重做",
-    shortcut: shortcuts.redo,
-    onClick: () => editor.chain().focus().redo().run(),
-    disabled: !editorState.canRedo,
   },
 ];
