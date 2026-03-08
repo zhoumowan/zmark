@@ -6,7 +6,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { useCollapse } from "../../../providers/collapse-provider";
+import { useCollapse } from "@/providers/collapse-provider";
 
 interface ActionButtonProps {
   onClick: () => void;

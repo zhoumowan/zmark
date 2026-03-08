@@ -10,9 +10,8 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
-import { useEditorStore } from "@/stores/editor";
-import { useSearchStore } from "@/stores/search";
-import { search, subscribeToSearch } from "@/utils/search";
+import { useEditorStore, useSearchStore } from "@/stores";
+import { search, subscribeToSearch } from "@/utils";
 
 export function SearchCommand() {
   const { isOpen, setIsOpen, toggle } = useSearchStore();

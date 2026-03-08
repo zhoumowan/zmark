@@ -7,9 +7,8 @@ import {
   getListActions,
   getTextActions,
 } from "@/components/editor/menubar/actions";
-import { useColorHighlight } from "@/hooks/use-color-highlight";
-import { useKeyDisplay } from "@/hooks/use-key-display";
-import { menuBarStateSelector } from "@/stores/editor";
+import { useColorHighlight, useKeyDisplay } from "@/hooks";
+import { menuBarStateSelector } from "@/stores";
 
 export const useMenuBar = (editor: Editor, onImageUpload?: () => void) => {
   const { shortcuts } = useKeyDisplay();

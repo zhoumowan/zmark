@@ -8,7 +8,7 @@ import {
   SidebarMenu,
 } from "@/components/ui/sidebar";
 import { CollapseProvider } from "@/providers/collapse-provider";
-import { useEditorStore } from "@/stores/editor";
+import { useEditorStore } from "@/stores";
 import type { TreeItem } from "@/types/editor";
 import {
   createDirectory,
@@ -16,7 +16,7 @@ import {
   getDataDir,
   getFileTree,
   getTreeKey,
-} from "@/utils/file";
+} from "@/utils";
 import { ActionButtons } from "./action-buttons";
 import { InputDialog } from "./input-dialog";
 import { Tree } from "./tree";

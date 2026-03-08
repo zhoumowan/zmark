@@ -7,7 +7,7 @@ import {
   Heading5,
   Heading6,
 } from "lucide-react";
-import type { MenuBarState } from "@/stores/editor";
+import type { MenuBarState } from "@/stores";
 
 type HeadingPickerProps = {
   editor: Editor;

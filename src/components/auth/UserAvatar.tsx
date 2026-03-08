@@ -1,5 +1,5 @@
 import { User as UserIcon } from "lucide-react";
-import { useAuthStore } from "@/stores/authStore";
+import { useAuthStore } from "@/stores";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import {
   DropdownMenu,

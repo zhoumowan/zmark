@@ -8,7 +8,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { useMathPopover } from "@/hooks/use-math-popover";
+import { useMathPopover } from "@/hooks";
 import { MenuButton } from "./menu-button";
 
 export const MathPopoverContent = ({

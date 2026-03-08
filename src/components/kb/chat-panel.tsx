@@ -10,20 +10,8 @@ import { useEffect, useRef, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { toast } from "sonner";
-import {
-  CHAT_ROLE_UI_CONFIG,
-  type ChatRole,
-  PRELOAD_IMAGES,
-} from "@/consts/chat";
-import { useKbStore } from "@/stores/kb";
-import type { ChatMessage } from "../../types/kb";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { Button } from "../ui/button";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "../ui/collapsible";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -31,10 +19,26 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "../ui/dialog";
-import { Input } from "../ui/input";
-import { ScrollArea } from "../ui/scroll-area";
-import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import {
+  CHAT_ROLE_UI_CONFIG,
+  type ChatRole,
+  PRELOAD_IMAGES,
+} from "@/consts/chat";
+import { useKbStore } from "@/stores/kb";
+import type { ChatMessage } from "@/types/kb";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "../ui/collapsible";
 
 const ChatAvatar = ({ role }: { role: ChatRole }) => {
   const config = CHAT_ROLE_UI_CONFIG[role];

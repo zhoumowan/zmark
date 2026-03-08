@@ -1,6 +1,6 @@
 import type { Editor } from "@tiptap/core";
 import { List, ListChecks, ListOrdered } from "lucide-react";
-import type { MenuBarState } from "@/stores/editor";
+import type { MenuBarState } from "@/stores";
 
 type ListPickerProps = {
   editor: Editor;

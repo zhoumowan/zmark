@@ -1,6 +1,6 @@
 import type { Editor } from "@tiptap/core";
 import type { TocItem } from "@/hooks/use-table-of-contents";
-import { cn } from "@/lib/utils";
+import { cn } from "@/utils";
 
 interface TableOfContentsProps {
   editor: Editor | null;

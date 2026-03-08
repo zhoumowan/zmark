@@ -9,7 +9,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
-import { useLinkPopover } from "@/hooks/use-link-popover";
+import { useLinkPopover } from "@/hooks";
 import { MenuButton } from "./menu-button";
 
 export const LinkPopoverContent = ({

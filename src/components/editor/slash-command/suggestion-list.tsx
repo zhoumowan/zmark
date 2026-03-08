@@ -11,7 +11,7 @@ import {
   Type,
 } from "lucide-react";
 import { forwardRef, useEffect, useImperativeHandle, useState } from "react";
-import { cn } from "@/lib/utils";
+import { cn } from "@/utils";
 import type {
   SuggestionItem,
   SuggestionListProps,

@@ -2,7 +2,7 @@ import type { AuthError, Session } from "@supabase/supabase-js";
 import { listen, type UnlistenFn } from "@tauri-apps/api/event";
 import { onOpenUrl } from "@tauri-apps/plugin-deep-link";
 import { open } from "@tauri-apps/plugin-shell";
-import { supabase } from "./supabase";
+import { supabase } from "./supabase-client";
 
 export interface AuthResult {
   session: Session | null;
@@ -28,7 +28,7 @@ export async function loginWithGitHub(): Promise<AuthResult> {
       console.error("[Auth] 获取认证 URL 失败:", error);
       return {
         session: null,
-        error: new Error(`启动登录失败: ${error.message}`),
+        error: new Error(`启动登录失败：${error.message}`),
       };
     }
 
@@ -70,7 +70,7 @@ export async function loginWithGitHub(): Promise<AuthResult> {
             resolve({
               session: null,
               error: new Error(
-                `认证出错: ${decodeURIComponent(errorDescription || errorParam || "未知错误")}`,
+                `认证出错：${decodeURIComponent(errorDescription || errorParam || "未知错误")}`,
               ),
             });
             return;
@@ -89,11 +89,11 @@ export async function loginWithGitHub(): Promise<AuthResult> {
               console.error("[Auth] 换取 Session 失败:", sessionError);
               resolve({
                 session: null,
-                error: new Error(`换取 Session 失败: ${sessionError.message}`),
+                error: new Error(`换取 Session 失败：${sessionError.message}`),
               });
             } else {
               console.log(
-                "[Auth] 登录成功! User:",
+                "[Auth] 登录成功！User:",
                 sessionData.session?.user.email,
               );
               resolve({ session: sessionData.session, error: null });

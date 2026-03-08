@@ -1,5 +1,5 @@
 import { GalleryVerticalEndIcon } from "lucide-react";
-import { useKeyDisplay } from "@/hooks/use-key-display";
+import { useKeyDisplay } from "@/hooks";
 
 const Shortcut = ({ label }: { label: string }) => {
   const { shortcuts } = useKeyDisplay();

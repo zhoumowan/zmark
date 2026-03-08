@@ -16,6 +16,7 @@
     "staticlib",
     "tauri",
     "Tiptap",
+    "Unlisten",
     "VITE",
     "zmark"
   ]

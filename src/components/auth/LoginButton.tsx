@@ -1,6 +1,6 @@
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
-import { useAuthStore } from "@/stores/authStore";
+import { useAuthStore } from "@/stores";
 import { Button } from "../ui/button";
 
 export const LoginButton = () => {

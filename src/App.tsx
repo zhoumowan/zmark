@@ -1,9 +1,8 @@
 import { FileText, Library, Loader2, LogOut } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import { SearchCommand } from "@/components/search-command";
-import { getAllMarkdownFiles } from "@/utils/file";
-import { indexFiles } from "@/utils/search";
+import { SearchCommand } from "@/components/editor/search-command";
+import { getAllMarkdownFiles, indexFiles } from "@/utils";
 import { LoginButton } from "./components/auth/LoginButton";
 import { UserAvatar } from "./components/auth/UserAvatar";
 import { ThemeToggle } from "./components/common/theme-toggle";
@@ -16,8 +15,7 @@ import { SidebarProvider } from "./components/ui/sidebar";
 import { Toaster } from "./components/ui/sonner";
 import { TooltipProvider } from "./components/ui/tooltip";
 import { ThemeProvider } from "./providers/theme-provider";
-import { useAuthStore } from "./stores/authStore";
-import { useEditorStore } from "./stores/editor";
+import { useAuthStore, useEditorStore } from "./stores";
 
 const App = () => {
   const { curPath } = useEditorStore();

@@ -4,6 +4,7 @@ import { readTextFile } from "@tauri-apps/plugin-fs";
 import { ChevronRight, File, Folder, PenLine, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import { TruncatedTooltip } from "@/components/common/truncated-tooltip";
 import {
   Collapsible,
   CollapsibleContent,
@@ -15,16 +16,15 @@ import {
   ContextMenuItem,
   ContextMenuTrigger,
 } from "@/components/ui/context-menu";
-import { useCollapse } from "@/providers/collapse-provider";
-import { useEditorStore } from "@/stores/editor";
-import type { TreeItem } from "@/types/editor";
-import { deleteFileOrDir, getTreeKey, renameFileOrDir } from "@/utils/file";
-import { TruncatedTooltip } from "../../common/truncated-tooltip";
 import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarMenuSub,
-} from "../../ui/sidebar";
+} from "@/components/ui/sidebar";
+import { useCollapse } from "@/providers/collapse-provider";
+import { useEditorStore } from "@/stores";
+import type { TreeItem } from "@/types/editor";
+import { deleteFileOrDir, getTreeKey, renameFileOrDir } from "@/utils";
 import { InputDialog } from "./input-dialog";
 
 interface ITreeProps {

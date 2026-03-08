@@ -1,11 +1,7 @@
 import type { Session, User } from "@supabase/supabase-js";
 import { create } from "zustand";
-import {
-  getSession,
-  loginWithGitHub,
-  logoutFromGitHub,
-} from "../lib/github-auth";
-import { supabase } from "../lib/supabase";
+import { getSession, loginWithGitHub, logoutFromGitHub } from "../utils/auth";
+import { supabase } from "../utils/supabase-client";
 
 export interface UserProfile {
   id: string;

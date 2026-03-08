@@ -18,8 +18,8 @@ import {
   Undo,
   WrapText,
 } from "lucide-react";
-import type { useKeyDisplay } from "@/hooks/use-key-display";
-import type { MenuBarState } from "@/stores/editor";
+import type { useKeyDisplay } from "@/hooks";
+import type { MenuBarState } from "@/stores";
 import type { MenuButtonProps } from "./menu-button";
 
 interface GetActionsParams {
