@@ -6,6 +6,7 @@
     "byteorder",
     "cdylib",
     "cmdk",
+    "katex",
     "minisearch",
     "Pilcrow",
     "reqwest",

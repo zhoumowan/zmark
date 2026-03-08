@@ -44,6 +44,7 @@ export function menuBarStateSelector(ctx: EditorStateSnapshot<Editor>) {
     canSuperscript: ctx.editor.can().chain().toggleSuperscript().run() ?? false,
     isSubscript: ctx.editor.isActive("subscript") ?? false,
     canSubscript: ctx.editor.can().chain().toggleSubscript().run() ?? false,
+    isInlineMath: ctx.editor.isActive("inlineMath") ?? false,
 
     // Block types
     isParagraph: ctx.editor.isActive("paragraph") ?? false,

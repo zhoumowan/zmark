@@ -168,3 +168,32 @@
   height: 0;
   pointer-events: none;
 }
+
+.tiptap {
+  .tiptap-mathematics-render {
+    cursor: pointer;
+    padding: 0 0.25rem;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+
+    &:hover {
+      background-color: var(--secondary);
+    }
+
+    &--editable {
+      cursor: pointer;
+    }
+
+    &[data-type="block-math"] {
+      display: flex;
+      justify-content: center;
+      margin: 1rem 0;
+      padding: 0.5rem;
+      width: 100%;
+    }
+
+    &[data-type="inline-math"] {
+      display: inline-block;
+    }
+  }
+}

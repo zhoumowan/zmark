@@ -1,118 +1,21 @@
+import "katex/dist/katex.min.css";
 import "./styles/index.scss";
 
 import { writeTextFile } from "@tauri-apps/plugin-fs";
 import { openUrl } from "@tauri-apps/plugin-opener";
-import { markInputRule, markPasteRule } from "@tiptap/core";
-import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
-import Highlight, { inputRegex, pasteRegex } from "@tiptap/extension-highlight";
-import Image from "@tiptap/extension-image";
-import Link from "@tiptap/extension-link";
-import { ListKit } from "@tiptap/extension-list";
-import Subscript from "@tiptap/extension-subscript";
-import Superscript from "@tiptap/extension-superscript";
-import { TextStyleKit } from "@tiptap/extension-text-style";
-import { Placeholder } from "@tiptap/extensions";
 import { EditorContent, useEditor } from "@tiptap/react";
-import StarterKit from "@tiptap/starter-kit";
-import { common, createLowlight } from "lowlight";
 import { useState } from "react";
 import { toast } from "sonner";
-import { Markdown } from "tiptap-markdown";
-import { DEFAULT_HIGHLIGHT_COLOR } from "@/consts/highlight";
 import { useSaveShortcut } from "@/hooks/use-save-shortcut";
 import { useEditorStore } from "@/stores/editor";
 import type { EditorStorage } from "@/types/editor.ts";
 import { handleImageUpload } from "@/utils/file";
 import { addOrUpdateFile } from "@/utils/search";
+import { extensions } from "./extensions";
 import { EmptyEditor } from "./fallback/empty-state.tsx";
 import { UnsupportedFile } from "./fallback/unsupported-file.tsx";
 import { MenuBar } from "./menubar/index.tsx";
-import { SlashCommand, slashSuggestion } from "./slash-command/slash-extension";
 import { TableOfContents } from "./toc";
-
-const lowlight = createLowlight(common);
-
-const extensions = [
-  Placeholder.configure({
-    placeholder: "Write something …",
-  }),
-  TextStyleKit,
-  ListKit,
-  StarterKit.configure({
-    link: false,
-    bulletList: false,
-    listItem: false,
-    listKeymap: false,
-    orderedList: false,
-    codeBlock: false,
-  }),
-  Markdown.configure({ html: true }),
-  SlashCommand.configure({
-    suggestion: slashSuggestion,
-  }),
-  Highlight.extend({
-    addKeyboardShortcuts() {
-      return {};
-    },
-    addInputRules() {
-      return [
-        markInputRule({
-          find: inputRegex,
-          type: this.type,
-          getAttributes: () => ({
-            color: DEFAULT_HIGHLIGHT_COLOR,
-          }),
-        }),
-      ];
-    },
-    addPasteRules() {
-      return [
-        markPasteRule({
-          find: pasteRegex,
-          type: this.type,
-          getAttributes: () => ({
-            color: DEFAULT_HIGHLIGHT_COLOR,
-          }),
-        }),
-      ];
-    },
-  }).configure({
-    multicolor: true,
-  }),
-  CodeBlockLowlight.configure({
-    lowlight,
-  }),
-  Image.configure({
-    allowBase64: true,
-  }),
-  Link.extend({
-    addInputRules() {
-      return [
-        markInputRule({
-          find: /\[(.+?)\]\((.+?)\)\s$/,
-          type: this.type,
-          getAttributes: (match) => {
-            const url = match[2];
-            // 简单的 URL 安全性过滤
-            if (url.startsWith("javascript:") || url.startsWith("vbscript:")) {
-              return { href: "" };
-            }
-            return {
-              href: url,
-            };
-          },
-        }),
-      ];
-    },
-  }).configure({
-    openOnClick: false,
-    autolink: true,
-    linkOnPaste: true,
-    validate: (url) => !!url && !url.startsWith("javascript:"),
-  }),
-  Superscript,
-  Subscript,
-];
 
 export default () => {
   const { content, curPath } = useEditorStore();

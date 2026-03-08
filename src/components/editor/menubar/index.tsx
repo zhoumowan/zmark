@@ -23,6 +23,7 @@ import { handleImageUpload } from "@/utils/file";
 import { HeadingPicker } from "./heading-picker";
 import { HighlightColorPicker } from "./highlight-picker";
 import { LinkPopover } from "./link-popover";
+import { MathPopover } from "./math-popover";
 import { MenuButton } from "./menu-button";
 
 type MenuBarProps = {
@@ -107,6 +108,7 @@ export const MenuBar = ({
             ))}
 
             <LinkPopover editor={editor} shortcut={shortcuts.link} />
+            <MathPopover editor={editor} />
 
             <Popover
               open={highlightPopoverOpen}
