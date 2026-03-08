@@ -17,6 +17,7 @@ import {
 } from "@tauri-apps/plugin-fs";
 import { useEditorStore } from "@/stores/editor";
 import type { TreeItem } from "@/types/editor";
+import type { FileContent } from "@/types/search";
 import {
   addOrUpdateFile,
   removeFile as removeSearchIndex,
@@ -162,12 +163,6 @@ export const handleImageUpload = async (
 
   return assetUrl;
 };
-
-export interface FileContent {
-  path: string;
-  name: string;
-  content: string;
-}
 
 async function readAllMarkdownFiles(dirPath: string): Promise<FileContent[]> {
   const entries = await readDir(dirPath);

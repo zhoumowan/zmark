@@ -21,10 +21,10 @@ export function SearchCommand() {
 
   // 监听搜索索引变化
   React.useEffect(() => {
-    const unsubscribe = subscribeToSearch(() => {
+    const unsubscribe = subscribeToSearch(async () => {
       // 当索引更新时，如果当前有搜索词，重新执行搜索
       if (query) {
-        const searchResults = search(query);
+        const searchResults = await search(query);
         setResults(searchResults);
       }
     });
@@ -45,12 +45,15 @@ export function SearchCommand() {
   }, [toggle]);
 
   React.useEffect(() => {
-    if (query) {
-      const searchResults = search(query);
-      setResults(searchResults);
-    } else {
-      setResults([]);
-    }
+    const fetchResults = async () => {
+      if (query) {
+        const searchResults = await search(query);
+        setResults(searchResults);
+      } else {
+        setResults([]);
+      }
+    };
+    fetchResults();
   }, [query]);
 
   const handleSelect = async (path: string) => {
