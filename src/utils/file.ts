@@ -10,12 +10,14 @@ import {
   mkdir,
   readDir,
   readTextFile,
+  remove,
+  rename,
   stat,
   writeFile,
 } from "@tauri-apps/plugin-fs";
 import type { TreeItem } from "@/types/editor";
-import { addOrUpdateFile } from "@/utils/search";
 import { useEditorStore } from "@/stores/editor";
+import { addOrUpdateFile, removeFile as removeSearchIndex } from "@/utils/search";
 
 /**
  * 获取数据目录路径
@@ -199,4 +201,56 @@ async function readAllMarkdownFiles(dirPath: string): Promise<FileContent[]> {
 export async function getAllMarkdownFiles() {
   const dataDir = await getDataDir();
   return await readAllMarkdownFiles(dataDir);
+}
+
+export async function deleteFileOrDir(path: string) {
+  try {
+    const isDirectory = await isDir(path);
+    await remove(path, { recursive: true });
+
+    if (!isDirectory) {
+      removeSearchIndex(path);
+    }
+    return true;
+  } catch (error) {
+    console.error("Failed to delete:", error);
+    throw error;
+  }
+}
+
+export async function renameFileOrDir(oldPath: string, newName: string) {
+  try {
+    const parentDir = await dirname(oldPath);
+    const newPath = await join(parentDir, newName);
+
+    if (await exists(newPath)) {
+      throw new Error("Target file already exists");
+    }
+
+    await rename(oldPath, newPath);
+
+    // Simple approach: remove old path from index
+    // Re-indexing will happen when user opens/saves the new file.
+    removeSearchIndex(oldPath);
+
+    // If it's a file, read content and add to index immediately
+    const isFile = !(await isDir(newPath));
+    if (isFile) {
+      try {
+        const content = await readTextFile(newPath);
+        addOrUpdateFile({
+          path: newPath,
+          name: newName,
+          content: content,
+        });
+      } catch (e) {
+        console.error("Failed to re-index renamed file:", e);
+      }
+    }
+
+    return newPath;
+  } catch (error) {
+    console.error("Failed to rename:", error);
+    throw error;
+  }
 }

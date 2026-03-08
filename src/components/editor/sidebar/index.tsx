@@ -137,7 +137,12 @@ export function AppSidebar({ mode, ...props }: ISidebarProps) {
             </div>
             <SidebarMenu className="px-1">
               {fileTree.map((item) => (
-                <Tree key={getTreeKey(item)} item={item} basePath={basePath} />
+                <Tree
+                  key={getTreeKey(item)}
+                  item={item}
+                  basePath={basePath}
+                  onRefresh={refreshFileTree}
+                />
               ))}
             </SidebarMenu>
           </SidebarGroup>
