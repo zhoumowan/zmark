@@ -53,8 +53,13 @@ export const Tree = (props: ITreeProps) => {
 
     const handleDoubleClick = async () => {
       setCurPath(fullPath);
-      const content = await readTextFile(fullPath);
-      setContent(content);
+      // Only read content for markdown files
+      if (fullPath.endsWith(".md")) {
+        const content = await readTextFile(fullPath);
+        setContent(content);
+      } else {
+        setContent(""); // Clear content for unsupported files
+      }
     };
 
     const isActive = curPath === fullPath;
