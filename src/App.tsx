@@ -1,6 +1,9 @@
 import { FileText, Library, Loader2, LogOut } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import { SearchCommand } from "@/components/search-command";
+import { getAllMarkdownFiles } from "@/utils/file";
+import { indexFiles } from "@/utils/search";
 import { LoginButton } from "./components/auth/LoginButton";
 import { UserAvatar } from "./components/auth/UserAvatar";
 import { ThemeToggle } from "./components/common/theme-toggle";
@@ -25,6 +28,20 @@ const App = () => {
     initialize();
   }, [initialize]);
 
+  useEffect(() => {
+    // 启动时建立搜索索引
+    const buildIndex = async () => {
+      try {
+        const files = await getAllMarkdownFiles();
+        indexFiles(files);
+        console.log("Search index built with", files.length, "files");
+      } catch (error) {
+        console.error("Failed to build search index:", error);
+      }
+    };
+    buildIndex();
+  }, []);
+
   const handleLogout = async () => {
     await logout();
     toast.success("已成功退出登录");
@@ -46,6 +63,7 @@ const App = () => {
   return (
     <ThemeProvider>
       <TooltipProvider>
+        <SearchCommand />
         {isInitializing ? (
           <div className="flex h-screen w-full items-center justify-center bg-background">
             <Loader2 className="h-8 w-8 animate-spin text-primary" />

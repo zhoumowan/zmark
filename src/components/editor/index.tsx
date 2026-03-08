@@ -22,6 +22,7 @@ import { useSaveShortcut } from "@/hooks/use-save-shortcut";
 import { useEditorStore } from "@/stores/editor";
 import type { EditorStorage } from "@/types/editor.ts";
 import { handleImageUpload } from "@/utils/file";
+import { addOrUpdateFile } from "@/utils/search";
 import { EmptyEditor } from "./fallback/empty-state.tsx";
 import { UnsupportedFile } from "./fallback/unsupported-file.tsx";
 import { MenuBar } from "./menubar/index.tsx";
@@ -187,6 +188,13 @@ export default () => {
       const storage = editor.storage as EditorStorage;
       const markdown = storage.markdown.getMarkdown();
       writeTextFile(curPath, markdown);
+
+      addOrUpdateFile({
+        path: curPath,
+        name: curPath.split("/").pop() || "Untitled",
+        content: markdown,
+      });
+
       toast.success("保存成功");
     }
   };

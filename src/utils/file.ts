@@ -5,9 +5,17 @@ import {
   documentDir,
   join,
 } from "@tauri-apps/api/path";
-import { exists, mkdir, readDir, stat, writeFile } from "@tauri-apps/plugin-fs";
-import { useEditorStore } from "@/stores/editor";
+import {
+  exists,
+  mkdir,
+  readDir,
+  readTextFile,
+  stat,
+  writeFile,
+} from "@tauri-apps/plugin-fs";
 import type { TreeItem } from "@/types/editor";
+import { addOrUpdateFile } from "@/utils/search";
+import { useEditorStore } from "@/stores/editor";
 
 /**
  * 获取数据目录路径
@@ -83,6 +91,12 @@ export async function createFile(filePath: string, basePath?: string) {
 
   if (!(await exists(finalPath))) {
     await writeFile(finalPath, new Uint8Array());
+    // Add new file to search index
+    addOrUpdateFile({
+      path: finalPath,
+      name: finalPath.split("/").pop() || "",
+      content: "",
+    });
   }
 }
 
@@ -143,3 +157,46 @@ export const handleImageUpload = async (
 
   return assetUrl;
 };
+
+export interface FileContent {
+  path: string;
+  name: string;
+  content: string;
+}
+
+async function readAllMarkdownFiles(dirPath: string): Promise<FileContent[]> {
+  const entries = await readDir(dirPath);
+  let files: FileContent[] = [];
+
+  for (const entry of entries) {
+    const name = entry.name;
+    if (!name || name.startsWith(".") || name === ".DS_Store") {
+      continue;
+    }
+
+    const fullPath = await join(dirPath, name);
+
+    if (entry.isFile && name.endsWith(".md")) {
+      try {
+        const content = await readTextFile(fullPath);
+        files.push({
+          path: fullPath,
+          name: name,
+          content: content,
+        });
+      } catch (e) {
+        console.error(`Failed to read file ${fullPath}`, e);
+      }
+    } else if (entry.isDirectory) {
+      const subFiles = await readAllMarkdownFiles(fullPath);
+      files = [...files, ...subFiles];
+    }
+  }
+
+  return files;
+}
+
+export async function getAllMarkdownFiles() {
+  const dataDir = await getDataDir();
+  return await readAllMarkdownFiles(dataDir);
+}
