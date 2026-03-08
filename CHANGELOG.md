@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.0] - 2026-03-08
+
+### ✨ New Features
+
+- **File System**: 实现智能目录导航功能
+- **File System**: 为文件树添加右键菜单支持删除和重命名功能
+- **Search**: 添加全局搜索功能
+
+### 🐛 Bug Fixes
+
+- **File System**: 仅对 markdown 文件读取内容
+- **StarterKit**: 禁用 StarterKit 中重复的功能
+
+### ♻️ Refactor
+
+- **Structure**: 文件目录规范
+- **Editor**: 重构标题选择
+
 ## [1.1.2] - 2026-03-07
 
 ### 🐛 Bug Fixes
