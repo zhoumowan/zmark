@@ -1,4 +1,5 @@
 import { InputRule, markInputRule, markPasteRule } from "@tiptap/core";
+import BubbleMenu from "@tiptap/extension-bubble-menu";
 import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
 import Highlight, { inputRegex, pasteRegex } from "@tiptap/extension-highlight";
 import Image from "@tiptap/extension-image";
@@ -35,6 +36,7 @@ export const extensions = [
     codeBlock: false,
   }),
   Markdown.configure({ html: true }),
+  BubbleMenu,
   SlashCommand.configure({
     suggestion: slashSuggestion,
   }),

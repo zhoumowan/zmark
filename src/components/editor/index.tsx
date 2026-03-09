@@ -14,6 +14,7 @@ import {
   handleImageUpload,
   unresolveMarkdownImages,
 } from "@/utils";
+import { EditorBubbleMenu } from "./bubble-menu";
 import { extensions } from "./extensions";
 import { EmptyEditor } from "./fallback/empty-state.tsx";
 import { UnsupportedFile } from "./fallback/unsupported-file.tsx";
@@ -128,6 +129,7 @@ export default () => {
         isMdFile ? (
           editor && (
             <>
+              <EditorBubbleMenu editor={editor} />
               <MenuBar
                 editor={editor}
                 isTocOpen={isTocOpen}
