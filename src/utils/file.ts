@@ -201,6 +201,133 @@ export async function getAllMarkdownFiles() {
   return await readAllMarkdownFiles(dataDir);
 }
 
+/**
+ * 将 Markdown 中的相对图片路径转换为 asset:// 路径，以便在编辑器中显示
+ */
+export async function resolveMarkdownImages(
+  markdown: string,
+  filePath: string,
+) {
+  const docDir = await dirname(filePath);
+
+  // 使用正则表达式匹配 Markdown 中的图片语法 ! [alt](path)
+  const matches = Array.from(markdown.matchAll(/!\[(.*?)\]\((.*?)\)/g));
+  let result = markdown;
+
+  for (const match of matches) {
+    const [fullMatch, alt, src] = match;
+
+    // 如果是远程路径或已经是 asset:// 路径或 base64，跳过
+    if (
+      src.startsWith("http") ||
+      src.startsWith("asset://") ||
+      src.startsWith("data:")
+    ) {
+      continue;
+    }
+
+    try {
+      // 解析相对路径为绝对路径
+      const absolutePath = await join(docDir, src);
+      // 检查文件是否存在
+      if (await exists(absolutePath)) {
+        const assetUrl = convertFileSrc(absolutePath);
+        result = result.replace(fullMatch, `![${alt}](${assetUrl})`);
+      }
+    } catch (e) {
+      console.error(`Failed to resolve image path: ${src}`, e);
+    }
+  }
+
+  return result;
+}
+
+/**
+ * 计算相对路径
+ */
+function getRelativePath(from: string, to: string) {
+  const fromParts = from.split(/[/\\]/).filter(Boolean);
+  const toParts = to.split(/[/\\]/).filter(Boolean);
+
+  let i = 0;
+  while (
+    i < fromParts.length &&
+    i < toParts.length &&
+    fromParts[i] === toParts[i]
+  ) {
+    i++;
+  }
+
+  const upCount = fromParts.length - i;
+  const upParts = new Array(upCount).fill("..");
+  const downParts = toParts.slice(i);
+
+  const relPath = [...upParts, ...downParts].join("/");
+  return relPath.startsWith(".") ? relPath : `./${relPath}`;
+}
+
+/**
+ * 将 Markdown 中的 asset:// 或绝对路径转换为相对路径，以便保存
+ */
+export async function unresolveMarkdownImages(
+  markdown: string,
+  filePath: string,
+) {
+  const docDir = await dirname(filePath);
+
+  const matches = Array.from(markdown.matchAll(/!\[(.*?)\]\((.*?)\)/g));
+  let result = markdown;
+
+  for (const match of matches) {
+    const [fullMatch, alt, src] = match;
+
+    let absolutePath = "";
+
+    if (src.startsWith("asset://")) {
+      try {
+        const url = new URL(src);
+        // decodeURIComponent(url.pathname) 可能会包含前导斜杠
+        absolutePath = decodeURIComponent(url.pathname);
+        // 在 macOS 上，absolutePath 如果以 /Users/... 开头，则它是绝对路径
+        // 在 Windows 上，absolutePath 如果以 /C:/... 开头，需要去掉前面的 /
+        if (
+          absolutePath.match(/^\/[a-zA-Z]:\//) ||
+          absolutePath.match(/^\/[a-zA-Z]:\\/)
+        ) {
+          absolutePath = absolutePath.substring(1);
+        }
+      } catch (e) {
+        console.error(`Failed to parse asset URL: ${src}`, e);
+        continue;
+      }
+    } else if (
+      src.startsWith("/") ||
+      (src.includes(":") && !src.startsWith("http"))
+    ) {
+      // 看起来像绝对路径
+      absolutePath = src;
+    } else {
+      // 已经是相对路径或远程路径
+      continue;
+    }
+
+    if (absolutePath) {
+      try {
+        // 计算从文档目录到图片目录的相对路径
+        const relPath = getRelativePath(docDir, absolutePath);
+        // 确保使用正斜杠
+        const webRelPath = relPath.replace(/\\/g, "/");
+
+        result = result.replace(fullMatch, `![${alt}](${webRelPath})`);
+      } catch (e) {
+        console.error(`Failed to unresolve image path: ${absolutePath}`, e);
+      }
+    }
+  }
+
+  return result;
+}
+
 export async function deleteFileOrDir(path: string) {
   try {
     const isDirectory = await isDir(path);

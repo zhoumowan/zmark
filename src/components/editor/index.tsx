@@ -9,7 +9,11 @@ import { toast } from "sonner";
 import { useSaveShortcut, useTableOfContents } from "@/hooks";
 import { useEditorStore } from "@/stores";
 import type { EditorStorage } from "@/types/editor.ts";
-import { addOrUpdateFile, handleImageUpload } from "@/utils";
+import {
+  addOrUpdateFile,
+  handleImageUpload,
+  unresolveMarkdownImages,
+} from "@/utils";
 import { extensions } from "./extensions";
 import { EmptyEditor } from "./fallback/empty-state.tsx";
 import { UnsupportedFile } from "./fallback/unsupported-file.tsx";
@@ -87,16 +91,22 @@ export default () => {
     [content],
   );
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (curPath && editor) {
       const storage = editor.storage as EditorStorage;
       const markdown = storage.markdown.getMarkdown();
-      writeTextFile(curPath, markdown);
+
+      // 将图片路径转换为相对路径后再保存
+      const unresolvedMarkdown = await unresolveMarkdownImages(
+        markdown,
+        curPath,
+      );
+      await writeTextFile(curPath, unresolvedMarkdown);
 
       addOrUpdateFile({
         path: curPath,
         name: curPath.split("/").pop() || "Untitled",
-        content: markdown,
+        content: unresolvedMarkdown,
       });
 
       toast.success("保存成功");

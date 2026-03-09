@@ -24,7 +24,12 @@ import {
 import { useCollapse } from "@/providers/collapse-provider";
 import { useEditorStore } from "@/stores";
 import type { TreeItem } from "@/types/editor";
-import { deleteFileOrDir, getTreeKey, renameFileOrDir } from "@/utils";
+import {
+  deleteFileOrDir,
+  getTreeKey,
+  renameFileOrDir,
+  resolveMarkdownImages,
+} from "@/utils";
 import { InputDialog } from "./input-dialog";
 
 interface ITreeProps {
@@ -134,7 +139,8 @@ export const Tree = (props: ITreeProps) => {
       // Only read content for markdown files
       if (fullPath.endsWith(".md")) {
         const content = await readTextFile(fullPath);
-        setContent(content);
+        const resolvedContent = await resolveMarkdownImages(content, fullPath);
+        setContent(resolvedContent);
       } else {
         setContent(""); // Clear content for unsupported files
       }
