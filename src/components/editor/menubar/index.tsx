@@ -8,6 +8,7 @@ import {
   Heading5,
   Heading6,
   Highlighter,
+  History,
   List,
   ListChecks,
   ListOrdered,
@@ -36,6 +37,8 @@ type MenuBarProps = {
   isTocOpen: boolean;
   onToggleToc: () => void;
   hasHeadings: boolean;
+  isHistoryOpen: boolean;
+  onToggleHistory: () => void;
 };
 
 export const MenuBar = ({
@@ -43,6 +46,8 @@ export const MenuBar = ({
   isTocOpen,
   onToggleToc,
   hasHeadings,
+  isHistoryOpen,
+  onToggleHistory,
 }: MenuBarProps) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -217,6 +222,13 @@ export const MenuBar = ({
               onClick={onToggleToc}
               isActive={isTocOpen}
               isVisible={hasHeadings}
+            />
+
+            <MenuButton
+              icon={History}
+              label={isHistoryOpen ? "隐藏历史" : "历史版本"}
+              onClick={onToggleHistory}
+              isActive={isHistoryOpen}
             />
           </TooltipProvider>
         </div>

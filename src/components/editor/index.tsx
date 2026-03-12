@@ -6,6 +6,12 @@ import { openUrl } from "@tauri-apps/plugin-opener";
 import { EditorContent, useEditor } from "@tiptap/react";
 import { useState } from "react";
 import { toast } from "sonner";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/sheet";
 import { useSaveShortcut, useTableOfContents } from "@/hooks";
 import { useEditorStore } from "@/stores";
 import type { EditorStorage } from "@/types/editor.ts";
@@ -120,6 +126,7 @@ export default () => {
   const isMdFile = curPath.endsWith(".md");
   const fileName = curPath.split("/").pop() || curPath;
   const [isTocOpen, setIsTocOpen] = useState(true);
+  const [isHistoryOpen, setIsHistoryOpen] = useState(false);
 
   const tocItems = useTableOfContents(editor);
 
@@ -135,6 +142,8 @@ export default () => {
                 isTocOpen={isTocOpen}
                 onToggleToc={() => setIsTocOpen(!isTocOpen)}
                 hasHeadings={tocItems.length > 0}
+                isHistoryOpen={isHistoryOpen}
+                onToggleHistory={() => setIsHistoryOpen(!isHistoryOpen)}
               />
               <div className="flex flex-1 overflow-hidden relative">
                 <EditorContent
@@ -145,6 +154,22 @@ export default () => {
                   <TableOfContents editor={editor} items={tocItems} />
                 )}
               </div>
+              <Sheet open={isHistoryOpen} onOpenChange={setIsHistoryOpen}>
+                <SheetContent side="right" className="w-[90vw]! max-w-[90vw]!">
+                  <SheetHeader>
+                    <SheetTitle>历史版本</SheetTitle>
+                  </SheetHeader>
+                  <div className="flex items-center justify-center h-[80%]">
+                    <div className="text-center text-muted-foreground">
+                      <div className="w-48 h-48 mx-auto mb-4 bg-linear-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-700 rounded-lg flex items-center justify-center">
+                        <span className="text-4xl">📜</span>
+                      </div>
+                      <p>历史版本功能开发中...</p>
+                      <p className="text-sm mt-2">敬请期待</p>
+                    </div>
+                  </div>
+                </SheetContent>
+              </Sheet>
             </>
           )
         ) : (
