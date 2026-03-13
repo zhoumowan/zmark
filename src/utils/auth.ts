@@ -14,7 +14,6 @@ export interface AuthResult {
  */
 export async function loginWithGitHub(): Promise<AuthResult> {
   try {
-    console.log("[Auth] 开始 GitHub 登录流程...");
     // 1. 启动 OAuth 流程获取认证 URL
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "github",
@@ -37,8 +36,6 @@ export async function loginWithGitHub(): Promise<AuthResult> {
       return { session: null, error: new Error("未能获取到登录 URL") };
     }
 
-    console.log("[Auth] 获取认证 URL 成功:", data.url);
-
     // 2. 返回 Promise 等待回调
     return new Promise<AuthResult>((resolve) => {
       let unlistenDeepLink: UnlistenFn | undefined;
@@ -52,7 +49,6 @@ export async function loginWithGitHub(): Promise<AuthResult> {
 
       // 处理回调 URL 的核心逻辑
       const handleUrl = async (url: string) => {
-        console.log("[Auth] 收到 Deep Link:", url);
         try {
           // 解析 URL 参数
           const urlObj = new URL(url);
@@ -77,9 +73,7 @@ export async function loginWithGitHub(): Promise<AuthResult> {
           }
 
           if (code) {
-            console.log("[Auth] 获取到 Authorization Code:", code);
             // 使用 code 换取 session
-            console.log("[Auth] 正在使用 code 换取 session...");
             const { data: sessionData, error: sessionError } =
               await supabase.auth.exchangeCodeForSession(code);
 
@@ -92,10 +86,6 @@ export async function loginWithGitHub(): Promise<AuthResult> {
                 error: new Error(`换取 Session 失败：${sessionError.message}`),
               });
             } else {
-              console.log(
-                "[Auth] 登录成功！User:",
-                sessionData.session?.user.email,
-              );
               resolve({ session: sessionData.session, error: null });
             }
           } else {
@@ -117,7 +107,6 @@ export async function loginWithGitHub(): Promise<AuthResult> {
         try {
           // 监听 App 未运行时启动的情况 (系统直接通过 URL 唤起)
           unlistenDeepLink = await onOpenUrl((urls) => {
-            console.log("[Auth] onOpenUrl 触发:", urls);
             for (const url of urls) {
               if (url.startsWith("zmark://")) {
                 handleUrl(url);
@@ -125,22 +114,17 @@ export async function loginWithGitHub(): Promise<AuthResult> {
               }
             }
           });
-          console.log("[Auth] onOpenUrl 监听器已设置");
 
           // 监听 App 已运行时的情况 (通过 Rust 插件 single-instance 转发的事件)
           unlistenEvent = await listen<string>(
             "deep-link-received",
             (event) => {
-              console.log("[Auth] deep-link-received 事件触发:", event.payload);
               handleUrl(event.payload);
             },
           );
-          console.log("[Auth] deep-link-received 监听器已设置");
 
           // 监听器设置完成后，打开浏览器
-          console.log("[Auth] 正在打开浏览器...");
           await open(data.url);
-          console.log("[Auth] 浏览器已打开");
         } catch (err) {
           console.error("[Auth] 设置监听或打开浏览器失败:", err);
           cleanup();

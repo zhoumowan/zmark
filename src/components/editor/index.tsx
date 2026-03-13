@@ -70,7 +70,6 @@ export default () => {
             if (file) {
               handleImageUpload(file)
                 .then((url) => {
-                  console.log("Image uploaded to:", url);
                   if (editor) {
                     editor.chain().focus().setImage({ src: url }).run();
                   } else {

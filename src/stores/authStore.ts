@@ -73,7 +73,6 @@ export const useAuthStore = create<AuthState>((set) => ({
   logout: async () => {
     // 开发环境模拟登出
     if (import.meta.env.DEV) {
-      console.log("[AuthStore] 开发环境：模拟退出登录 (session 未清除)");
       return;
     }
 
@@ -96,7 +95,6 @@ export const useAuthStore = create<AuthState>((set) => ({
   initialize: async () => {
     // 开发环境直接模拟已登录状态
     if (import.meta.env.DEV) {
-      console.log("[AuthStore] 开发环境：跳过登录检查，使用模拟用户");
       const mockUser: UserProfile = {
         id: "dev-user-id",
         email: "dev@example.com",

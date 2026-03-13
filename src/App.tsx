@@ -32,7 +32,6 @@ const App = () => {
       try {
         const files = await getAllMarkdownFiles();
         indexFiles(files);
-        console.log("Search index built with", files.length, "files");
       } catch (error) {
         console.error("Failed to build search index:", error);
       }
