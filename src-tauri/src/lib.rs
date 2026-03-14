@@ -5,27 +5,15 @@ use tauri_plugin_deep_link::DeepLinkExt;
 mod commands;
 mod db;
 
-// Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
-#[tauri::command]
-fn greet(name: &str) -> String {
-    format!("Hello, {}! You've been greeted from Rust!", name)
-}
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
         .setup(|app| {
-            #[cfg(debug_assertions)] // 仅在开发环境
+            #[cfg(debug_assertions)]
             {
                 let window = app.get_webview_window("main").unwrap();
                 window.open_devtools();
-            }
-            #[cfg(not(debug_assertions))] // 在生产环境也开启
-            {
-                // 注意：在生产环境开启 DevTools 可能有安全风险，但在调试白屏问题时很有用
-                // 发布正式版时请记得移除
-                let window = app.get_webview_window("main").unwrap();
-                window.open_devtools(); // 如果需要在启动时自动打开，取消注释这行
             }
             Ok(())
         })
@@ -78,7 +66,6 @@ pub fn run() {
             Ok(())
         })
         .invoke_handler(tauri::generate_handler![
-            greet,
             commands::knowledge_base::create_knowledge_base,
             commands::knowledge_base::list_knowledge_bases,
             commands::knowledge_base::add_document,

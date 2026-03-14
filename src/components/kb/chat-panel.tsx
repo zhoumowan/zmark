@@ -142,7 +142,7 @@ export const ChatPanel = () => {
                 <p>设置 API Key</p>
               </TooltipContent>
             </Tooltip>
-            <DialogContent>
+            <DialogContent aria-describedby={undefined}>
               <DialogHeader>
                 <DialogTitle>设置 SiliconFlow API Key</DialogTitle>
               </DialogHeader>
