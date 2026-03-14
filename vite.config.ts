@@ -2,11 +2,20 @@ import path from "node:path";
 import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
+import { compression } from "vite-plugin-compression2";
 
 const host = process.env.TAURI_DEV_HOST;
 
 export default defineConfig({
-  plugins: [react(), tailwindcss()],
+  plugins: [
+    react(),
+    tailwindcss(),
+    compression({
+      include: [/\.(js)$/, /\.(css)$/, /\.(html)$/],
+      threshold: 1400,
+      algorithms: ["brotliCompress"],
+    }),
+  ],
 
   clearScreen: false,
 
@@ -42,10 +51,12 @@ export default defineConfig({
       output: {
         manualChunks: (id) => {
           if (id.includes("node_modules")) {
+            if (id.includes("lowlight")) {
+              return "lowlight";
+            }
             if (
               id.includes("@tiptap") ||
               id.includes("tiptap") ||
-              id.includes("lowlight") ||
               id.includes("prosemirror")
             ) {
               return "editor";
