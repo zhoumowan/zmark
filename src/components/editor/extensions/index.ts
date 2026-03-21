@@ -100,8 +100,20 @@ export const extensions = [
     linkOnPaste: true,
     validate: (url) => !!url && !url.startsWith("javascript:"),
   }),
-  Superscript,
-  Subscript,
+  Superscript.extend({
+    addKeyboardShortcuts() {
+      return {
+        "Mod-Shift-.": () => this.editor.commands.toggleSuperscript(),
+      };
+    },
+  }),
+  Subscript.extend({
+    addKeyboardShortcuts() {
+      return {
+        "Mod-Shift-,": () => this.editor.commands.toggleSubscript(),
+      };
+    },
+  }),
   InlineMath.extend({
     addInputRules() {
       return [

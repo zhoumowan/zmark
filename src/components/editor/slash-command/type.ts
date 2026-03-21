@@ -32,7 +32,7 @@ export interface SuggestionListProps {
   /**
    * 当用户选中某一项后的回调函数 (由 Tiptap 自动生成并传入)
    */
-  onSelect: (item: SuggestionItem) => void;
+  command: (item: SuggestionItem) => void;
 }
 
 /**

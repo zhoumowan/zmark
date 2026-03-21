@@ -11,7 +11,10 @@ export const renderItems = () => {
   return {
     onStart: (props: SuggestionProps) => {
       component = new ReactRenderer(SuggestionList, {
-        props,
+        props: {
+          items: props.items,
+          command: props.command,
+        },
         editor: props.editor,
       });
 
@@ -32,7 +35,10 @@ export const renderItems = () => {
     },
 
     onUpdate(props: SuggestionProps) {
-      component?.updateProps(props);
+      component?.updateProps({
+        items: props.items,
+        command: props.command,
+      });
 
       if (!props.clientRect) {
         return;
