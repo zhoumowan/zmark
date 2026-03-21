@@ -25,6 +25,7 @@ import {
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { useMenuBar } from "@/hooks";
 import { handleImageUpload } from "@/utils";
+import { CollaborationPopover } from "./collaboration-popover";
 import { HeadingPicker } from "./heading-picker";
 import { HighlightColorPicker } from "./highlight-picker";
 import { LinkPopover } from "./link-popover";
@@ -39,6 +40,8 @@ type MenuBarProps = {
   hasHeadings: boolean;
   isHistoryOpen: boolean;
   onToggleHistory: () => void;
+  // biome-ignore lint/suspicious/noExplicitAny: <WebrtcProvider type is complex and not fully exported>
+  provider?: any;
 };
 
 export const MenuBar = ({
@@ -48,6 +51,7 @@ export const MenuBar = ({
   hasHeadings,
   isHistoryOpen,
   onToggleHistory,
+  provider,
 }: MenuBarProps) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -230,6 +234,8 @@ export const MenuBar = ({
               onClick={onToggleHistory}
               isActive={isHistoryOpen}
             />
+
+            <CollaborationPopover provider={provider} />
           </TooltipProvider>
         </div>
       </div>
