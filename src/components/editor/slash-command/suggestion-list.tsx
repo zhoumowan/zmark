@@ -27,7 +27,7 @@ export const SuggestionList = forwardRef<
   const selectItem = (index: number) => {
     const item = editorContext.items[index];
     if (item) {
-      editorContext.onSelect(item);
+      editorContext.command(item);
     }
   };
 

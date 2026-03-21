@@ -1,1 +1,2 @@
-pnpm check
+#!/usr/bin/env sh
+biome check

@@ -21,8 +21,8 @@ export const useKeyDisplay = () => {
     italic: formatShortcut(["Mod", "I"]),
     code: formatShortcut(["Mod", "E"]),
     highlight: formatShortcut(["Mod", "Shift", "H"]),
-    superscript: formatShortcut(["Mod", "."]),
-    subscript: formatShortcut(["Mod", ","]),
+    superscript: formatShortcut(["Mod", "Shift", "."]),
+    subscript: formatShortcut(["Mod", "Shift", ","]),
     undo: formatShortcut(["Mod", "Z"]),
     redo: isMac
       ? formatShortcut(["Mod", "Shift", "Z"])

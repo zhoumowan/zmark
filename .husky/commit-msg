@@ -1,1 +1,2 @@
+#!/usr/bin/env sh
 node scripts/verify-commit.js "$1"
