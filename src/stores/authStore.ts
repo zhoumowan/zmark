@@ -72,9 +72,9 @@ export const useAuthStore = create<AuthState>((set) => ({
 
   logout: async () => {
     // 开发环境模拟登出
-    if (import.meta.env.DEV) {
-      return;
-    }
+    // if (import.meta.env.DEV) {
+    //   return;
+    // }
 
     set({ loading: true, error: null });
     try {
@@ -94,41 +94,41 @@ export const useAuthStore = create<AuthState>((set) => ({
 
   initialize: async () => {
     // 开发环境直接模拟已登录状态
-    if (import.meta.env.DEV) {
-      const mockUser: UserProfile = {
-        id: "dev-user-id",
-        email: "dev@example.com",
-        name: "Developer",
-        avatar_url: "https://github.com/shadcn.png",
-        user_name: "dev_user",
-      };
+    // if (import.meta.env.DEV) {
+    //   const mockUser: UserProfile = {
+    //     id: "dev-user-id",
+    //     email: "dev@example.com",
+    //     name: "Developer",
+    //     avatar_url: "https://github.com/shadcn.png",
+    //     user_name: "dev_user",
+    //   };
 
-      // 构造一个模拟的 Session 对象
-      const mockSession = {
-        access_token: "mock-token",
-        refresh_token: "mock-refresh-token",
-        expires_in: 3600,
-        token_type: "bearer",
-        user: {
-          id: mockUser.id,
-          app_metadata: {},
-          user_metadata: {
-            full_name: mockUser.name,
-            avatar_url: mockUser.avatar_url,
-            preferred_username: mockUser.user_name,
-          },
-          aud: "authenticated",
-          created_at: new Date().toISOString(),
-        } as User,
-      } as Session;
+    //   // 构造一个模拟的 Session 对象
+    //   const mockSession = {
+    //     access_token: "mock-token",
+    //     refresh_token: "mock-refresh-token",
+    //     expires_in: 3600,
+    //     token_type: "bearer",
+    //     user: {
+    //       id: mockUser.id,
+    //       app_metadata: {},
+    //       user_metadata: {
+    //         full_name: mockUser.name,
+    //         avatar_url: mockUser.avatar_url,
+    //         preferred_username: mockUser.user_name,
+    //       },
+    //       aud: "authenticated",
+    //       created_at: new Date().toISOString(),
+    //     } as User,
+    //   } as Session;
 
-      set({
-        session: mockSession,
-        user: mockUser,
-        isInitializing: false,
-      });
-      return;
-    }
+    //   set({
+    //     session: mockSession,
+    //     user: mockUser,
+    //     isInitializing: false,
+    //   });
+    //   return;
+    // }
 
     // 1. 获取初始 Session
     try {
