@@ -211,7 +211,7 @@ pub async fn chat(
         .map_err(|e: anyhow::Error| e.to_string())?;
 
     let question_embedding = question_embeddings
-        .get(0)
+        .first()
         .ok_or("Failed to get question embedding")?
         .clone();
 
@@ -309,8 +309,7 @@ pub async fn chat(
         let text = String::from_utf8_lossy(&chunk);
 
         for line in text.lines() {
-            if line.starts_with("data: ") {
-                let data = &line[6..];
+            if let Some(data) = line.strip_prefix("data: ") {
                 if data == "[DONE]" {
                     window
                         .emit("chat-done", "")
