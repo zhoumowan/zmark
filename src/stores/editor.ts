@@ -3,22 +3,29 @@ import type { Editor } from "@tiptap/core";
 import type { EditorStateSnapshot } from "@tiptap/react";
 import { create } from "zustand";
 
-interface IEditorStore {
+interface EditorState {
   content: string;
   setContent: (content: string) => void;
   curPath: string;
-  setCurPath: (curPath: string) => void;
+  setCurPath: (path: string) => void;
   previewPath: string;
-  setPreviewPath: (previewPath: string) => void;
+  setPreviewPath: (path: string) => void;
+
+  // 新增：协作房间状态
+  roomName: string | null;
+  setRoomName: (roomName: string | null) => void;
 }
 
-export const useEditorStore = create<IEditorStore>((set) => ({
+export const useEditorStore = create<EditorState>((set) => ({
   content: "",
-  setContent: (content: string) => set({ content }),
+  setContent: (content) => set({ content }),
   curPath: "",
-  setCurPath: (curPath: string) => set({ curPath }),
+  setCurPath: (curPath) => set({ curPath }),
   previewPath: "",
-  setPreviewPath: (previewPath: string) => set({ previewPath }),
+  setPreviewPath: (previewPath) => set({ previewPath }),
+
+  roomName: null,
+  setRoomName: (roomName) => set({ roomName }),
 }));
 
 /**
