@@ -18,7 +18,7 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { useSaveShortcut, useTableOfContents } from "@/hooks";
-import { useCollabStore, useEditorStore } from "@/stores";
+import { useAuthStore, useCollabStore, useEditorStore } from "@/stores";
 import type { EditorStorage } from "@/types/editor.ts";
 import {
   addOrUpdateFile,
@@ -40,6 +40,7 @@ export default function Editor({
 }) {
   const { content, curPath: storeCurPath, activeCollabId } = useEditorStore();
   const { files } = useCollabStore();
+  const { user } = useAuthStore();
 
   const collabId = mode === "collab" ? activeCollabId : null;
   const curPath = mode === "editor" ? storeCurPath : "";
@@ -83,15 +84,25 @@ export default function Editor({
     };
   }, [ydoc, collabId]); // 添加 collabId 依赖
 
-  // 使用 useMemo 固定当前用户的随机身份
-  const userInfo = useMemo(
-    () => ({
-      name: `用户_${Math.floor(Math.random() * 1000)}`,
-      color: `#${Math.floor(Math.random() * 16777215)
+  const [userColor] = useState(
+    () =>
+      `#${Math.floor(Math.random() * 16777215)
         .toString(16)
         .padStart(6, "0")}`,
+  );
+
+  const userDisplayName = useMemo(() => {
+    const email = user?.email?.trim();
+    if (email) return email.split("@")[0] || email;
+    return user?.user_name || user?.name || "用户";
+  }, [user?.email, user?.name, user?.user_name]);
+
+  const userInfo = useMemo(
+    () => ({
+      name: userDisplayName,
+      color: userColor,
     }),
-    [],
+    [userColor, userDisplayName],
   );
 
   // 动态计算 extensions，确保只有 provider 准备好时才注入 CollaborationCursor
