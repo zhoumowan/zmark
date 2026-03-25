@@ -1,10 +1,11 @@
-import { FileText, Library, Loader2, LogOut } from "lucide-react";
+import { FileText, Library, Loader2, LogOut, Users } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { SearchCommand } from "@/components/editor/search-command";
 import { getAllMarkdownFiles, indexFiles } from "@/utils";
 import { LoginButton } from "./components/auth/LoginButton";
 import { UserAvatar } from "./components/auth/UserAvatar";
+import { CollabSidebar } from "./components/collab/collab-sidebar";
 import { ThemeToggle } from "./components/common/theme-toggle";
 import Editor from "./components/editor";
 import { AppSidebar } from "./components/editor/sidebar";
@@ -18,8 +19,8 @@ import { ThemeProvider } from "./providers/theme-provider";
 import { useAuthStore, useEditorStore } from "./stores";
 
 const App = () => {
-  const { curPath } = useEditorStore();
-  const [mode, setMode] = useState<"editor" | "kb">("editor");
+  const { curPath, activeCollabId } = useEditorStore();
+  const [mode, setMode] = useState<"editor" | "kb" | "collab">("editor");
   const { initialize, isInitializing, session, logout } = useAuthStore();
   const loginBackgroundRef = useRef<HTMLDivElement | null>(null);
   const canvasNestRef = useRef<
@@ -107,6 +108,11 @@ const App = () => {
       icon: Library,
       title: "知识库",
     },
+    {
+      id: "collab",
+      icon: Users,
+      title: "协同编辑",
+    },
   ] as const;
 
   return (
@@ -172,14 +178,23 @@ const App = () => {
                 <div className="flex w-full h-full">
                   {mode === "editor" ? (
                     <AppSidebar style={{ left: "3rem" }} mode={mode} />
-                  ) : (
+                  ) : mode === "kb" ? (
                     <KbSidebar style={{ left: "3rem" }} mode={mode} />
+                  ) : (
+                    <CollabSidebar style={{ left: "3rem" }} />
                   )}
                   <div className="content flex-1 overflow-hidden relative">
-                    {mode === "editor" ? (
-                      <Editor key={curPath} />
-                    ) : (
+                    {mode === "kb" ? (
                       <ChatPanel />
+                    ) : (
+                      <Editor
+                        mode={mode}
+                        key={
+                          mode === "editor"
+                            ? curPath
+                            : activeCollabId || "collab"
+                        }
+                      />
                     )}
                   </div>
                 </div>

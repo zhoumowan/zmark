@@ -38,9 +38,7 @@ export const EmptyEditor = () => {
           className="text-muted-foreground/50"
         />
         <h2 className="mt-6 text-2xl font-bold">欢迎使用 zmark</h2>
-        <p className="mt-2 text-muted-foreground">
-          从左侧文件树选择一个文件开始编辑
-        </p>
+        <p className="mt-2 text-muted-foreground">从左侧选择一个文件开始编辑</p>
 
         <div className="mt-12 grid grid-cols-[auto_auto] justify-center gap-x-8 gap-y-4">
           {SHORTCUTS_CONFIG.map((item) => (
