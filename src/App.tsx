@@ -1,7 +1,15 @@
-import { FileText, Library, Loader2, LogOut, Users } from "lucide-react";
+import {
+  FileText,
+  Library,
+  Loader2,
+  LogOut,
+  Settings,
+  Users,
+} from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { SearchCommand } from "@/components/editor/search-command";
+import { AccountSettingsPage } from "@/components/settings";
 import { getAllMarkdownFiles, indexFiles } from "@/utils";
 import { LoginButton } from "./components/auth/LoginButton";
 import { UserAvatar } from "./components/auth/UserAvatar";
@@ -20,7 +28,9 @@ import { useAuthStore, useEditorStore } from "./stores";
 
 const App = () => {
   const { curPath, activeCollabId } = useEditorStore();
-  const [mode, setMode] = useState<"editor" | "kb" | "collab">("editor");
+  const [mode, setMode] = useState<"editor" | "kb" | "collab" | "settings">(
+    "editor",
+  );
   const { initialize, isInitializing, session, logout } = useAuthStore();
   const loginBackgroundRef = useRef<HTMLDivElement | null>(null);
   const canvasNestRef = useRef<
@@ -162,6 +172,14 @@ const App = () => {
                 <Button
                   variant="ghost"
                   size="icon-xs"
+                  onClick={() => setMode("settings")}
+                  title="设置"
+                >
+                  <Settings className="size-4" />
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="icon-xs"
                   onClick={handleLogout}
                   className="text-muted-foreground hover:text-red-500"
                   title="退出登录"
@@ -174,31 +192,35 @@ const App = () => {
 
             {/* 右侧内容区域 */}
             <div className="flex-1 flex overflow-hidden relative">
-              <SidebarProvider className="w-full h-full">
-                <div className="flex w-full h-full">
-                  {mode === "editor" ? (
-                    <AppSidebar style={{ left: "3rem" }} mode={mode} />
-                  ) : mode === "kb" ? (
-                    <KbSidebar style={{ left: "3rem" }} mode={mode} />
-                  ) : (
-                    <CollabSidebar style={{ left: "3rem" }} />
-                  )}
-                  <div className="content flex-1 overflow-hidden relative">
-                    {mode === "kb" ? (
-                      <ChatPanel />
+              {mode === "settings" ? (
+                <AccountSettingsPage />
+              ) : (
+                <SidebarProvider className="w-full h-full">
+                  <div className="flex w-full h-full">
+                    {mode === "editor" ? (
+                      <AppSidebar style={{ left: "3rem" }} mode={mode} />
+                    ) : mode === "kb" ? (
+                      <KbSidebar style={{ left: "3rem" }} mode={mode} />
                     ) : (
-                      <Editor
-                        mode={mode}
-                        key={
-                          mode === "editor"
-                            ? curPath
-                            : activeCollabId || "collab"
-                        }
-                      />
+                      <CollabSidebar style={{ left: "3rem" }} />
                     )}
+                    <div className="content flex-1 overflow-hidden relative">
+                      {mode === "kb" ? (
+                        <ChatPanel />
+                      ) : (
+                        <Editor
+                          mode={mode}
+                          key={
+                            mode === "editor"
+                              ? curPath
+                              : activeCollabId || "collab"
+                          }
+                        />
+                      )}
+                    </div>
                   </div>
-                </div>
-              </SidebarProvider>
+                </SidebarProvider>
+              )}
             </div>
           </div>
         )}
