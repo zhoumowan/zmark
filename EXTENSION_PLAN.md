@@ -16,16 +16,17 @@
 *   **功能描述**：多人在不同终端同时编辑同一份文档，光标位置实时同步，无冲突合并。
 *   **技术选型**： `https://yjs.dev/` (CRDT 算法) + `https://tiptap.dev/hocuspocus` (WebSocket 后端)。
 *   **任务列表**：
-    - [ ] **编辑器集成**：使用 Tiptap 的官方扩展 `@tiptap/extension-collaboration`。
-    - [ ] **通信层**：部署一个轻量级的 Node.js 服务作为协同中转站，或使用 P2P (WebRTC) 方案实现局域网协作。
-    - [ ] **光标同步**：通过 `@tiptap/extension-collaboration-cursor` 渲染其他用户的姓名 and 颜色光标。
+    - [x] **编辑器集成**：使用 Tiptap 的官方扩展 `@tiptap/extension-collaboration`。
+    - [x] **通信层**：接入 `@hocuspocus/provider`，通过 WebSocket (`VITE_COLLAB_URL`，默认 `ws://localhost:1234`) 同步协作文档。
+    - [x] **光标同步**：通过 `@tiptap/extension-collaboration-cursor` 渲染其他用户的姓名和颜色光标。
 
 ## 3. 文档版本历史 (Version Control)
 *   **功能描述**：记录文档的每一次重大修改，支持“一键回滚”到历史某个时刻。
-*   **技术选型**：本地 Git 引擎 或 自定义快照存储。
+*   **技术选型**：自定义快照存储（LocalStorage）+ `diff` 差异对比。
 *   **任务列表**：
-    - [ ] **Git 驱动**：利用 Tauri 的 `Command` API 调用本地 `git` 指令（`git commit`），将每个保存点作为一次提交。
-    - [ ] **差异对比**：使用 `https://github.com/kpdecker/jsdiff` 对两个版本的 JSON 树进行对比，并利用自定义 Tiptap Node 渲染差异。
+    - [x] **快照存储**：按文件路径保存版本快照到 LocalStorage（可在面板中保存新版本）。
+    - [x] **差异对比**：使用 `diff`（`diffLines`/`diffWords`）生成对比结果，并在版本面板中可视化展示。
+    - [ ] **Git 驱动（进阶）**：利用 Tauri 的 `Command` API 调用本地 `git` 指令（`git commit`），将每个保存点作为一次提交。
 
 ## 4. Notion 级交互体验 (Interactive UI)
 *   **功能描述**：支持 `/` 快捷指令菜单和选中文字后的浮动工具栏。
@@ -40,7 +41,7 @@
 *   **任务列表**：
     - [x] **Markdown**：利用现有的 `tiptap-markdown` 插件将编辑器 JSON 转换为标准 MD 字符串。
     - [ ] **PDF 导出**：渲染一个隐藏的、应用了打印样式的 HTML 容器，通过 `window.print()` 或 `html2canvas` + `jspdf` 生成 PDF 文件。
-    - [ ] **Tauri 通道**：通过 Tauri 的 `save` 对话框，让用户选择导出路径。
+    - [x] **Tauri 通道**：通过 Tauri 的 `save` 对话框，让用户选择导出路径并写入 Markdown 文件。
 
 ## 6. 智能目录导航 (Dynamic ToC)
 *   **功能描述**：实时提取文档标题生成大纲，点击目录自动平滑滚动到对应位置。
@@ -49,7 +50,7 @@
     - [x] **联动效果**：实现双向联动（滚动文档时侧边栏目录自动高亮，点击目录时文档滚动）。
 
 ## 7. 附件管理与离线资源 (Asset Management)
-*   **功能描述**：支持拖拽图片上传，并在本地建立 `.assets` 文件夹统一管理图片、附件。
+*   **功能描述**：支持图片上传，并在本地建立 `assets` 文件夹统一管理图片、附件。
 *   **任务列表**：
-    - [x] **本地化存储**：拦截图片插入动作，通过 Tauri 的 `fs` 插件将文件复制到项目根目录下的 `.assets` 文件夹。
-    - [ ] **相对路径解析**：在编辑器中动态转换资源路径，确保跨设备打开时图片不丢失。
+    - [x] **本地化存储**：拦截图片插入动作，通过 Tauri 的 `fs` 插件将文件保存到当前文档目录下的 `assets` 文件夹，并使用 `asset://` 协议预览。
+    - [x] **相对路径解析**：打开时将相对图片路径解析为 `asset://`；保存时将 `asset://`/绝对路径转换回相对路径，确保跨设备打开时图片不丢失。
