@@ -70,7 +70,9 @@ pub fn run() {
             commands::knowledge_base::add_document,
             commands::knowledge_base::list_documents,
             commands::knowledge_base::delete_document,
-            commands::knowledge_base::chat
+            commands::knowledge_base::chat,
+            commands::git::git_file_history,
+            commands::git::git_file_content
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

@@ -11,6 +11,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import {
+  type GitCommitVersion,
+  getGitVersionContent,
+  getGitVersions,
   getVersions,
   saveVersion,
   type Version,
@@ -142,7 +145,9 @@ export const VersionHistory = ({
   curPath,
   getContent,
 }: VersionHistoryProps) => {
-  const [versions, setVersions] = useState<Version[]>([]);
+  const [source, setSource] = useState<"git" | "local">("local");
+  const [localVersions, setLocalVersions] = useState<Version[]>([]);
+  const [gitVersions, setGitVersions] = useState<GitCommitVersion[]>([]);
   const [oldVersionId, setOldVersionId] = useState<string>("");
   const [newVersionId, setNewVersionId] = useState<string>("");
   const [diffResult, setDiffResult] = useState<DiffRow[] | null>(null);
@@ -151,27 +156,70 @@ export const VersionHistory = ({
     del: number;
     same: number;
   } | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    if (curPath) {
-      const loaded = getVersions(curPath);
-      setVersions(loaded);
-      if (loaded.length >= 2) {
-        setNewVersionId(loaded[0].id);
-        setOldVersionId(loaded[1].id);
-      } else if (loaded.length === 1) {
-        setNewVersionId(loaded[0].id);
-        setOldVersionId(loaded[0].id);
+    let cancelled = false;
+
+    const load = async () => {
+      if (!curPath) return;
+
+      setIsLoading(true);
+      setDiffResult(null);
+      setStats(null);
+
+      try {
+        const commits = await getGitVersions(curPath);
+        if (cancelled) return;
+
+        setSource("git");
+        setGitVersions(commits);
+
+        if (commits.length >= 2) {
+          setNewVersionId(commits[0].id);
+          setOldVersionId(commits[1].id);
+        } else if (commits.length === 1) {
+          setNewVersionId(commits[0].id);
+          setOldVersionId(commits[0].id);
+        } else {
+          setNewVersionId("");
+          setOldVersionId("");
+        }
+      } catch (_error) {
+        if (cancelled) return;
+
+        const loaded = getVersions(curPath);
+        setSource("local");
+        setLocalVersions(loaded);
+
+        if (loaded.length >= 2) {
+          setNewVersionId(loaded[0].id);
+          setOldVersionId(loaded[1].id);
+        } else if (loaded.length === 1) {
+          setNewVersionId(loaded[0].id);
+          setOldVersionId(loaded[0].id);
+        } else {
+          setNewVersionId("");
+          setOldVersionId("");
+        }
+      } finally {
+        if (!cancelled) setIsLoading(false);
       }
-    }
+    };
+
+    load();
+    return () => {
+      cancelled = true;
+    };
   }, [curPath]);
 
   const handleSaveVersion = () => {
+    if (source !== "local") return;
     try {
       const content = getContent();
       const newVer = saveVersion(curPath, content);
-      const newVersions = [newVer, ...versions];
-      setVersions(newVersions);
+      const newVersions = [newVer, ...localVersions];
+      setLocalVersions(newVersions);
       setNewVersionId(newVer.id);
       if (newVersions.length >= 2) {
         setOldVersionId(newVersions[1].id);
@@ -185,48 +233,86 @@ export const VersionHistory = ({
     }
   };
 
-  const runDiff = () => {
-    const oldData = versions.find((v) => v.id === oldVersionId);
-    const newData = versions.find((v) => v.id === newVersionId);
-
-    if (!oldData || !newData) {
+  const runDiff = async () => {
+    if (!oldVersionId || !newVersionId) {
       toast.error("请选择两个版本进行对比");
       return;
     }
 
-    const diff = computeDiff(oldData.content, newData.content);
+    try {
+      let oldLines: string[] = [];
+      let newLines: string[] = [];
 
-    let addCount = 0;
-    let delCount = 0;
-    let sameCount = 0;
+      if (source === "git") {
+        const [oldText, newText] = await Promise.all([
+          getGitVersionContent(curPath, oldVersionId),
+          getGitVersionContent(curPath, newVersionId),
+        ]);
+        oldLines = oldText.split("\n");
+        newLines = newText.split("\n");
+      } else {
+        const oldData = localVersions.find((v) => v.id === oldVersionId);
+        const newData = localVersions.find((v) => v.id === newVersionId);
 
-    diff.forEach((row) => {
-      if (row.type === "same") sameCount++;
-      else if (row.type === "add") addCount++;
-      else if (row.type === "del") delCount++;
-      else if (row.type === "change") {
-        addCount++;
-        delCount++;
+        if (!oldData || !newData) {
+          toast.error("请选择两个版本进行对比");
+          return;
+        }
+
+        oldLines = oldData.content;
+        newLines = newData.content;
       }
-    });
 
-    setDiffResult(diff);
-    setStats({ add: addCount, del: delCount, same: sameCount });
+      const diff = computeDiff(oldLines, newLines);
+
+      let addCount = 0;
+      let delCount = 0;
+      let sameCount = 0;
+
+      diff.forEach((row) => {
+        if (row.type === "same") sameCount++;
+        else if (row.type === "add") addCount++;
+        else if (row.type === "del") delCount++;
+        else if (row.type === "change") {
+          addCount++;
+          delCount++;
+        }
+      });
+
+      setDiffResult(diff);
+      setStats({ add: addCount, del: delCount, same: sameCount });
+    } catch (error) {
+      console.error(error);
+      toast.error(source === "git" ? "获取 Git 版本失败" : "生成对比失败");
+    }
   };
 
-  if (!versions.length) {
+  const versions = source === "git" ? gitVersions : localVersions;
+
+  if (isLoading && !versions.length) {
+    return (
+      <div className="flex flex-col h-full items-center justify-center text-muted-foreground p-6">
+        <History className="w-12 h-12 mb-4 opacity-20" />
+        <p className="mb-4">正在加载历史版本…</p>
+      </div>
+    );
+  }
+
+  if (!versions.length && !isLoading) {
     return (
       <div className="flex flex-col h-full items-center justify-center text-muted-foreground p-6">
         <History className="w-12 h-12 mb-4 opacity-20" />
         <p className="mb-4">暂无历史版本</p>
-        <button
-          type="button"
-          onClick={handleSaveVersion}
-          className="px-4 py-2 bg-primary text-primary-foreground! rounded-md text-sm font-medium flex items-center gap-2 hover:bg-primary/80! transition-colors"
-        >
-          <Save className="w-4 h-4" />
-          保存当前版本
-        </button>
+        {source === "local" && (
+          <button
+            type="button"
+            onClick={handleSaveVersion}
+            className="px-4 py-2 bg-primary text-primary-foreground! rounded-md text-sm font-medium flex items-center gap-2 hover:bg-primary/80! transition-colors"
+          >
+            <Save className="w-4 h-4" />
+            保存当前版本
+          </button>
+        )}
       </div>
     );
   }
@@ -248,14 +334,16 @@ export const VersionHistory = ({
               <GitCompare className="w-3.5 h-3.5" />
               生成对比
             </button>
-            <button
-              type="button"
-              onClick={handleSaveVersion}
-              className="px-3 py-1.5 bg-primary text-primary-foreground! rounded text-xs font-medium flex items-center gap-1.5 hover:bg-primary/80! transition-colors"
-            >
-              <Save className="w-3.5 h-3.5" />
-              保存新版本
-            </button>
+            {source === "local" && (
+              <button
+                type="button"
+                onClick={handleSaveVersion}
+                className="px-3 py-1.5 bg-primary text-primary-foreground! rounded text-xs font-medium flex items-center gap-1.5 hover:bg-primary/80! transition-colors"
+              >
+                <Save className="w-3.5 h-3.5" />
+                保存新版本
+              </button>
+            )}
           </div>
         </div>
 

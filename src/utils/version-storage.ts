@@ -1,8 +1,19 @@
+import { invoke } from "@tauri-apps/api/core";
+
 export interface Version {
   id: string;
   label: string;
   date: string;
   content: string[];
+  timestamp: number;
+}
+
+export interface GitCommitVersion {
+  id: string;
+  label: string;
+  date: string;
+  author: string;
+  message: string;
   timestamp: number;
 }
 
@@ -20,6 +31,42 @@ export const getVersions = (path: string): Version[] => {
     console.error("Failed to load versions", e);
     return [];
   }
+};
+
+export const getGitVersions = async (
+  path: string,
+  limit = 50,
+  skip = 0,
+): Promise<GitCommitVersion[]> => {
+  const commits = await invoke<
+    { id: string; author: string; message: string; timestamp: number }[]
+  >("git_file_history", { path, limit, skip });
+
+  return commits.map((c) => {
+    const date = new Date(c.timestamp * 1000).toLocaleString("zh-CN", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+    });
+    return {
+      id: c.id,
+      label: c.id.slice(0, 7),
+      date,
+      author: c.author,
+      message: c.message,
+      timestamp: c.timestamp * 1000,
+    };
+  });
+};
+
+export const getGitVersionContent = async (
+  path: string,
+  commitId: string,
+): Promise<string> => {
+  return await invoke<string>("git_file_content", { path, commit: commitId });
 };
 
 export const saveVersion = (
