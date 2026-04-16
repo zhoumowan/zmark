@@ -22,6 +22,7 @@
     "rlib",
     "rusqlite",
     "Shadcn",
+    "SILICONFLOW",
     "staticlib",
     "supabase",
     "tauri",

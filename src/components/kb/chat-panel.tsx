@@ -55,6 +55,9 @@ const ChatAvatar = ({ role }: { role: ChatRole }) => {
 };
 
 export const ChatPanel = () => {
+  const isEnvApiKeyConfigured = Boolean(
+    import.meta.env.VITE_SILICONFLOW_API_KEY?.trim(),
+  );
   const {
     messages,
     isStreaming,
@@ -151,11 +154,18 @@ export const ChatPanel = () => {
                   type="password"
                   placeholder="sk-..."
                   value={tempKey}
+                  disabled={isEnvApiKeyConfigured}
                   onChange={(e) => setTempKey(e.target.value)}
                 />
-                <p className="text-xs text-muted-foreground mt-2">
-                  Key 将保存在本地存储中。
-                </p>
+                {isEnvApiKeyConfigured ? (
+                  <p className="text-xs text-muted-foreground mt-2">
+                    当前使用环境变量中的 API Key，设置面板中的本地 Key 不生效。
+                  </p>
+                ) : (
+                  <p className="text-xs text-muted-foreground mt-2">
+                    Key 将保存在本地存储中。
+                  </p>
+                )}
               </div>
               <DialogFooter>
                 <Button
@@ -169,6 +179,7 @@ export const ChatPanel = () => {
                 </Button>
                 <Button
                   variant="secondary"
+                  disabled={isEnvApiKeyConfigured}
                   onClick={() => {
                     setApiKey(tempKey);
                     toast.success("API Key 已保存");

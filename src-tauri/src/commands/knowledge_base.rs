@@ -1,11 +1,11 @@
 use crate::db::get_db_conn;
-use anyhow::Result;
+use anyhow::{anyhow, Result};
 use byteorder::{LittleEndian, ReadBytesExt, WriteBytesExt};
 use futures_util::StreamExt;
 use reqwest::Client;
 use rusqlite::params;
 use serde::{Deserialize, Serialize};
-use serde_json::json;
+use serde_json::{json, Value};
 use std::io::Cursor;
 use std::time::{SystemTime, UNIX_EPOCH};
 use tauri::{AppHandle, Emitter, Window};
@@ -361,7 +361,23 @@ async fn get_embeddings(texts: &Vec<String>, api_key: &str) -> Result<Vec<Vec<f3
         .send()
         .await?;
 
-    let json: serde_json::Value = response.json().await?;
+    let status = response.status();
+    let body = response.text().await?;
+    if !status.is_success() {
+        return Err(anyhow!(
+            "SiliconFlow embedding 请求失败 ({}): {}",
+            status,
+            extract_api_error_message(&body)
+        ));
+    }
+
+    let json: Value = serde_json::from_str(&body).map_err(|error| {
+        anyhow!(
+            "SiliconFlow embedding 响应解析失败: {}. 原始响应: {}",
+            error,
+            body
+        )
+    })?;
     let mut embeddings = Vec::new();
     if let Some(data) = json["data"].as_array() {
         for item in data {
@@ -374,7 +390,27 @@ async fn get_embeddings(texts: &Vec<String>, api_key: &str) -> Result<Vec<Vec<f3
             }
         }
     }
+
+    if embeddings.is_empty() {
+        return Err(anyhow!(
+            "SiliconFlow embedding 响应中没有返回向量数据: {}",
+            extract_api_error_message(&body)
+        ));
+    }
+
     Ok(embeddings)
+}
+
+fn extract_api_error_message(body: &str) -> String {
+    serde_json::from_str::<Value>(body)
+        .ok()
+        .and_then(|json| {
+            json["error"]["message"]
+                .as_str()
+                .map(str::to_owned)
+                .or_else(|| json["message"].as_str().map(str::to_owned))
+        })
+        .unwrap_or_else(|| body.to_string())
 }
 
 fn f32_vec_to_blob(vec: &[f32]) -> Vec<u8> {

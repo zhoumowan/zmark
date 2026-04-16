@@ -10,6 +10,9 @@ import type {
   ThinkingProcess,
 } from "@/types/kb";
 
+const defaultApiKey = import.meta.env.VITE_SILICONFLOW_API_KEY?.trim() || "";
+const hasEnvApiKeyConfigured = defaultApiKey.length > 0;
+
 interface KbState {
   currentKbId: string | null;
   knowledgeBases: KnowledgeBase[];
@@ -41,9 +44,12 @@ export const useKbStore = create<KbState>()(
       documents: [],
       messages: [],
       isStreaming: false,
-      apiKey: "",
+      apiKey: defaultApiKey,
 
-      setApiKey: (apiKey) => set({ apiKey }),
+      setApiKey: (apiKey) =>
+        set({
+          apiKey: hasEnvApiKeyConfigured ? defaultApiKey : apiKey.trim(),
+        }),
 
       setCurrentKbId: (currentKbId) => {
         set({ currentKbId });
@@ -183,7 +189,20 @@ export const useKbStore = create<KbState>()(
     }),
     {
       name: "kb-storage",
-      partialize: (state) => ({ apiKey: state.apiKey }),
+      partialize: (state) =>
+        hasEnvApiKeyConfigured ? {} : { apiKey: state.apiKey.trim() },
+      merge: (persistedState, currentState) => {
+        const persistedApiKey = (
+          persistedState as Partial<KbState>
+        )?.apiKey?.trim();
+        const envApiKey = currentState.apiKey.trim();
+
+        return {
+          ...currentState,
+          ...(persistedState as Partial<KbState>),
+          apiKey: envApiKey || persistedApiKey || "",
+        };
+      },
     },
   ),
 );
