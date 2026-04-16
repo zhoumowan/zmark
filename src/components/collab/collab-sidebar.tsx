@@ -1,6 +1,7 @@
 import { Copy, FileText, Link, Plus, Trash2, Users } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
+import { TruncatedTooltip } from "@/components/common/truncated-tooltip";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -102,9 +103,9 @@ export function CollabSidebar({
                       role="button"
                       tabIndex={0}
                     >
-                      <div className="flex items-center gap-2 truncate">
+                      <div className="flex items-center gap-2 min-w-0">
                         <Users className="h-4 w-4 shrink-0" />
-                        <span className="truncate">{file.name}</span>
+                        <TruncatedTooltip content={file.name} />
                       </div>
                       <div className="flex items-center opacity-0 group-hover:opacity-100 transition-opacity">
                         <Tooltip>

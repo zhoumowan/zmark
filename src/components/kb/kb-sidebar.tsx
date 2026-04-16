@@ -1,8 +1,15 @@
 import { open } from "@tauri-apps/plugin-dialog";
 import { readTextFile } from "@tauri-apps/plugin-fs";
-import { FileText, Plus, Trash2, Upload } from "lucide-react";
+import { File, Plus, Trash2, Upload } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import { TruncatedTooltip } from "@/components/common/truncated-tooltip";
+import {
+  ContextMenu,
+  ContextMenuContent,
+  ContextMenuItem,
+  ContextMenuTrigger,
+} from "@/components/ui/context-menu";
 import {
   Dialog,
   DialogContent,
@@ -17,6 +24,8 @@ import {
   SidebarContent,
   SidebarGroup,
   SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import {
   Tooltip,
@@ -35,6 +44,9 @@ import {
   SelectValue,
 } from "../ui/select";
 
+const getDisplayFilename = (filename: string) =>
+  filename.split(/[/\\]/).pop() || filename;
+
 export function KbSidebar({
   mode,
   ...props
@@ -45,6 +57,7 @@ export function KbSidebar({
     documents,
     setCurrentKbId,
     fetchKnowledgeBases,
+    fetchDocuments,
     createKnowledgeBase,
     addDocument,
     deleteDocument,
@@ -56,6 +69,12 @@ export function KbSidebar({
   useEffect(() => {
     fetchKnowledgeBases();
   }, [fetchKnowledgeBases]);
+
+  useEffect(() => {
+    if (currentKbId) {
+      fetchDocuments(currentKbId);
+    }
+  }, [currentKbId, fetchDocuments]);
 
   const handleCreateKb = async () => {
     if (!newKbName.trim()) return;
@@ -80,7 +99,7 @@ export function KbSidebar({
       if (!selected || !Array.isArray(selected)) return;
 
       for (const filePath of selected) {
-        const filename = filePath.split("/").pop() || "unknown.md";
+        const filename = getDisplayFilename(filePath);
         const loadingToast = toast.loading(`正在处理 ${filename}...`);
         try {
           const text = await readTextFile(filePath);
@@ -136,30 +155,27 @@ export function KbSidebar({
             <ScrollArea className="flex-1">
               <SidebarMenu className="px-1">
                 {documents.map((doc: Document) => (
-                  <div
-                    key={doc.id}
-                    className="group flex items-center justify-between p-2 rounded-lg hover:bg-accent text-sm"
-                  >
-                    <div className="flex items-center gap-2 truncate">
-                      <FileText className="h-4 w-4 text-muted-foreground shrink-0" />
-                      <span className="truncate">{doc.filename}</span>
-                    </div>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <Button
-                          size="icon"
-                          variant="ghost"
-                          className="h-8 w-8 opacity-0 group-hover:opacity-100 transition-opacity"
+                  <SidebarMenuItem key={doc.id}>
+                    <ContextMenu>
+                      <ContextMenuTrigger asChild>
+                        <SidebarMenuButton>
+                          <File />
+                          <TruncatedTooltip
+                            content={getDisplayFilename(doc.filename)}
+                          />
+                        </SidebarMenuButton>
+                      </ContextMenuTrigger>
+                      <ContextMenuContent>
+                        <ContextMenuItem
                           onClick={() => deleteDocument(doc.id)}
+                          className="text-destructive focus:text-destructive"
                         >
-                          <Trash2 className="h-4 w-4 text-destructive" />
-                        </Button>
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p>删除文档</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  </div>
+                          <Trash2 className="mr-2 h-4 w-4" />
+                          删除
+                        </ContextMenuItem>
+                      </ContextMenuContent>
+                    </ContextMenu>
+                  </SidebarMenuItem>
                 ))}
                 {currentKbId && documents.length === 0 && (
                   <div className="text-center text-muted-foreground py-8 text-sm">

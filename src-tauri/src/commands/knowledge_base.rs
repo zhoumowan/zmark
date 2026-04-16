@@ -51,6 +51,12 @@ pub struct ThinkingProcess {
     pub retrieved_docs: Vec<RetrievedDocument>,
 }
 
+#[derive(Debug, Serialize, Deserialize, Clone)]
+pub struct ChatHistoryMessage {
+    pub role: String,
+    pub content: String,
+}
+
 #[tauri::command]
 pub async fn create_knowledge_base(
     app: AppHandle,
@@ -203,6 +209,7 @@ pub async fn chat(
     kb_id: String,
     question: String,
     api_key: String,
+    history: Vec<ChatHistoryMessage>,
     window: Window,
 ) -> std::result::Result<(), String> {
     // 1. 生成问题的 Embedding
@@ -286,17 +293,41 @@ pub async fn chat(
 
     // 3. 调用 Chat API
     let client = Client::new();
-    let prompt = format!(
-        "你是一个知识库问答助手。请根据以下参考内容回答用户的问题。\n如果参考内容中没有相关信息，请如实说明。\n\n参考内容：\n{}\n\n用户问题：{}",
-        context, question
-    );
+    let system_prompt =
+        "你是一个知识库问答助手。请优先根据当前检索到的参考内容回答用户问题，并结合已有对话上下文保持回答连贯。如果参考内容中没有相关信息，请明确说明。";
+    let mut messages = vec![json!({
+        "role": "system",
+        "content": system_prompt,
+    })];
+
+    if !context.trim().is_empty() {
+        messages.push(json!({
+            "role": "system",
+            "content": format!("当前问题可参考的知识库内容如下：\n{}", context),
+        }));
+    }
+
+    for message in history {
+        let role = message.role.trim();
+        if (role == "user" || role == "assistant") && !message.content.trim().is_empty() {
+            messages.push(json!({
+                "role": role,
+                "content": message.content,
+            }));
+        }
+    }
+
+    messages.push(json!({
+        "role": "user",
+        "content": question,
+    }));
 
     let response = client
         .post("https://api.siliconflow.cn/v1/chat/completions")
         .header("Authorization", format!("Bearer {}", api_key))
         .json(&json!({
             "model": "Qwen/Qwen2.5-7B-Instruct",
-            "messages": [{"role": "user", "content": prompt}],
+            "messages": messages,
             "stream": true
         }))
         .send()

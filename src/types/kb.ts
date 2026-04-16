@@ -29,3 +29,17 @@ export interface ChatMessage {
   content: string;
   thinking?: ThinkingProcess;
 }
+
+export interface ChatSession {
+  id: string;
+  kbId: string;
+  title: string;
+  createdAt: number;
+  updatedAt: number;
+  messages: ChatMessage[];
+}
+
+export interface ChatHistoryMessage {
+  role: ChatRole;
+  content: string;
+}

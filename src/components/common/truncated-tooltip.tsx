@@ -32,7 +32,7 @@ export const TruncatedTooltip = ({ content }: { content: TreeItem }) => {
         <TooltipTrigger asChild>
           <div className="truncate">{span}</div>
         </TooltipTrigger>
-        <TooltipContent side="right">
+        <TooltipContent>
           <p>{textContent}</p>
         </TooltipContent>
       </Tooltip>
