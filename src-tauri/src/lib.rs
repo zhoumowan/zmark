@@ -72,7 +72,8 @@ pub fn run() {
             commands::knowledge_base::delete_document,
             commands::knowledge_base::chat,
             commands::git::git_file_history,
-            commands::git::git_file_content
+            commands::git::git_file_content,
+            commands::runner::run_python
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

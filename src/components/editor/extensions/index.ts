@@ -1,6 +1,5 @@
 import { InputRule, markInputRule, markPasteRule } from "@tiptap/core";
 import BubbleMenu from "@tiptap/extension-bubble-menu";
-import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
 import Highlight, { inputRegex, pasteRegex } from "@tiptap/extension-highlight";
 import Image from "@tiptap/extension-image";
 import Link from "@tiptap/extension-link";
@@ -18,6 +17,7 @@ import {
   SlashCommand,
   slashSuggestion,
 } from "../slash-command/slash-extension";
+import { CodeBlock } from "./code-block";
 import { ZMarkContainer } from "./zmark-container";
 
 const lowlight = createLowlight(common);
@@ -71,7 +71,7 @@ export const extensions = [
   }).configure({
     multicolor: true,
   }),
-  CodeBlockLowlight.configure({
+  CodeBlock.configure({
     lowlight,
   }),
   Image.configure({
