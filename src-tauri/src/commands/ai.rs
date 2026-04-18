@@ -1,12 +1,10 @@
 use futures_util::StreamExt;
 use reqwest::Client;
-use serde::{Deserialize, Serialize};
 use serde_json::json;
-use tauri::{AppHandle, Emitter, Window};
+use tauri::{Emitter, Window};
 
 #[tauri::command]
 pub async fn ai_copilot(
-    app: AppHandle,
     prompt: String,
     content: String,
     api_key: String,

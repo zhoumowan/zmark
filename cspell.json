@@ -18,6 +18,7 @@
     "minisearch",
     "msvc",
     "Pilcrow",
+    "Qwen",
     "reqwest",
     "rlib",
     "rusqlite",
