@@ -6208,7 +6208,7 @@ dependencies = [
 
 [[package]]
 name = "zmark"
-version = "1.5.0"
+version = "1.6.2"
 dependencies = [
  "anyhow",
  "base64 0.22.1",
