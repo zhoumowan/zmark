@@ -65,6 +65,9 @@ importers:
       '@tiptap/extension-mathematics':
         specifier: ^3.20.1
         version: 3.20.1(@tiptap/core@3.20.1(@tiptap/pm@3.20.1))(@tiptap/pm@3.20.1)(katex@0.16.38)
+      '@tiptap/extension-mention':
+        specifier: 3.20.1
+        version: 3.20.1(@tiptap/core@3.20.1(@tiptap/pm@3.20.1))(@tiptap/pm@3.20.1)(@tiptap/suggestion@3.20.1(@tiptap/core@3.20.1(@tiptap/pm@3.20.1))(@tiptap/pm@3.20.1))
       '@tiptap/extension-subscript':
         specifier: ^3.20.1
         version: 3.20.1(@tiptap/core@3.20.1(@tiptap/pm@3.20.1))(@tiptap/pm@3.20.1)
@@ -2220,6 +2223,13 @@ packages:
       '@tiptap/core': ^3.20.1
       '@tiptap/pm': ^3.20.1
       katex: ^0.16.4
+
+  '@tiptap/extension-mention@3.20.1':
+    resolution: {integrity: sha512-KOGokj7oH1QpcM8P02V+o6wHsVE0g7XEtdIy2vtq2vlFE3npNNNFkMa8F8VWX6qyC+VeVrNU6SIzS5MFY2TORA==}
+    peerDependencies:
+      '@tiptap/core': ^3.20.1
+      '@tiptap/pm': ^3.20.1
+      '@tiptap/suggestion': ^3.20.1
 
   '@tiptap/extension-ordered-list@3.20.1':
     resolution: {integrity: sha512-Y+3Ad7OwAdagqdYwCnbqf7/to5ypD4NnUNHA0TXRCs7cAHRA8AdgPoIcGFpaaSpV86oosNU3yfeJouYeroffog==}
@@ -7062,6 +7072,12 @@ snapshots:
       '@tiptap/core': 3.20.1(@tiptap/pm@3.20.1)
       '@tiptap/pm': 3.20.1
       katex: 0.16.38
+
+  '@tiptap/extension-mention@3.20.1(@tiptap/core@3.20.1(@tiptap/pm@3.20.1))(@tiptap/pm@3.20.1)(@tiptap/suggestion@3.20.1(@tiptap/core@3.20.1(@tiptap/pm@3.20.1))(@tiptap/pm@3.20.1))':
+    dependencies:
+      '@tiptap/core': 3.20.1(@tiptap/pm@3.20.1)
+      '@tiptap/pm': 3.20.1
+      '@tiptap/suggestion': 3.20.1(@tiptap/core@3.20.1(@tiptap/pm@3.20.1))(@tiptap/pm@3.20.1)
 
   '@tiptap/extension-ordered-list@3.20.1(@tiptap/extension-list@3.20.1(@tiptap/core@3.20.1(@tiptap/pm@3.20.1))(@tiptap/pm@3.20.1))':
     dependencies:

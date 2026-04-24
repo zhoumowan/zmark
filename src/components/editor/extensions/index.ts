@@ -18,6 +18,7 @@ import {
   slashSuggestion,
 } from "../slash-command/slash-extension";
 import { CodeBlock } from "./code-block";
+import { Mention } from "./mention";
 import { ZMarkContainer } from "./zmark-container";
 
 const lowlight = createLowlight(common);
@@ -37,6 +38,7 @@ export const extensions = [
     codeBlock: false,
   }),
   ZMarkContainer,
+  Mention,
   Markdown.configure({ html: true, transformPastedText: true }),
   BubbleMenu,
   SlashCommand.configure({

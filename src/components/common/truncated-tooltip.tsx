@@ -1,43 +1,54 @@
-import { useLayoutEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import type { TreeItem } from "@/types/editor";
+import { cn } from "@/utils";
 
-export const TruncatedTooltip = ({ content }: { content: TreeItem }) => {
+export const TruncatedTooltip = ({
+  content,
+  className,
+  side,
+  sideOffset = 4,
+}: {
+  content: TreeItem;
+  className?: string;
+  side?: "top" | "right" | "bottom" | "left";
+  sideOffset?: number;
+}) => {
   const ref = useRef<HTMLSpanElement>(null);
-  const [isTruncated, setIsTruncated] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   const textContent =
     typeof content === "string" ? content : (content[0] as string);
 
-  useLayoutEffect(() => {
-    const element = ref.current;
-    if (element) {
-      setIsTruncated(element.scrollWidth > element.clientWidth);
+  const handleOpenChange = (open: boolean) => {
+    if (open) {
+      const element = ref.current;
+      if (element && element.scrollWidth > element.clientWidth) {
+        setIsOpen(true);
+      }
+    } else {
+      setIsOpen(false);
     }
-  }, []);
+  };
 
   const span = (
-    <span ref={ref} className="truncate h-8 leading-8">
+    <span ref={ref} className={cn("block w-full truncate", className)}>
       {textContent}
     </span>
   );
 
-  if (isTruncated) {
-    return (
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <div className="truncate">{span}</div>
-        </TooltipTrigger>
-        <TooltipContent>
-          <p>{textContent}</p>
-        </TooltipContent>
-      </Tooltip>
-    );
-  }
-
-  return span;
+  return (
+    <Tooltip open={isOpen} onOpenChange={handleOpenChange}>
+      <TooltipTrigger asChild>
+        <div className="flex-1 min-w-0">{span}</div>
+      </TooltipTrigger>
+      <TooltipContent side={side} sideOffset={sideOffset}>
+        <p>{textContent}</p>
+      </TooltipContent>
+    </Tooltip>
+  );
 };

@@ -35,6 +35,7 @@
     "@tiptap/extension-link": "^3.20.1",
     "@tiptap/extension-list": "^3.20.1",
     "@tiptap/extension-mathematics": "^3.20.1",
+    "@tiptap/extension-mention": "3.20.1",
     "@tiptap/extension-subscript": "^3.20.1",
     "@tiptap/extension-superscript": "^3.20.1",
     "@tiptap/extension-text-style": "^3.20.1",
