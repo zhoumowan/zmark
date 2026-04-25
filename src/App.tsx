@@ -45,6 +45,7 @@ const App = () => {
   }, [initialize]);
 
   useEffect(() => {
+    console.log("zmark initialized");
     // 启动时建立搜索索引
     const buildIndex = async () => {
       const [err, files] = await to(getAllMarkdownFiles());
