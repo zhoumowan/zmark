@@ -23,7 +23,7 @@ jobs:
           cache: 'pnpm'
 
       - name: Install pnpm
-        uses: pnpm/action-setup@v4
+        run: corepack enable && corepack prepare pnpm@latest --activate
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -60,14 +60,14 @@ jobs:
         with:
           ref: refs/tags/v${{ needs.release.outputs.version }}
 
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4
-
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 24
           cache: 'pnpm'
+
+      - name: Install pnpm
+        run: corepack enable && corepack prepare pnpm@latest --activate
 
       - name: Install Rust
         uses: dtolnay/rust-toolchain@stable
