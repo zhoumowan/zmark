@@ -1,3 +1,16 @@
+# [1.7.0](https://github.com/zhoumowan/zmark/compare/v1.6.2...v1.7.0) (2026-04-25)
+
+
+### Bug Fixes
+
+* 修复会话列表项的交互结构 ([9a11e8f](https://github.com/zhoumowan/zmark/commit/9a11e8fd353fe5f2f597f59cc4682634ff42ab9a))
+
+
+### Features
+
+* useAiCopilot 优化 ([c4cd3eb](https://github.com/zhoumowan/zmark/commit/c4cd3eb33172baf1699dec23ccbe17ff2db615b5))
+* 添加文档提及功能 ([bcf20d7](https://github.com/zhoumowan/zmark/commit/bcf20d78d007199ca708113ae78254732f02a1d1))
+* 添加系统托盘支持 ([3856d40](https://github.com/zhoumowan/zmark/commit/3856d4027c81cf98a3671c1487a94b4f2b854c16))
 
 ## [1.6.2](https://github.com/zhoumowan/zmark/compare/fa32f6b749e411351642683bf01e684f2986fb8b...v1.6.2) (2026-04-18)
 
