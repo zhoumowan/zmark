@@ -3,11 +3,11 @@ import { useEffect, useState } from "react";
 import * as Y from "yjs";
 import {
   base64ToUint8,
-  supabase,
-  TauriSqlitePersistence,
   toSync,
   uint8ToBase64,
 } from "@/utils";
+import { supabase } from "@/utils/supabase-client";
+import { TauriSqlitePersistence } from "@/utils/y-sqlite";
 
 export function useCollaboration(collabId: string | null) {
   const [ydoc] = useState(() => new Y.Doc());
@@ -25,7 +25,7 @@ export function useCollaboration(collabId: string | null) {
       ydoc,
     );
     return () => {
-      persistence.destroy();
+      void persistence.destroy();
     };
   }, [collabId, ydoc]);
 

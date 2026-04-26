@@ -13,75 +13,47 @@
     "fs:allow-document-read-recursive",
     {
       "identifier": "fs:allow-read-text-file",
-      "scope": ["*"]
+      "allow": [{ "path": "**" }]
     },
     {
       "identifier": "fs:allow-write-text-file",
-      "scope": ["*"]
+      "allow": [{ "path": "**" }]
     },
     {
       "identifier": "fs:allow-write-file",
-      "allow": [
-        {
-          "path": "$DOCUMENT/markdowns/**"
-        }
-      ]
+      "allow": [{ "path": "**" }]
     },
     {
       "identifier": "fs:allow-read-file",
-      "allow": [
-        {
-          "path": "$DOCUMENT/markdowns/**"
-        }
-      ]
+      "allow": [{ "path": "**" }]
     },
     {
       "identifier": "fs:allow-exists",
-      "allow": [
-        {
-          "path": "$DOCUMENT/markdowns/**"
-        }
-      ]
+      "allow": [{ "path": "**" }]
     },
     {
       "identifier": "fs:allow-mkdir",
-      "allow": [
-        {
-          "path": "$DOCUMENT/markdowns/**"
-        }
-      ]
+      "allow": [{ "path": "**" }]
     },
     {
       "identifier": "fs:allow-remove",
-      "allow": [
-        {
-          "path": "$DOCUMENT/markdowns/**"
-        }
-      ]
+      "allow": [{ "path": "**" }]
     },
     {
       "identifier": "fs:allow-rename",
-      "allow": [
-        {
-          "path": "$DOCUMENT/markdowns/**"
-        }
-      ]
+      "allow": [{ "path": "**" }]
     },
     {
       "identifier": "fs:allow-watch",
-      "allow": [{ "path": "$DOCUMENT/**/*" }]
+      "allow": [{ "path": "**" }]
     },
     {
       "identifier": "fs:allow-stat",
-      "allow": [
-        {
-          "path": "$DOCUMENT/markdowns/**"
-        }
-      ]
+      "allow": [{ "path": "**" }]
     },
     {
       "identifier": "fs:allow-unwatch",
-      "allow": [{ "path": "$DOCUMENT/**/*" }]
+      "allow": [{ "path": "**" }]
     }
   ]
 }

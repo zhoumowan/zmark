@@ -1,6 +1,6 @@
 import Database from "@tauri-apps/plugin-sql";
 import * as Y from "yjs";
-import { base64ToUint8, uint8ToBase64 } from "@/utils";
+import { base64ToUint8, uint8ToBase64 } from "./base64";
 
 export class TauriSqlitePersistence {
   private db: Database | null = null;
@@ -16,7 +16,7 @@ export class TauriSqlitePersistence {
     this.ydoc = ydoc;
 
     this.onUpdate = () => {
-      if (this.saveTimer) window.clearTimeout(this.saveTimer);
+      if (this.saveTimer !== null) window.clearTimeout(this.saveTimer);
       this.saveTimer = window.setTimeout(() => {
         this.flushSave();
       }, 1500);
@@ -73,13 +73,13 @@ export class TauriSqlitePersistence {
     }
   }
 
-  public destroy() {
-    this.destroyed = true;
-    if (this.saveTimer) {
+  public async destroy() {
+    if (this.saveTimer !== null) {
       window.clearTimeout(this.saveTimer);
       this.saveTimer = null;
     }
     this.ydoc.off("update", this.onUpdate);
-    this.flushSave();
+    await this.flushSave();
+    this.destroyed = true;
   }
 }

@@ -98,7 +98,8 @@ export default function Editor({
 
   // 恢复正常的显示逻辑
   const showEditor = curPath || collabId;
-  const isMdFile = Boolean(collabId) || curPath.endsWith(".md");
+  const isMdFile =
+    Boolean(collabId) || curPath.endsWith(".md") || curPath.endsWith(".zmark");
   const fileName = collabId
     ? `协作文档: ${currentFile?.name || "未知"}`
     : curPath?.split("/").pop() || curPath;
