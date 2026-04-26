@@ -6,3 +6,5 @@ export * from "./file";
 export * from "./search";
 export * from "./time";
 export * from "./version-storage";
+export * from "./supabase-client";
+export * from "./y-sqlite";
