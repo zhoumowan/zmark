@@ -1,3 +1,6 @@
+import { invoke } from "@tauri-apps/api/core";
+import { listen } from "@tauri-apps/api/event";
+import { readTextFile } from "@tauri-apps/plugin-fs";
 import {
   FileText,
   Library,
@@ -11,7 +14,11 @@ import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { SearchCommand } from "@/components/editor/search-command";
 import { AccountSettingsPage } from "@/components/settings";
-import { getAllMarkdownFiles, indexFiles } from "@/utils";
+import {
+  getAllMarkdownFiles,
+  indexFiles,
+  resolveMarkdownImages,
+} from "@/utils";
 import { to } from "@/utils/error-handler";
 import { minimizeToTray } from "@/utils/tray";
 import { LoginButton } from "./components/auth/LoginButton";
@@ -56,6 +63,46 @@ const App = () => {
       }
     };
     buildIndex();
+
+    // 监听文件关联打开
+    const handleFileOpen = async (filePath: string) => {
+      if (
+        !filePath ||
+        !(filePath.endsWith(".md") || filePath.endsWith(".zmark"))
+      )
+        return;
+      try {
+        const content = await readTextFile(filePath);
+        const resolvedContent = await resolveMarkdownImages(content, filePath);
+        useEditorStore.getState().setContent(resolvedContent);
+        useEditorStore.getState().setCurPath(filePath);
+        setMode("editor");
+      } catch (err) {
+        console.error("Failed to open file from args:", err);
+        toast.error("无法打开文件");
+      }
+    };
+
+    // 检查首次启动参数
+    invoke<string[]>("get_app_startup_args")
+      .then((args) => {
+        const fileArg = args.find(
+          (arg) => arg.endsWith(".md") || arg.endsWith(".zmark"),
+        );
+        if (fileArg) {
+          handleFileOpen(fileArg);
+        }
+      })
+      .catch(console.error);
+
+    // 监听运行时的打开请求 (如单实例)
+    const unlistenPromise = listen<string>("file-open-received", (event) => {
+      handleFileOpen(event.payload);
+    });
+
+    return () => {
+      unlistenPromise.then((f) => f());
+    };
   }, []);
 
   useEffect(() => {

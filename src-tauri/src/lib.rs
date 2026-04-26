@@ -25,6 +25,9 @@ pub fn run() {
                 println!("Deep link received in single-instance: {}", url);
                 // 发送 "deep-link-received" 事件给前端
                 let _ = app.emit("deep-link-received", url);
+            } else if let Some(file_arg) = argv.iter().find(|arg| arg.ends_with(".md") || arg.ends_with(".zmark")) {
+                println!("File open received in single-instance: {}", file_arg);
+                let _ = app.emit("file-open-received", file_arg);
             } else {
                 // 在 macOS 上，开发环境下有时候 url 不会在 argv 中直接传递，
                 // 而是通过系统事件触发，这里加个 fallback 日志方便排查
@@ -41,8 +44,10 @@ pub fn run() {
                 let _ = app.emit("deep-link-check", ());
             }
 
-            // 聚焦主窗口
+            // 显示并聚焦主窗口
             if let Some(window) = app.get_webview_window("main") {
+                let _ = window.show();
+                let _ = window.unminimize();
                 let _ = window.set_focus();
             }
         }))
@@ -117,6 +122,7 @@ pub fn run() {
             Ok(())
         })
         .invoke_handler(tauri::generate_handler![
+            commands::startup::get_app_startup_args,
             commands::knowledge_base::create_knowledge_base,
             commands::knowledge_base::list_knowledge_bases,
             commands::knowledge_base::add_document,
