@@ -106,6 +106,7 @@ export default function Editor({
     : curPath?.split("/").pop() || curPath;
   const [isTocOpen, setIsTocOpen] = useState(false);
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
+  const [isInlineFrontmatterOpen, setIsInlineFrontmatterOpen] = useState(false);
 
   const tocItems = useTableOfContents(editor);
 
@@ -123,14 +124,26 @@ export default function Editor({
                 hasHeadings={tocItems.length > 0}
                 isHistoryOpen={isHistoryOpen}
                 onToggleHistory={() => setIsHistoryOpen(!isHistoryOpen)}
+                isInlineFrontmatterOpen={isInlineFrontmatterOpen}
+                onToggleInlineFrontmatter={() =>
+                  setIsInlineFrontmatterOpen(!isInlineFrontmatterOpen)
+                }
               />
               <div className="flex flex-1 overflow-hidden relative">
                 <div className="flex-1 h-full overflow-y-auto no-scrollbar">
                   <div className="max-w-[800px] mx-auto">
-                    <div className="pt-8 px-6 sm:px-12">
-                      <FrontmatterPanel />
-                    </div>
-                    <div className="px-0 sm:px-6">
+                    {isInlineFrontmatterOpen && (
+                      <div className="pt-8 px-6 sm:px-12">
+                        <FrontmatterPanel />
+                      </div>
+                    )}
+                    <div
+                      className={
+                        isInlineFrontmatterOpen
+                          ? "px-0 sm:px-6"
+                          : "pt-8 px-0 sm:px-6"
+                      }
+                    >
                       <EditorContent editor={editor} />
                     </div>
                   </div>

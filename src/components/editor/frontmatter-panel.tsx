@@ -145,14 +145,17 @@ function PropertyRow({
   );
 }
 
-export function FrontmatterPanel() {
+export function FrontmatterPanel({ className }: { className?: string } = {}) {
   const { frontmatter, setFrontmatter, curPath } = useEditorStore();
   const [isAdding, setIsAdding] = useState(false);
   const [newPropKey, setNewPropKey] = useState("");
 
   if (!curPath) return null;
 
-  const entries = Object.entries(frontmatter || {});
+  const entries = Object.entries(frontmatter || {}) as [
+    string,
+    string | string[],
+  ][];
 
   const handleKeyChange = (oldKey: string, newKey: string) => {
     if (oldKey === newKey) return;
@@ -181,19 +184,23 @@ export function FrontmatterPanel() {
   };
 
   return (
-    <div className="mb-6 flex flex-col gap-1 pb-6 border-b border-border/40 text-sm">
+    <div
+      className={`flex flex-col gap-1 text-sm ${className ?? "mb-6 pb-6 border-b border-border/40"}`}
+    >
       {entries.length === 0 ? (
-        <div className="opacity-60 hover:opacity-100 transition-opacity">
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => setIsAdding(true)}
-            className="text-muted-foreground h-8 px-2"
-          >
-            <Plus className="w-4 h-4 mr-1" />
-            添加文档属性
-          </Button>
-        </div>
+        !isAdding && (
+          <div className="opacity-60 hover:opacity-100 transition-opacity">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setIsAdding(true)}
+              className="text-muted-foreground h-8 px-2"
+            >
+              <Plus className="w-4 h-4 mr-1" />
+              添加文档属性
+            </Button>
+          </div>
+        )
       ) : (
         <div className="flex flex-col gap-1">
           {entries.map(([key, value]) => (
@@ -206,17 +213,19 @@ export function FrontmatterPanel() {
               onDelete={() => handleDelete(key)}
             />
           ))}
-          <div className="mt-1">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setIsAdding(true)}
-              className="text-muted-foreground h-8 px-2"
-            >
-              <Plus className="w-4 h-4 mr-1" />
-              添加属性
-            </Button>
-          </div>
+          {!isAdding && (
+            <div className="mt-1">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setIsAdding(true)}
+                className="text-muted-foreground h-8 px-2"
+              >
+                <Plus className="w-4 h-4 mr-1" />
+                添加属性
+              </Button>
+            </div>
+          )}
         </div>
       )}
 

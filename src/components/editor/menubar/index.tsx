@@ -13,9 +13,10 @@ import {
   ListChecks,
   ListOrdered,
   ListTree,
+  Settings2,
   TableOfContents,
 } from "lucide-react";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { toast } from "sonner";
 import {
   Popover,
@@ -25,6 +26,7 @@ import {
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { useMenuBar } from "@/hooks";
 import { handleImageUpload, to } from "@/utils";
+import { FrontmatterPanel } from "../frontmatter-panel";
 import { HeadingPicker } from "./heading-picker";
 import { HighlightColorPicker } from "./highlight-picker";
 import { LinkPopover } from "./link-popover";
@@ -39,6 +41,8 @@ type MenuBarProps = {
   hasHeadings: boolean;
   isHistoryOpen: boolean;
   onToggleHistory: () => void;
+  isInlineFrontmatterOpen: boolean;
+  onToggleInlineFrontmatter: () => void;
 };
 
 export const MenuBar = ({
@@ -48,8 +52,11 @@ export const MenuBar = ({
   hasHeadings,
   isHistoryOpen,
   onToggleHistory,
+  isInlineFrontmatterOpen,
+  onToggleInlineFrontmatter,
 }: MenuBarProps) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [frontmatterPopoverOpen, setFrontmatterPopoverOpen] = useState(false);
 
   // 菜单栏图片按钮的点击回调，通过 ref 间接点击隐藏的 input
   const handleImageButtonClick = () => {
@@ -223,6 +230,42 @@ export const MenuBar = ({
               isActive={isTocOpen}
               isVisible={hasHeadings}
             />
+
+            <Popover
+              open={frontmatterPopoverOpen}
+              onOpenChange={setFrontmatterPopoverOpen}
+            >
+              <PopoverTrigger asChild>
+                <MenuButton
+                  icon={Settings2}
+                  label="文档属性"
+                  isActive={frontmatterPopoverOpen}
+                />
+              </PopoverTrigger>
+              <PopoverContent
+                className="w-[400px] p-4 max-h-[80vh] overflow-y-auto"
+                align="end"
+                side="bottom"
+              >
+                <div className="flex items-center justify-between mb-4 pb-2 border-b">
+                  <h3 className="font-semibold leading-none tracking-tight">
+                    文档属性
+                  </h3>
+                  <button
+                    type="button"
+                    onClick={onToggleInlineFrontmatter}
+                    className={`text-xs px-2 py-1 rounded-md transition-colors ${
+                      isInlineFrontmatterOpen
+                        ? "bg-primary/10 text-primary hover:bg-primary/20"
+                        : "bg-muted text-muted-foreground hover:bg-muted/80"
+                    }`}
+                  >
+                    {isInlineFrontmatterOpen ? "隐藏内联显示" : "在正文中显示"}
+                  </button>
+                </div>
+                <FrontmatterPanel className="" />
+              </PopoverContent>
+            </Popover>
 
             <MenuButton
               icon={History}
