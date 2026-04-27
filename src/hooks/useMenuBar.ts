@@ -1,6 +1,5 @@
 import type { Editor } from "@tiptap/core";
 import { useEditorState } from "@tiptap/react";
-import { useState } from "react";
 import {
   getHistoryActions,
   getInsertActions,
@@ -12,9 +11,6 @@ import { menuBarStateSelector } from "@/stores";
 
 export const useMenuBar = (editor: Editor, onImageUpload?: () => void) => {
   const { shortcuts } = useKeyDisplay();
-  const [highlightPopoverOpen, setHighlightPopoverOpen] = useState(false);
-  const [headingPopoverOpen, setHeadingPopoverOpen] = useState(false);
-  const [listPopoverOpen, setListPopoverOpen] = useState(false);
 
   const editorState = useEditorState({
     editor,
@@ -31,12 +27,6 @@ export const useMenuBar = (editor: Editor, onImageUpload?: () => void) => {
   };
 
   return {
-    highlightPopoverOpen,
-    setHighlightPopoverOpen,
-    headingPopoverOpen,
-    setHeadingPopoverOpen,
-    listPopoverOpen,
-    setListPopoverOpen,
     historyActions: getHistoryActions(actionParams),
     textActions: getTextActions(actionParams),
     listActions: getListActions(actionParams),
