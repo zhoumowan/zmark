@@ -1,6 +1,7 @@
 import Database from "@tauri-apps/plugin-sql";
 import * as Y from "yjs";
 import { base64ToUint8, uint8ToBase64 } from "./base64";
+import { logError } from "./log";
 
 export class TauriSqlitePersistence {
   private db: Database | null = null;
@@ -47,7 +48,7 @@ export class TauriSqlitePersistence {
           const yUpdateBase64 = result[0].y_update;
           Y.applyUpdate(this.ydoc, base64ToUint8(yUpdateBase64));
         } catch (e) {
-          console.error("Failed to apply update from SQLite", e);
+          logError("Failed to apply update from SQLite", e);
         }
       }
 
@@ -55,7 +56,7 @@ export class TauriSqlitePersistence {
       this.ydoc.emit("sync", [true, this.ydoc]);
       this.ydoc.on("update", this.onUpdate);
     } catch (e) {
-      console.error("Failed to init TauriSqlitePersistence", e);
+      logError("Failed to init TauriSqlitePersistence", e);
     }
   }
 
@@ -69,7 +70,7 @@ export class TauriSqlitePersistence {
         [this.collabId, base64],
       );
     } catch (e) {
-      console.error("Failed to save to SQLite", e);
+      logError("Failed to save to SQLite", e);
     }
   }
 

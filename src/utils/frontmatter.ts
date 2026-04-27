@@ -1,3 +1,5 @@
+import { logError } from "./log";
+
 export function parseMarkdown(fileContent: string) {
   try {
     const regex = /^---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/;
@@ -46,7 +48,7 @@ export function parseMarkdown(fileContent: string) {
 
     return { frontmatter, body };
   } catch (err) {
-    console.error("Failed to parse frontmatter:", err);
+    logError("Failed to parse frontmatter:", err);
     return { frontmatter: {}, body: fileContent };
   }
 }
@@ -73,7 +75,7 @@ export function stringifyMarkdown(
 
     return yamlStr + body;
   } catch (err) {
-    console.error("Failed to stringify frontmatter:", err);
+    logError("Failed to stringify frontmatter:", err);
     return body;
   }
 }

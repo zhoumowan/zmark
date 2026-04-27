@@ -5,6 +5,7 @@ import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
 import { useKbStore } from "@/stores/kb";
 import type { EditorStorage } from "@/types/editor";
+import { logError, logWarn } from "@/utils";
 
 export function useAiCopilot(editor: Editor | null) {
   const [isOpen, setIsOpen] = useState(false);
@@ -101,7 +102,7 @@ export function useAiCopilot(editor: Editor | null) {
         }
       }
     } catch (e) {
-      console.warn("Failed to serialize markdown, fallback to plain text", e);
+      logWarn("Failed to serialize markdown, fallback to plain text", e);
       textToProcess = editor.state.doc.textBetween(
         expandedRange.from,
         expandedRange.to,
@@ -182,7 +183,7 @@ export function useAiCopilot(editor: Editor | null) {
             ).markdown.parser.parse(accumulatedText);
           }
         } catch (e) {
-          console.warn("Failed to parse markdown, fallback to plain text", e);
+          logWarn("Failed to parse markdown, fallback to plain text", e);
         }
 
         editor
@@ -205,7 +206,7 @@ export function useAiCopilot(editor: Editor | null) {
         apiKey,
       });
     } catch (err) {
-      console.error(err);
+      logError(err);
       toast.error("AI 处理失败");
       setIsGenerating(false);
       unlistenStream();

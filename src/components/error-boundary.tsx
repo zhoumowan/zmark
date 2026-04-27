@@ -1,5 +1,6 @@
 import { Component, type ErrorInfo, type ReactNode } from "react";
 import { toast } from "sonner";
+import { logError } from "@/utils";
 
 interface Props {
   children?: ReactNode;
@@ -24,7 +25,7 @@ export class ErrorBoundary extends Component<Props, State> {
   }
 
   public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    console.error("Uncaught error:", error, errorInfo);
+    logError("Uncaught error:", error, errorInfo);
 
     if (this.props.onError) {
       this.props.onError(error, errorInfo);

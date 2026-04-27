@@ -27,6 +27,7 @@ import type { TreeItem } from "@/types/editor";
 import {
   deleteFileOrDir,
   getTreeKey,
+  logError,
   renameFileOrDir,
   resolveMarkdownImages,
   to,
@@ -95,7 +96,7 @@ export const Tree = (props: ITreeProps) => {
 
     const [err, newPath] = await to(renameFileOrDir(fullPath, finalName));
     if (err) {
-      console.error(err);
+      logError(err);
       toast.error("重命名失败");
       return;
     }
@@ -124,7 +125,7 @@ export const Tree = (props: ITreeProps) => {
     if (confirmed) {
       const [err] = await to(deleteFileOrDir(fullPath));
       if (err) {
-        console.error(err);
+        logError(err);
         toast.error("删除失败");
         return;
       }

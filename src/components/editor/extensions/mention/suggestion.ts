@@ -7,7 +7,7 @@ import tippy, {
 } from "tippy.js";
 import { useEditorStore } from "@/stores/editor";
 import { getAllMarkdownFiles } from "@/utils";
-import { MentionList } from "./mention-list";
+import { MentionList, type MentionListHandle } from "./mention-list";
 
 export const getMentionSuggestion = (): Omit<
   SuggestionOptions,
@@ -76,8 +76,8 @@ export const getMentionSuggestion = (): Omit<
           return true;
         }
 
-        // biome-ignore lint/suspicious/noExplicitAny: Required for React component ref access
-        return (component?.ref as any)?.onKeyDown(props);
+        const ref = component?.ref as unknown as MentionListHandle | null;
+        return ref?.onKeyDown(props) ?? false;
       },
 
       onExit() {

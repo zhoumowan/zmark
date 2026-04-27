@@ -5,7 +5,12 @@ import { toast } from "sonner";
 import { useEditorStore } from "@/stores";
 import type { CollabFile } from "@/stores/collab";
 import type { EditorStorage } from "@/types/editor";
-import { addOrUpdateFile, to, unresolveMarkdownImages } from "@/utils";
+import {
+  addOrUpdateFile,
+  logError,
+  to,
+  unresolveMarkdownImages,
+} from "@/utils";
 import { stringifyMarkdown } from "@/utils/frontmatter";
 
 interface UseEditorSaveProps {
@@ -39,7 +44,7 @@ export function useEditorSave({
       );
 
       if (dialogErr) {
-        console.error("Save dialog failed:", dialogErr);
+        logError("Save dialog failed:", dialogErr);
         toast.error("弹出保存对话框失败");
         return;
       }

@@ -19,6 +19,7 @@ import { useEditorStore } from "@/stores/editor";
 import type { TreeItem } from "@/types/editor";
 import type { FileContent } from "@/types/search";
 import { to } from "./error-handler";
+import { logError } from "./log";
 import { addOrUpdateFile, removeFile as removeSearchIndex } from "./search";
 
 /**
@@ -69,7 +70,7 @@ export function getTreeKey(item: TreeItem) {
 export async function isDir(path: string) {
   const [err, fileStat] = await to(stat(path));
   if (err) {
-    console.error("Error checking if path is directory:", err);
+    logError("Error checking if path is directory:", err);
     return false;
   }
   return fileStat?.isDirectory ?? false;
@@ -173,7 +174,7 @@ async function readAllMarkdownFiles(dirPath: string): Promise<FileContent[]> {
     if (entry.isFile && name.endsWith(".md")) {
       const [err, content] = await to(readTextFile(fullPath));
       if (err) {
-        console.error(`Failed to read file ${fullPath}`, err);
+        logError(`Failed to read file ${fullPath}`, err);
       } else if (content !== undefined) {
         files.push({
           path: fullPath,
@@ -223,14 +224,14 @@ export async function resolveMarkdownImages(
     // 解析相对路径为绝对路径
     const [err, absolutePath] = await to(join(docDir, src));
     if (err) {
-      console.error(`Failed to resolve image path: ${src}`, err);
+      logError(`Failed to resolve image path: ${src}`, err);
       continue;
     }
 
     // 检查文件是否存在
     const [existErr, isExist] = await to(exists(absolutePath as string));
     if (existErr) {
-      console.error(`Failed to check image existence: ${src}`, existErr);
+      logError(`Failed to check image existence: ${src}`, existErr);
       continue;
     }
 
@@ -325,7 +326,7 @@ export async function deleteFileOrDir(path: string) {
   const [err] = await to(remove(path, { recursive: true }));
 
   if (err) {
-    console.error("Failed to delete:", err);
+    logError("Failed to delete:", err);
     throw err;
   }
 
@@ -346,7 +347,7 @@ export async function renameFileOrDir(oldPath: string, newName: string) {
 
   const [renameErr] = await to(rename(oldPath, newPath));
   if (renameErr) {
-    console.error("Failed to rename:", renameErr);
+    logError("Failed to rename:", renameErr);
     throw renameErr;
   }
 
@@ -359,7 +360,7 @@ export async function renameFileOrDir(oldPath: string, newName: string) {
   if (isFile) {
     const [readErr, content] = await to(readTextFile(newPath));
     if (readErr) {
-      console.error("Failed to re-index renamed file:", readErr);
+      logError("Failed to re-index renamed file:", readErr);
     } else if (content !== undefined) {
       addOrUpdateFile({
         path: newPath,

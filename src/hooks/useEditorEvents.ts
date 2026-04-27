@@ -1,12 +1,11 @@
 import { openUrl } from "@tauri-apps/plugin-opener";
 import type { Editor } from "@tiptap/core";
 import { toast } from "sonner";
-import { handleImageUpload, to } from "@/utils";
+import { handleImageUpload, logError, to } from "@/utils";
 
 export function useEditorEvents() {
   return {
-    // biome-ignore lint/suspicious/noExplicitAny: <tiptap 类型就是any 所以项目也不限制了>
-    click: (_: any, event: MouseEvent) => {
+    click: (_view: Editor["view"], event: MouseEvent) => {
       const target = event.target as HTMLElement;
       const anchor = target.closest("a");
       if (anchor) {
@@ -17,7 +16,7 @@ export function useEditorEvents() {
           if (metaKey || ctrlKey) {
             to(openUrl(href)).then(([err]) => {
               if (err) {
-                console.error("Failed to open URL:", err);
+                logError("Failed to open URL:", err);
                 toast.error("无法打开链接");
               }
             });
@@ -40,7 +39,7 @@ export function useEditorEvents() {
         if (file) {
           to(handleImageUpload(file)).then(([err, url]) => {
             if (err) {
-              console.error("Image upload failed:", err);
+              logError("Image upload failed:", err);
               const errorMessage = err.message || String(err);
               toast.error(`图片上传失败: ${errorMessage}`);
             } else if (url) {

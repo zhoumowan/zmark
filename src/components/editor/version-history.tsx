@@ -15,6 +15,7 @@ import {
   getGitVersionContent,
   getGitVersions,
   getVersions,
+  logError,
   saveVersion,
   to,
   toSync,
@@ -221,7 +222,7 @@ export const VersionHistory = ({
     });
 
     if (err) {
-      console.error(err);
+      logError(err);
       toast.error("保存版本失败");
       return;
     }
@@ -277,7 +278,7 @@ export const VersionHistory = ({
 
     const [diffErr, diff] = toSync(() => computeDiff(oldLines, newLines));
     if (diffErr) {
-      console.error(diffErr);
+      logError(diffErr);
       toast.error("对比计算失败");
       return;
     }

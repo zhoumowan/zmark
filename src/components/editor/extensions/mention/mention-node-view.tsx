@@ -2,7 +2,7 @@ import { readTextFile } from "@tauri-apps/plugin-fs";
 import { type NodeViewProps, NodeViewWrapper } from "@tiptap/react";
 import { File } from "lucide-react";
 import { useEditorStore } from "@/stores/editor";
-import { resolveMarkdownImages, to } from "@/utils";
+import { logError, resolveMarkdownImages, to } from "@/utils";
 import { parseMarkdown } from "@/utils/frontmatter";
 
 export const MentionNodeView = (props: NodeViewProps) => {
@@ -15,23 +15,22 @@ export const MentionNodeView = (props: NodeViewProps) => {
   const handleClick = async () => {
     if (!id) return;
 
-    let frontmatter = {};
-    const [err, content] = await to(
-      readTextFile(id).then((text) => {
+    const [err, result] = await to(
+      readTextFile(id).then(async (text) => {
         const parsed = parseMarkdown(text);
-        frontmatter = parsed.frontmatter;
-        return resolveMarkdownImages(parsed.body, id);
+        const content = await resolveMarkdownImages(parsed.body, id);
+        return { frontmatter: parsed.frontmatter, content };
       }),
     );
 
     if (err) {
-      console.error("Failed to read file:", err);
+      logError("Failed to read file:", err);
       return;
     }
 
-    if (content !== undefined) {
-      setFrontmatter(frontmatter);
-      setContent(content);
+    if (result?.content !== undefined) {
+      setFrontmatter(result.frontmatter);
+      setContent(result.content);
       setCurPath(id);
     }
   };

@@ -1,5 +1,6 @@
 import { invoke } from "@tauri-apps/api/core";
 import { toSync } from "./error-handler";
+import { logDebug, logError } from "./log";
 
 export interface Version {
   id: string;
@@ -25,10 +26,10 @@ export const getVersions = (path: string): Version[] => {
   const key = `${STORAGE_PREFIX}${path}`;
   const stored = localStorage.getItem(key);
   if (!stored) return [];
-  console.log("Loaded versions:", stored);
+  logDebug("Loaded versions:", stored);
   const [err, parsed] = toSync<Version[]>(() => JSON.parse(stored));
   if (err) {
-    console.error("Failed to load versions", err);
+    logError("Failed to load versions", err);
     return [];
   }
   return parsed as Version[];
@@ -107,7 +108,7 @@ export const saveVersion = (
   });
 
   if (err) {
-    console.error("Failed to save version", err);
+    logError("Failed to save version", err);
     throw err;
   }
 

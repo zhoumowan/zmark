@@ -1,6 +1,7 @@
 import type { SearchResult } from "minisearch";
 import type { FileContent, SearchAction, SearchResponse } from "@/types/search";
 import { safeExecute } from "./error-handler";
+import { logError } from "./log";
 import SearchWorker from "./search.worker?worker";
 
 // 创建 Worker 实例
@@ -32,7 +33,7 @@ worker.onmessage = (e: MessageEvent<SearchResponse>) => {
       break;
     }
     case "ERROR": {
-      console.error("Search worker error:", response.payload);
+      logError("Search worker error:", response.payload);
       break;
     }
   }
@@ -52,7 +53,7 @@ function notifyListeners() {
   [...listeners].forEach(
     safeExecute(
       async (listener) => listener(),
-      (error) => console.error("Error in search listener:", error),
+      (error) => logError("Error in search listener:", error),
     ),
   );
 }

@@ -11,7 +11,13 @@ import {
   CommandList,
 } from "@/components/ui/command";
 import { useEditorStore, useSearchStore } from "@/stores";
-import { resolveMarkdownImages, search, subscribeToSearch, to } from "@/utils";
+import {
+  logError,
+  resolveMarkdownImages,
+  search,
+  subscribeToSearch,
+  to,
+} from "@/utils";
 import { parseMarkdown } from "@/utils/frontmatter";
 
 export function SearchCommand() {
@@ -58,28 +64,31 @@ export function SearchCommand() {
   }, [query]);
 
   const handleSelect = async (path: string) => {
-    let frontmatter = {};
-    const [err, resolvedContent] = await to(
-      readTextFile(path).then((content) => {
+    const [err, result] = await to(
+      readTextFile(path).then(async (content) => {
         const parsed = parseMarkdown(content);
-        frontmatter = parsed.frontmatter;
-        return resolveMarkdownImages(parsed.body, path);
+        const resolvedContent = await resolveMarkdownImages(parsed.body, path);
+        return { frontmatter: parsed.frontmatter, resolvedContent };
       }),
     );
     if (err) {
-      console.error("Failed to read file:", err);
+      logError("Failed to read file:", err);
       return;
     }
 
-    if (resolvedContent !== undefined) {
-      setFrontmatter(frontmatter);
-      setContent(resolvedContent);
+    if (result?.resolvedContent !== undefined) {
+      setFrontmatter(result.frontmatter);
+      setContent(result.resolvedContent);
       setCurPath(path);
       setIsOpen(false);
     }
   };
 
   // 辅助函数：截取匹配内容片段并高亮
+  const escapeRegExp = (s: string) => {
+    return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  };
+
   const renderHighlightedSnippet = (content: string, query: string) => {
     if (!content || !query) return null;
 
@@ -104,7 +113,7 @@ export function SearchCommand() {
       (end < content.length ? "..." : "");
 
     // 简单的关键词高亮处理
-    const parts = snippet.split(new RegExp(`(${query})`, "gi"));
+    const parts = snippet.split(new RegExp(`(${escapeRegExp(query)})`, "gi"));
 
     return (
       <span>

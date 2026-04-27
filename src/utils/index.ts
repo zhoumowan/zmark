@@ -3,6 +3,7 @@ export * from "./base64";
 export { cn } from "./classname";
 export * from "./error-handler";
 export * from "./file";
+export * from "./log";
 export * from "./search";
 export * from "./supabase-client";
 export * from "./time";

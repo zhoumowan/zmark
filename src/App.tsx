@@ -20,6 +20,8 @@ import { AccountSettingsPage } from "@/components/settings";
 import {
   getAllMarkdownFiles,
   indexFiles,
+  logDebug,
+  logError,
   resolveMarkdownImages,
   to,
 } from "@/utils";
@@ -65,22 +67,22 @@ const MainApp = () => {
           }
         });
       } catch (err) {
-        console.error("Failed to register global shortcut:", err);
+        logError("Failed to register global shortcut:", err);
       }
     };
     registerShortcut();
     return () => {
-      unregisterAll().catch(console.error);
+      unregisterAll().catch((err) => logError(err));
     };
   }, []);
 
   useEffect(() => {
-    console.log("zmark initialized");
+    logDebug("zmark initialized");
     // 启动时建立搜索索引
     const buildIndex = async () => {
       const [err, files] = await to(getAllMarkdownFiles());
       if (err) {
-        console.error("Failed to build search index:", err);
+        logError("Failed to build search index:", err);
       } else if (files) {
         indexFiles(files);
       }
@@ -103,7 +105,7 @@ const MainApp = () => {
         useEditorStore.getState().setCurPath(filePath);
         setMode("editor");
       } catch (err) {
-        console.error("Failed to open file from args:", err);
+        logError("Failed to open file from args:", err);
         toast.error("无法打开文件");
       }
     };
@@ -118,7 +120,7 @@ const MainApp = () => {
           handleFileOpen(fileArg);
         }
       })
-      .catch(console.error);
+      .catch((err) => logError(err));
 
     // 监听运行时的打开请求 (如单实例)
     const unlistenPromise = listen<string>("file-open-received", (event) => {

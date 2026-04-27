@@ -36,7 +36,7 @@ export const TruncatedTooltip = ({
   };
 
   const span = (
-    <span ref={ref} className={cn("block w-full truncate", className)}>
+    <span ref={ref} className={cn("block w-full truncate h-full", className)}>
       {textContent}
     </span>
   );
@@ -44,7 +44,7 @@ export const TruncatedTooltip = ({
   return (
     <Tooltip open={isOpen} onOpenChange={handleOpenChange}>
       <TooltipTrigger asChild>
-        <div className="flex-1 min-w-0">{span}</div>
+        <div className="flex-1 min-w-0 h-full">{span}</div>
       </TooltipTrigger>
       <TooltipContent side={side} sideOffset={sideOffset}>
         <p>{textContent}</p>

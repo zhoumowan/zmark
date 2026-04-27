@@ -90,7 +90,6 @@ function PropertyRow({
   onDelete: () => void;
 }) {
   const [editingKey, setEditingKey] = useState(propKey);
-  const [isFocused, setIsFocused] = useState(false);
 
   useEffect(() => {
     setEditingKey(propKey);
@@ -100,12 +99,7 @@ function PropertyRow({
     propKey.toLowerCase() === "tags" || propKey.toLowerCase() === "tag";
 
   return (
-    // biome-ignore lint/a11y/noStaticElementInteractions: <temp>
-    <div
-      className="group flex items-start gap-2 py-1 -mx-2 px-2 rounded-md hover:bg-muted/30 transition-colors"
-      onMouseEnter={() => setIsFocused(true)}
-      onMouseLeave={() => setIsFocused(false)}
-    >
+    <div className="group flex items-start gap-2 py-1 -mx-2 px-2 rounded-md hover:bg-muted/30 transition-colors">
       <div className="flex items-center text-muted-foreground gap-2 w-[140px] shrink-0 min-h-8">
         {getIconForKey(propKey)}
         <Input
@@ -136,7 +130,7 @@ function PropertyRow({
       <Button
         variant="ghost"
         size="icon"
-        className={`h-7 w-7 shrink-0 text-muted-foreground hover:text-destructive transition-opacity ${isFocused ? "opacity-100" : "opacity-0"}`}
+        className="h-7 w-7 shrink-0 text-muted-foreground hover:text-destructive transition-opacity opacity-0 group-hover:opacity-100 group-focus-within:opacity-100"
         onClick={onDelete}
       >
         <Trash2 className="w-4 h-4" />
@@ -152,32 +146,32 @@ export function FrontmatterPanel({ className }: { className?: string } = {}) {
 
   if (!curPath) return null;
 
-  const entries = Object.entries(frontmatter || {}) as [
+  const entries = Object.entries(frontmatter ?? {}) as [
     string,
     string | string[],
   ][];
 
   const handleKeyChange = (oldKey: string, newKey: string) => {
     if (oldKey === newKey) return;
-    const newFrontmatter = { ...frontmatter };
+    const newFrontmatter = { ...(frontmatter ?? {}) };
     newFrontmatter[newKey] = newFrontmatter[oldKey];
     delete newFrontmatter[oldKey];
     setFrontmatter(newFrontmatter);
   };
 
   const handleValueChange = (key: string, newValue: string | string[]) => {
-    setFrontmatter({ ...frontmatter, [key]: newValue });
+    setFrontmatter({ ...(frontmatter ?? {}), [key]: newValue });
   };
 
   const handleDelete = (key: string) => {
-    const newFrontmatter = { ...frontmatter };
+    const newFrontmatter = { ...(frontmatter ?? {}) };
     delete newFrontmatter[key];
     setFrontmatter(newFrontmatter);
   };
 
   const handleAddNew = () => {
     if (newPropKey.trim()) {
-      setFrontmatter({ ...frontmatter, [newPropKey.trim()]: "" });
+      setFrontmatter({ ...(frontmatter ?? {}), [newPropKey.trim()]: "" });
       setNewPropKey("");
       setIsAdding(false);
     }

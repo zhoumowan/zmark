@@ -16,6 +16,7 @@ import {
   getDataDir,
   getFileTree,
   getTreeKey,
+  logError,
   to,
 } from "@/utils";
 import { ActionButtons } from "./action-buttons";
@@ -71,7 +72,7 @@ export function AppSidebar({ mode, ...props }: ISidebarProps) {
       );
 
       if (err) {
-        console.error("Failed to setup file watcher:", err);
+        logError("Failed to setup file watcher:", err);
       } else if (unwatch) {
         unwatchRef.current = unwatch;
       }

@@ -11,7 +11,7 @@ import type {
   KnowledgeBase,
   ThinkingProcess,
 } from "@/types/kb";
-import { to } from "@/utils";
+import { logError, to } from "@/utils";
 
 const defaultApiKey = import.meta.env.VITE_SILICONFLOW_API_KEY?.trim() || "";
 const hasEnvApiKeyConfigured = defaultApiKey.length > 0;
@@ -129,7 +129,7 @@ export const useKbStore = create<KbState>()(
           invoke<KnowledgeBase[]>("list_knowledge_bases"),
         );
         if (err) {
-          console.error("Failed to fetch knowledge bases:", err);
+          logError("Failed to fetch knowledge bases:", err);
         } else {
           set({ knowledgeBases: kbs });
         }
@@ -140,7 +140,7 @@ export const useKbStore = create<KbState>()(
           invoke<Document[]>("list_documents", { kbId }),
         );
         if (err) {
-          console.error("Failed to fetch documents:", err);
+          logError("Failed to fetch documents:", err);
         } else {
           set({ documents: docs });
         }
@@ -153,7 +153,7 @@ export const useKbStore = create<KbState>()(
           }),
         );
         if (err) {
-          console.error("Failed to create knowledge base:", err);
+          logError("Failed to create knowledge base:", err);
           throw err;
         }
         if (newKb) {
@@ -176,7 +176,7 @@ export const useKbStore = create<KbState>()(
           }),
         );
         if (err) {
-          console.error("Failed to add document:", err);
+          logError("Failed to add document:", err);
           throw err;
         }
         if (newDoc) {
@@ -189,7 +189,7 @@ export const useKbStore = create<KbState>()(
       deleteDocument: async (docId) => {
         const [err] = await to(invoke("delete_document", { docId }));
         if (err) {
-          console.error("Failed to delete document:", err);
+          logError("Failed to delete document:", err);
           throw err;
         }
         set((state) => ({
@@ -386,7 +386,7 @@ export const useKbStore = create<KbState>()(
 
         const [err] = await to(setupListenersAndChat());
         if (err) {
-          console.error("Chat failed:", err);
+          logError("Chat failed:", err);
           set({ isStreaming: false });
           cleanupListeners();
           throw err;

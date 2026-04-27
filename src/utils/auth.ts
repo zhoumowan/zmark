@@ -3,6 +3,7 @@ import { listen, type UnlistenFn } from "@tauri-apps/api/event";
 import { onOpenUrl } from "@tauri-apps/plugin-deep-link";
 import { open } from "@tauri-apps/plugin-shell";
 import { to } from "./error-handler";
+import { logError } from "./log";
 import { supabase } from "./supabase-client";
 
 export interface AuthResult {
@@ -23,7 +24,7 @@ export function ensureAuthCallbackListener(options?: {
   let unlistenEvent: UnlistenFn | undefined;
 
   const handleError = (message: string) => {
-    console.error("[Auth] 回调处理失败:", message);
+    logError("[Auth] 回调处理失败:", message);
     options?.onError?.(message);
   };
 
@@ -95,7 +96,7 @@ export async function loginWithGitHub(): Promise<AuthResult> {
   );
 
   if (err) {
-    console.error("[Auth] 登录流程异常:", err);
+    logError("[Auth] 登录流程异常:", err);
     return {
       session: null,
       error: err instanceof Error ? err : new Error("登录过程中发生未知错误"),
@@ -103,7 +104,7 @@ export async function loginWithGitHub(): Promise<AuthResult> {
   }
 
   if (res?.error) {
-    console.error("[Auth] 获取认证 URL 失败:", res.error);
+    logError("[Auth] 获取认证 URL 失败:", res.error);
     return {
       session: null,
       error: new Error(`启动登录失败：${res.error.message}`),
@@ -111,7 +112,7 @@ export async function loginWithGitHub(): Promise<AuthResult> {
   }
 
   if (!res?.data?.url) {
-    console.error("[Auth] 未获取到 URL");
+    logError("[Auth] 未获取到 URL");
     return { session: null, error: new Error("未能获取到登录 URL") };
   }
 

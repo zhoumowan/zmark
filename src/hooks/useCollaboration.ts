@@ -1,7 +1,7 @@
 import { HocuspocusProvider } from "@hocuspocus/provider";
 import { useEffect, useState } from "react";
 import * as Y from "yjs";
-import { base64ToUint8, toSync, uint8ToBase64 } from "@/utils";
+import { base64ToUint8, logDebug, toSync, uint8ToBase64 } from "@/utils";
 import { supabase } from "@/utils/supabase-client";
 import { TauriSqlitePersistence } from "@/utils/y-sqlite";
 
@@ -111,7 +111,7 @@ export function useCollaboration(collabId: string | null) {
       onConnect() {},
       onSynced() {},
       onDisconnect() {
-        console.log("CRDT Disconnected");
+        logDebug("CRDT Disconnected");
       },
     });
 
