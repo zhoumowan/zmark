@@ -1,3 +1,10 @@
+# [1.13.0](https://github.com/zhoumowan/zmark/compare/v1.12.0...v1.13.0) (2026-04-27)
+
+
+### Features
+
+* 优化知识库创建和文档添加的用户体验 ([49a46da](https://github.com/zhoumowan/zmark/commit/49a46dadf871492a70d80beb7474f06d87e4620e))
+
 # [1.12.0](https://github.com/zhoumowan/zmark/compare/v1.11.0...v1.12.0) (2026-04-27)
 
 
