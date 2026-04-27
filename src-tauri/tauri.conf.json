@@ -20,10 +20,25 @@
     "windows": [
       {
         "title": "zmark",
+        "label": "main",
         "width": 1200,
         "height": 800,
         "visible": true,
         "fullscreen": false
+      },
+      {
+        "title": "Quick Capture",
+        "label": "capture",
+        "width": 600,
+        "height": 250,
+        "visible": false,
+        "decorations": false,
+        "transparent": true,
+        "alwaysOnTop": true,
+        "center": true,
+        "resizable": false,
+        "skipTaskbar": true,
+        "shadow": false
       }
     ],
     "security": {

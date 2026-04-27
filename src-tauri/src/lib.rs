@@ -53,6 +53,7 @@ pub fn run() {
         }))
         .plugin(tauri_plugin_opener::init())
         .plugin(tauri_plugin_dialog::init())
+        .plugin(tauri_plugin_global_shortcut::Builder::new().build())
         .plugin(tauri_plugin_sql::Builder::default().build())
         .setup(|app| {
             let show_item = MenuItem::with_id(app, "show", "显示 zmark", true, None::<&str>)?;
@@ -100,15 +101,17 @@ pub fn run() {
             //     window.open_devtools();
             // }
 
-            // 阻止关闭，改为隐藏到系统托盘，保持协作连接继续运行。
-            if let Some(window) = app.get_webview_window("main") {
-                let window_clone = window.clone();
-                window.on_window_event(move |event| {
-                    if let tauri::WindowEvent::CloseRequested { api, .. } = event {
-                        api.prevent_close();
-                        let _ = window_clone.hide();
-                    }
-                });
+            // 阻止关闭，改为隐藏到系统托盘/后台，保持协作连接或窗口实例继续运行。
+            for label in ["main", "capture"] {
+                if let Some(window) = app.get_webview_window(label) {
+                    let window_clone = window.clone();
+                    window.on_window_event(move |event| {
+                        if let tauri::WindowEvent::CloseRequested { api, .. } = event {
+                            api.prevent_close();
+                            let _ = window_clone.hide();
+                        }
+                    });
+                }
             }
 
             db::init_db(app.handle())?;
@@ -136,7 +139,9 @@ pub fn run() {
             commands::ai::ai_copilot,
             commands::tray::minimize_to_tray,
             commands::tray::show_window,
-            commands::tray::is_window_visible
+            commands::tray::is_window_visible,
+            commands::tray::show_capture_window,
+            commands::tray::hide_capture_window
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

@@ -1,4 +1,4 @@
-use tauri::WebviewWindow;
+use tauri::{AppHandle, Manager, WebviewWindow};
 
 #[tauri::command]
 pub async fn minimize_to_tray(window: WebviewWindow) -> Result<(), String> {
@@ -18,4 +18,21 @@ pub async fn show_window(window: WebviewWindow) -> Result<(), String> {
 #[tauri::command]
 pub async fn is_window_visible(window: WebviewWindow) -> Result<bool, String> {
     window.is_visible().map_err(|e| e.to_string())
+}
+
+#[tauri::command]
+pub async fn show_capture_window(app: AppHandle) -> Result<(), String> {
+    if let Some(window) = app.get_webview_window("capture") {
+        window.show().map_err(|e| e.to_string())?;
+        window.set_focus().map_err(|e| e.to_string())?;
+    }
+    Ok(())
+}
+
+#[tauri::command]
+pub async fn hide_capture_window(app: AppHandle) -> Result<(), String> {
+    if let Some(window) = app.get_webview_window("capture") {
+        window.hide().map_err(|e| e.to_string())?;
+    }
+    Ok(())
 }

@@ -1,6 +1,8 @@
 import { invoke } from "@tauri-apps/api/core";
 import { listen } from "@tauri-apps/api/event";
+import { getCurrentWindow } from "@tauri-apps/api/window";
 import { readTextFile } from "@tauri-apps/plugin-fs";
+import { register, unregisterAll } from "@tauri-apps/plugin-global-shortcut";
 import {
   FileText,
   Library,
@@ -13,6 +15,7 @@ import {
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { SearchCommand } from "@/components/editor/search-command";
+import { QuickCaptureWindow } from "@/components/quick-capture/window";
 import { AccountSettingsPage } from "@/components/settings";
 import {
   getAllMarkdownFiles,
@@ -36,7 +39,7 @@ import { TooltipProvider } from "./components/ui/tooltip";
 import { ThemeProvider } from "./providers/theme-provider";
 import { useAuthStore, useEditorStore } from "./stores";
 
-const App = () => {
+const MainApp = () => {
   const { curPath, activeCollabId } = useEditorStore();
   const [mode, setMode] = useState<"editor" | "kb" | "collab" | "settings">(
     "editor",
@@ -50,6 +53,25 @@ const App = () => {
   useEffect(() => {
     initialize();
   }, [initialize]);
+
+  useEffect(() => {
+    const registerShortcut = async () => {
+      try {
+        await unregisterAll();
+        await register("CommandOrControl+Shift+Space", async (event) => {
+          if (event.state === "Pressed") {
+            await invoke("show_capture_window");
+          }
+        });
+      } catch (err) {
+        console.error("Failed to register global shortcut:", err);
+      }
+    };
+    registerShortcut();
+    return () => {
+      unregisterAll().catch(console.error);
+    };
+  }, []);
 
   useEffect(() => {
     console.log("zmark initialized");
@@ -287,6 +309,25 @@ const App = () => {
       </TooltipProvider>
     </ThemeProvider>
   );
+};
+
+const App = () => {
+  const appWindow = getCurrentWindow();
+
+  if (appWindow.label === "capture") {
+    // 确保 html 和 body 完全透明，消除可能由于渲染延迟导致的白边或框
+    document.documentElement.style.backgroundColor = "transparent";
+    document.body.style.backgroundColor = "transparent";
+
+    return (
+      <ThemeProvider>
+        <QuickCaptureWindow />
+        <Toaster position="top-center" richColors />
+      </ThemeProvider>
+    );
+  }
+
+  return <MainApp />;
 };
 
 export default App;
