@@ -1,35 +1,37 @@
 import type { Editor } from "@tiptap/core";
 import { useCallback, useEffect, useState } from "react";
+import { useEditorSubscription } from "./useEditorSubscription";
 
 export function useMathPopover(editor: Editor) {
   const [latex, setLatex] = useState("");
   const [isOpen, setIsOpen] = useState(false);
 
-  useEffect(() => {
+  const updateState = useCallback(() => {
     if (!editor) return;
 
-    const updateState = () => {
-      if (editor.isActive("inlineMath")) {
-        const { latex } = editor.getAttributes("inlineMath");
-        setLatex(latex || "");
-      } else if (editor.isActive("blockMath")) {
-        const { latex } = editor.getAttributes("blockMath");
-        setLatex(latex || "");
-      } else {
-        const { from, to } = editor.state.selection;
-        const text = editor.state.doc.textBetween(from, to);
-        setLatex(text);
-      }
-    };
+    if (editor.isActive("inlineMath")) {
+      const { latex } = editor.getAttributes("inlineMath");
+      setLatex(latex || "");
+      return;
+    }
 
-    editor.on("selectionUpdate", updateState);
-    editor.on("transaction", updateState);
+    if (editor.isActive("blockMath")) {
+      const { latex } = editor.getAttributes("blockMath");
+      setLatex(latex || "");
+      return;
+    }
 
-    return () => {
-      editor.off("selectionUpdate", updateState);
-      editor.off("transaction", updateState);
-    };
+    const { from, to } = editor.state.selection;
+    const text = editor.state.doc.textBetween(from, to);
+    setLatex(text);
   }, [editor]);
+
+  useEffect(() => {
+    updateState();
+  }, [updateState]);
+
+  useEditorSubscription(editor, "selectionUpdate", updateState);
+  useEditorSubscription(editor, "transaction", updateState);
 
   const setMath = useCallback(
     (latexInput: string) => {

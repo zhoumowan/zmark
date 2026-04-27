@@ -1,6 +1,5 @@
 import { Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
-import { toast } from "sonner";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,6 +11,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { useAsyncAction } from "@/hooks";
 import { useAuthStore } from "@/stores";
 
 export const AccountSettingsPage = () => {
@@ -28,20 +28,25 @@ export const AccountSettingsPage = () => {
     setAvatarUrl(latest.avatar_url || "");
   }, [userId]);
 
-  if (!user) return null;
+  const { execute: save, isLoading: isSaving } = useAsyncAction(
+    async () => {
+      const err = await updateAccount({
+        name,
+        avatar_url: avatarUrl,
+      });
+      if (err) {
+        throw new Error(err);
+      }
+      return null;
+    },
+    {
+      loadingMessage: "保存中...",
+      successMessage: "设置已保存",
+      errorMessage: (e) => e.message,
+    },
+  );
 
-  const handleSave = async () => {
-    const toastId = toast.loading("保存中...");
-    const err = await updateAccount({
-      name,
-      avatar_url: avatarUrl,
-    });
-    if (err) {
-      toast.error(err, { id: toastId });
-      return;
-    }
-    toast.success("设置已保存", { id: toastId });
-  };
+  if (!user) return null;
 
   return (
     <div className="flex h-full w-full overflow-auto p-6">
@@ -72,7 +77,7 @@ export const AccountSettingsPage = () => {
               <Input
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                disabled={loading}
+                disabled={loading || isSaving}
               />
             </div>
 
@@ -81,13 +86,17 @@ export const AccountSettingsPage = () => {
               <Input
                 value={avatarUrl}
                 onChange={(e) => setAvatarUrl(e.target.value)}
-                disabled={loading}
+                disabled={loading || isSaving}
               />
             </div>
           </CardContent>
           <CardFooter className="justify-end gap-2">
-            <Button variant="secondary" onClick={handleSave} disabled={loading}>
-              {loading ? (
+            <Button
+              variant="secondary"
+              onClick={() => save()}
+              disabled={loading || isSaving}
+            >
+              {loading || isSaving ? (
                 <>
                   <Loader2 className="size-4 animate-spin" />
                   保存中

@@ -1,28 +1,23 @@
 import type { Editor } from "@tiptap/core";
 import { useCallback, useEffect, useState } from "react";
+import { useEditorSubscription } from "./useEditorSubscription";
 import { useGlobalShortcut } from "./useGlobalShortcut";
 
 export function useLinkPopover(editor: Editor | null) {
   const [url, setUrl] = useState("");
   const [isOpen, setIsOpen] = useState(false);
 
-  useEffect(() => {
+  const updateUrl = useCallback(() => {
     if (!editor) return;
-
-    const updateUrl = () => {
-      const { href } = editor.getAttributes("link");
-      if (href) {
-        setUrl(href);
-      } else {
-        setUrl("");
-      }
-    };
-
-    editor.on("selectionUpdate", updateUrl);
-    return () => {
-      editor.off("selectionUpdate", updateUrl);
-    };
+    const { href } = editor.getAttributes("link");
+    setUrl(href || "");
   }, [editor]);
+
+  useEffect(() => {
+    updateUrl();
+  }, [updateUrl]);
+
+  useEditorSubscription(editor, "selectionUpdate", updateUrl);
 
   const setLink = useCallback(
     (linkUrl: string) => {

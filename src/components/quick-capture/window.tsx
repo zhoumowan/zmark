@@ -4,15 +4,14 @@ import { getCurrentWindow } from "@tauri-apps/api/window";
 import { writeTextFile } from "@tauri-apps/plugin-fs";
 import { Loader2 } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
+import { useAsyncAction } from "@/hooks";
 import { to } from "@/utils/error-handler";
 import { getDataDir } from "@/utils/file";
 import { addOrUpdateFile } from "@/utils/search";
 
 export function QuickCaptureWindow() {
   const [content, setContent] = useState("");
-  const [saving, setSaving] = useState(false);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
   const hideWindow = useCallback(async (clearContent = false) => {
@@ -43,31 +42,31 @@ export function QuickCaptureWindow() {
     };
   }, [hideWindow]);
 
-  const handleSave = async () => {
-    if (!content.trim()) return;
-    setSaving(true);
-    try {
+  const { execute: saveCapture, isLoading: saving } = useAsyncAction(
+    async (text: string) => {
       const baseDir = await getDataDir();
       const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
       const filename = `Capture-${timestamp}.md`;
       const finalPath = await join(baseDir, filename);
 
-      const [err] = await to(writeTextFile(finalPath, content));
+      const [err] = await to(writeTextFile(finalPath, text));
       if (err) {
-        toast.error("保存失败");
-        return;
+        throw err;
       }
 
-      addOrUpdateFile({ path: finalPath, name: filename, content });
-      toast.success("灵感已记录");
+      addOrUpdateFile({ path: finalPath, name: filename, content: text });
+      return null;
+    },
+    {
+      successMessage: "灵感已记录",
+      errorMessage: "保存失败",
+      onSuccess: () => hideWindow(true),
+    },
+  );
 
-      // 保存成功后隐藏窗口并清空内容
-      hideWindow(true);
-    } catch (_e) {
-      toast.error("保存发生异常");
-    } finally {
-      setSaving(false);
-    }
+  const handleSave = async () => {
+    if (!content.trim()) return;
+    await saveCapture(content);
   };
 
   return (
