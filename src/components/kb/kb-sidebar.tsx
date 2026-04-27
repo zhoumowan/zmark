@@ -32,6 +32,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { useAsyncAction, useEnterSubmit } from "@/hooks";
 import { useKbStore } from "@/stores";
 import type { Document, KnowledgeBase } from "@/types/kb";
 import { getDisplayFilename, to } from "@/utils";
@@ -46,7 +47,7 @@ import {
 } from "../ui/select";
 
 export function KbSidebar({
-  mode,
+  mode: _mode,
   ...props
 }: React.ComponentProps<typeof Sidebar> & { mode: "editor" | "kb" }) {
   const {
@@ -74,16 +75,44 @@ export function KbSidebar({
     }
   }, [currentKbId, fetchDocuments]);
 
+  const { execute: createKb, isLoading: isCreatingKb } = useAsyncAction(
+    async (name: string) => {
+      const [err] = await to(createKnowledgeBase(name));
+      if (err) {
+        throw err instanceof Error ? err : new Error(String(err));
+      }
+      return null;
+    },
+    {
+      loadingMessage: "创建中...",
+      successMessage: "知识库创建成功",
+      errorMessage: (e) => `创建失败: ${e.message}`,
+      onSuccess: () => setNewKbName(""),
+    },
+  );
+
   const handleCreateKb = async () => {
-    if (!newKbName.trim()) return;
-    const [err] = await to(createKnowledgeBase(newKbName));
-    if (err) {
-      toast.error(`创建失败: ${err}`);
-    } else {
-      setNewKbName("");
-      toast.success("知识库创建成功");
-    }
+    const name = newKbName.trim();
+    if (!name) return;
+    await createKb(name);
     setIsCreating(false);
+  };
+
+  const { onCompositionStart, onCompositionEnd, onKeyDown } = useEnterSubmit({
+    onEnter: handleCreateKb,
+    enabled: isCreating && !isCreatingKb,
+  });
+
+  const showAddDocumentResult = (
+    filename: string,
+    toastId: string | number,
+    err: unknown,
+  ) => {
+    if (err) {
+      toast.error(`${filename} 添加失败: ${String(err)}`, { id: toastId });
+      return;
+    }
+    toast.success(`${filename} 添加成功`, { id: toastId });
   };
 
   const handleAddDocument = async () => {
@@ -105,18 +134,14 @@ export function KbSidebar({
     for (const filePath of selected) {
       const filename = getDisplayFilename(filePath);
       const loadingToast = toast.loading(`正在处理 ${filename}...`);
-
-      const [addErr] = await to(
-        readTextFile(filePath).then((text) =>
-          addDocument(currentKbId, filename, text),
-        ),
-      );
-
-      if (addErr) {
-        toast.error(`${filename} 添加失败: ${addErr}`, { id: loadingToast });
-      } else {
-        toast.success(`${filename} 添加成功`, { id: loadingToast });
+      const [readErr, text] = await to(readTextFile(filePath));
+      if (readErr) {
+        showAddDocumentResult(filename, loadingToast, readErr);
+        continue;
       }
+
+      const [addErr] = await to(addDocument(currentKbId, filename, text));
+      showAddDocumentResult(filename, loadingToast, addErr);
     }
   };
 
@@ -217,14 +242,20 @@ export function KbSidebar({
               placeholder="知识库名称"
               value={newKbName}
               onChange={(e) => setNewKbName(e.target.value)}
-              onKeyDown={(e) => e.key === "Enter" && handleCreateKb()}
+              onCompositionStart={onCompositionStart}
+              onCompositionEnd={onCompositionEnd}
+              onKeyDown={onKeyDown}
             />
           </div>
           <DialogFooter>
             <Button variant="destructive" onClick={() => setIsCreating(false)}>
               取消
             </Button>
-            <Button variant="secondary" onClick={handleCreateKb}>
+            <Button
+              variant="secondary"
+              onClick={handleCreateKb}
+              disabled={isCreatingKb}
+            >
               确认
             </Button>
           </DialogFooter>
