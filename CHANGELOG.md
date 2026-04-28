@@ -1,3 +1,10 @@
+## [1.14.1](https://github.com/zhoumowan/zmark/compare/v1.14.0...v1.14.1) (2026-04-28)
+
+
+### Bug Fixes
+
+* handle dot-less filenames and port in asset URLs ([c61fc74](https://github.com/zhoumowan/zmark/commit/c61fc74d9a88c62bed73c6ffef5b083228bafc31))
+
 # [1.14.0](https://github.com/zhoumowan/zmark/compare/v1.13.0...v1.14.0) (2026-04-28)
 
 
