@@ -348,7 +348,11 @@ export async function unresolveMarkdownImages(
 ) {
   const docDir = await dirname(filePath);
   return await replaceMarkdownImages(markdown, async ({ alt, src }) => {
-    if (src.startsWith("http://") || src.startsWith("https://")) {
+    const isHttpSrc =
+      src.startsWith("http://") || src.startsWith("https://");
+    const isTauriAssetSrc = /^https?:\/\/asset\.localhost(?::\d+)?\//i.test(src);
+
+    if (isHttpSrc && !isTauriAssetSrc) {
       return undefined;
     }
 
