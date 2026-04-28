@@ -2,7 +2,11 @@ import { invoke } from "@tauri-apps/api/core";
 import { listen } from "@tauri-apps/api/event";
 import { getCurrentWindow } from "@tauri-apps/api/window";
 import { readTextFile } from "@tauri-apps/plugin-fs";
-import { register, unregisterAll } from "@tauri-apps/plugin-global-shortcut";
+import {
+  isRegistered,
+  register,
+  unregister,
+} from "@tauri-apps/plugin-global-shortcut";
 import {
   FileText,
   Library,
@@ -44,6 +48,8 @@ import { TooltipProvider } from "./components/ui/tooltip";
 import { ThemeProvider } from "./providers/theme-provider";
 import { useAuthStore, useEditorStore } from "./stores";
 
+let isShortcutRegistering = false;
+
 const MainApp = () => {
   const { curPath, activeCollabId } = useEditorStore();
   const [mode, setMode] = useState<
@@ -60,21 +66,55 @@ const MainApp = () => {
   }, [initialize]);
 
   useEffect(() => {
-    const registerShortcut = async () => {
+    let cancelled = false;
+    const shortcut = "CommandOrControl+Shift+Space";
+
+    const initShortcut = async () => {
+      // Prevent concurrent registrations during StrictMode or HMR
+      while (isShortcutRegistering) {
+        await new Promise((resolve) => setTimeout(resolve, 50));
+      }
+      if (cancelled) return;
+
+      isShortcutRegistering = true;
       try {
-        await unregisterAll();
-        await register("CommandOrControl+Shift+Space", async (event) => {
+        const registered = await isRegistered(shortcut);
+        if (registered) {
+          await unregister(shortcut);
+        }
+        if (cancelled) return;
+
+        await register(shortcut, async (event) => {
           if (event.state === "Pressed") {
             await invoke("show_capture_window");
           }
         });
       } catch (err) {
         logError("Failed to register global shortcut:", err);
+      } finally {
+        isShortcutRegistering = false;
       }
     };
-    registerShortcut();
+
+    initShortcut();
+
     return () => {
-      unregisterAll().catch((err) => logError(err));
+      cancelled = true;
+      // Wait for registration to complete before unregistering
+      const cleanup = async () => {
+        while (isShortcutRegistering) {
+          await new Promise((resolve) => setTimeout(resolve, 50));
+        }
+        try {
+          const registered = await isRegistered(shortcut);
+          if (registered) {
+            await unregister(shortcut);
+          }
+        } catch (err) {
+          logError("Failed to unregister global shortcut:", err);
+        }
+      };
+      cleanup();
     };
   }, []);
 
