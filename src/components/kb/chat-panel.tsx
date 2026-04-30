@@ -489,6 +489,7 @@ export const ChatPanel = () => {
             />
             <Button
               size="icon"
+              variant="secondary"
               onClick={handleSend}
               disabled={isStreaming || !input.trim() || !currentKbId}
             >
