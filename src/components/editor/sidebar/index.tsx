@@ -1,6 +1,8 @@
+import { open } from "@tauri-apps/plugin-dialog";
 import { BaseDirectory, watch } from "@tauri-apps/plugin-fs";
 import type * as React from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { toast } from "sonner";
 import {
   Sidebar,
   SidebarContent,
@@ -16,6 +18,8 @@ import {
   getDataDir,
   getFileTree,
   getTreeKey,
+  importDirectory,
+  importFiles,
   logError,
   to,
 } from "@/utils";
@@ -117,6 +121,48 @@ export function AppSidebar({ mode, ...props }: ISidebarProps) {
     setDialogOpen(true);
   };
 
+  const handleImportFiles = async () => {
+    const selected = await open({
+      multiple: true,
+      filters: [
+        {
+          name: "Markdown Files",
+          extensions: ["md", "zmark"],
+        },
+      ],
+    });
+
+    if (selected && selected.length > 0) {
+      const filePaths = Array.isArray(selected) ? selected : [selected];
+      const [err] = await to(importFiles(filePaths, previewPath));
+      if (err) {
+        logError("Failed to import files:", err);
+        toast.error("导入文件失败");
+      } else {
+        toast.success("导入文件成功");
+        await refreshFileTree();
+      }
+    }
+  };
+
+  const handleImportDirectory = async () => {
+    const selected = await open({
+      directory: true,
+      multiple: false,
+    });
+
+    if (selected && typeof selected === "string") {
+      const [err] = await to(importDirectory(selected, previewPath));
+      if (err) {
+        logError("Failed to import directory:", err);
+        toast.error("导入文件夹失败");
+      } else {
+        toast.success("导入文件夹成功");
+        await refreshFileTree();
+      }
+    }
+  };
+
   const handleClick = async (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) {
       const dataDir = await getDataDir();
@@ -138,6 +184,8 @@ export function AppSidebar({ mode, ...props }: ISidebarProps) {
               <ActionButtons
                 handleCreateFile={handleCreateFile}
                 handleCreateDirectory={handleCreateDirectory}
+                handleImportFiles={handleImportFiles}
+                handleImportDirectory={handleImportDirectory}
                 refreshFileTree={refreshFileTree}
               />
             </div>

@@ -6,6 +6,7 @@ import {
   join,
 } from "@tauri-apps/api/path";
 import {
+  copyFile,
   exists,
   mkdir,
   readDir,
@@ -420,4 +421,61 @@ export async function renameFileOrDir(oldPath: string, newName: string) {
   }
 
   return newPath;
+}
+
+async function getUniqueFilePath(
+  dirPath: string,
+  fileName: string,
+): Promise<string> {
+  let destPath = await join(dirPath, fileName);
+  let counter = 1;
+  const extIndex = fileName.lastIndexOf(".");
+  const name = extIndex !== -1 ? fileName.slice(0, extIndex) : fileName;
+  const ext = extIndex !== -1 ? fileName.slice(extIndex) : "";
+
+  while (await exists(destPath)) {
+    const newFileName = `${name} (${counter})${ext}`;
+    destPath = await join(dirPath, newFileName);
+    counter++;
+  }
+  return destPath;
+}
+
+export async function importFiles(filePaths: string[], basePath?: string) {
+  const dataDir = await getDataDir();
+  let targetDir = dataDir;
+
+  if (basePath) {
+    const baseIsDir = await isDir(basePath);
+    targetDir = baseIsDir ? basePath : await dirname(basePath);
+  }
+
+  for (const filePath of filePaths) {
+    const fileName = getDisplayFilename(filePath);
+    const destPath = await getUniqueFilePath(targetDir, fileName);
+
+    await copyFile(filePath, destPath);
+  }
+}
+
+export async function importDirectory(sourceDir: string, basePath?: string) {
+  const dataDir = await getDataDir();
+  let targetDir = dataDir;
+
+  if (basePath) {
+    const baseIsDir = await isDir(basePath);
+    targetDir = baseIsDir ? basePath : await dirname(basePath);
+  }
+
+  const entries = await readDir(sourceDir);
+  for (const entry of entries) {
+    if (
+      entry.isFile &&
+      (entry.name.endsWith(".md") || entry.name.endsWith(".zmark"))
+    ) {
+      const sourcePath = await join(sourceDir, entry.name);
+      const destPath = await getUniqueFilePath(targetDir, entry.name);
+      await copyFile(sourcePath, destPath);
+    }
+  }
 }

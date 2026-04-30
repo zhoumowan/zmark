@@ -59,6 +59,10 @@
     {
       "identifier": "fs:allow-unwatch",
       "allow": [{ "path": "**" }]
+    },
+    {
+      "identifier": "fs:allow-copy-file",
+      "allow": [{ "path": "**" }]
     }
   ]
 }

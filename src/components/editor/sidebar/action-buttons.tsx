@@ -1,4 +1,11 @@
-import { FilePlus, FolderPlus, FoldVertical, RefreshCw } from "lucide-react";
+import {
+  FileDown,
+  FilePlus,
+  FolderDown,
+  FolderPlus,
+  FoldVertical,
+  RefreshCw,
+} from "lucide-react";
 import type React from "react";
 import { SidebarMenuButton } from "@/components/ui/sidebar";
 import {
@@ -19,7 +26,7 @@ const ActionButton = ({ onClick, tooltip, children }: ActionButtonProps) => (
     <TooltipTrigger asChild>
       <SidebarMenuButton
         size="sm"
-        className="h-8 w-8 flex items-center justify-center hover:bg-sidebar-accent transition-colors"
+        className="h-6 w-6 flex items-center justify-center hover:bg-sidebar-accent transition-colors"
         onClick={onClick}
       >
         {children}
@@ -34,10 +41,14 @@ const ActionButton = ({ onClick, tooltip, children }: ActionButtonProps) => (
 export const ActionButtons = ({
   handleCreateFile,
   handleCreateDirectory,
+  handleImportFiles,
+  handleImportDirectory,
   refreshFileTree,
 }: {
   handleCreateFile: () => void;
   handleCreateDirectory: () => void;
+  handleImportFiles: () => void;
+  handleImportDirectory: () => void;
   refreshFileTree: () => void;
 }) => {
   const { collapseAll } = useCollapse();
@@ -56,6 +67,18 @@ export const ActionButtons = ({
       icon: <FolderPlus className="size-4" />,
     },
     {
+      key: "import-files",
+      onClick: handleImportFiles,
+      tooltip: "导入文件",
+      icon: <FileDown className="size-4" />,
+    },
+    {
+      key: "import-directory",
+      onClick: handleImportDirectory,
+      tooltip: "导入文件夹",
+      icon: <FolderDown className="size-4" />,
+    },
+    {
       key: "refresh-file-tree",
       onClick: refreshFileTree,
       tooltip: "刷新",
@@ -70,7 +93,7 @@ export const ActionButtons = ({
   ];
 
   return (
-    <div className="flex items-center gap-1">
+    <div className="flex items-center gap-0.5">
       {buttons.map((button) => (
         <ActionButton
           key={button.key}
