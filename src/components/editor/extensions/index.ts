@@ -9,8 +9,10 @@ import Superscript from "@tiptap/extension-superscript";
 import { TextStyleKit } from "@tiptap/extension-text-style";
 import { Placeholder } from "@tiptap/extensions";
 import StarterKit from "@tiptap/starter-kit";
+import type { Node } from "prosemirror-model";
 import { Markdown } from "tiptap-markdown";
 import { DEFAULT_HIGHLIGHT_COLOR } from "@/consts/highlight";
+import type { MarkdownSerializerState } from "@/types";
 import {
   SlashCommand,
   slashSuggestion,
@@ -88,7 +90,7 @@ export const extensions = [
     addStorage() {
       return {
         markdown: {
-          serialize(state: any, node: any) {
+          serialize(state: MarkdownSerializerState, node: Node) {
             const alt = node.attrs.alt || "";
             const src = node.attrs.src || "";
             const title = node.attrs.title ? ` "${node.attrs.title}"` : "";

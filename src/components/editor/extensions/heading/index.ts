@@ -1,5 +1,7 @@
 import { mergeAttributes } from "@tiptap/core";
 import TiptapHeading from "@tiptap/extension-heading";
+import type { Node } from "prosemirror-model";
+import type { MarkdownSerializerState } from "@/types";
 
 function slugify(text: string) {
   return text
@@ -25,7 +27,7 @@ export const Heading = TiptapHeading.extend({
   addStorage() {
     return {
       markdown: {
-        serialize(state: any, node: any) {
+        serialize(state: MarkdownSerializerState, node: Node) {
           const align = node.attrs.textAlign;
           if (align && align !== "left") {
             state.write(`<h${node.attrs.level} align="${align}">`);
@@ -33,7 +35,7 @@ export const Heading = TiptapHeading.extend({
             state.write(`</h${node.attrs.level}>`);
             state.closeBlock(node);
           } else {
-            state.write(state.repeat("#", node.attrs.level) + " ");
+            state.write(`${state.repeat("#", node.attrs.level)} `);
             state.renderInline(node);
             state.closeBlock(node);
           }

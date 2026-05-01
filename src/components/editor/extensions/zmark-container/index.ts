@@ -1,70 +1,8 @@
 import { Node } from "@tiptap/core";
-
-type MarkdownItLike = {
-  use: (plugin: (md: MarkdownItLike) => void) => void;
-  block: {
-    ruler: {
-      before: (
-        afterName: string,
-        ruleName: string,
-        rule: (
-          state: MarkdownItStateBlock,
-          startLine: number,
-          endLine: number,
-          silent: boolean,
-        ) => boolean,
-        options?: { alt?: string[] },
-      ) => void;
-    };
-  };
-  renderer: {
-    rules: Record<string, unknown>;
-  };
-  utils: {
-    escapeHtml: (value: string) => string;
-  };
-};
-
-type MarkdownToken = {
-  type: string;
-  tag: string;
-  nesting: number;
-  block?: boolean;
-  markup?: string;
-  info?: string;
-  meta?: Record<string, unknown>;
-};
-
-type MarkdownItStateBlock = {
-  bMarks: number[];
-  tShift: number[];
-  eMarks: number[];
-  src: string;
-  parentType: string;
-  lineMax: number;
-  line: number;
-  md: {
-    block: {
-      tokenize: (
-        state: MarkdownItStateBlock,
-        startLine: number,
-        endLine: number,
-      ) => void;
-    };
-  };
-  push: (type: string, tag: string, nesting: number) => MarkdownToken;
-};
-
-type MarkdownSerializerStateLike = {
-  write: (content: string) => void;
-  ensureNewLine: () => void;
-  renderContent: (node: ProseMirrorNodeLike) => void;
-  closeBlock: (node: ProseMirrorNodeLike) => void;
-};
-
-type ProseMirrorNodeLike = {
-  attrs: Record<string, unknown>;
-};
+import type MarkdownIt from "markdown-it";
+import type Token from "markdown-it/lib/token.mjs";
+import type { Node as ProseMirrorNode } from "prosemirror-model";
+import type { MarkdownSerializerState } from "@/types";
 
 type ContainerHeader = {
   kind: string;
@@ -190,7 +128,7 @@ function isContainerNodeSelection(selection: unknown): selection is {
   return nodeSelection.node?.type?.name === "zmarkContainer";
 }
 
-function zmarkContainerMarkdownItPlugin(md: MarkdownItLike): void {
+function zmarkContainerMarkdownItPlugin(md: MarkdownIt): void {
   const markerCharCode = 0x3a;
 
   md.block.ruler.before(
@@ -250,6 +188,7 @@ function zmarkContainerMarkdownItPlugin(md: MarkdownItLike): void {
       const oldParent = state.parentType;
       const oldLineMax = state.lineMax;
 
+      // @ts-expect-error: override parentType for container rendering
       state.parentType = "container";
       state.lineMax = nextLine;
 
@@ -278,10 +217,7 @@ function zmarkContainerMarkdownItPlugin(md: MarkdownItLike): void {
     },
   );
 
-  md.renderer.rules.zmark_container_open = (
-    tokens: MarkdownToken[],
-    idx: number,
-  ) => {
+  md.renderer.rules.zmark_container_open = (tokens: Token[], idx: number) => {
     const token = tokens[idx];
     const kind = token.info || "note";
     const initialContent =
@@ -439,10 +375,7 @@ export const ZMarkContainer = Node.create({
   addStorage() {
     return {
       markdown: {
-        serialize(
-          state: MarkdownSerializerStateLike,
-          node: ProseMirrorNodeLike,
-        ) {
+        serialize(state: MarkdownSerializerState, node: ProseMirrorNode) {
           const kind = (node.attrs.kind as string) || "note";
 
           state.write(`:::${kind}`);
@@ -454,7 +387,7 @@ export const ZMarkContainer = Node.create({
           state.closeBlock(node);
         },
         parse: {
-          setup(markdownit: MarkdownItLike) {
+          setup(markdownit: MarkdownIt) {
             markdownit.use(zmarkContainerMarkdownItPlugin);
           },
         },

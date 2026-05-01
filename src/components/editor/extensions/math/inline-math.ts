@@ -1,16 +1,21 @@
 import { InputRule } from "@tiptap/core";
 import { InlineMath as TiptapInlineMath } from "@tiptap/extension-mathematics";
+import type MarkdownIt from "markdown-it";
+import type StateInline from "markdown-it/lib/rules_inline/state_inline.mjs";
+import type Token from "markdown-it/lib/token.mjs";
+import type { Node } from "prosemirror-model";
+import type { MarkdownSerializerState } from "@/types";
 
 export const InlineMath = TiptapInlineMath.extend({
   addStorage() {
     return {
       markdown: {
         parse: {
-          setup(markdownit: any) {
+          setup(markdownit: MarkdownIt) {
             markdownit.inline.ruler.after(
               "escape",
               "inlineMath",
-              (state: any, silent: boolean) => {
+              (state: StateInline, silent: boolean) => {
                 const start = state.pos;
                 if (state.src.charCodeAt(start) !== 0x24) return false;
                 if (state.src.charCodeAt(start + 1) === 0x24) return false;
@@ -34,7 +39,7 @@ export const InlineMath = TiptapInlineMath.extend({
               },
             );
             markdownit.renderer.rules.inlineMath = (
-              tokens: any,
+              tokens: Token[],
               idx: number,
             ) => {
               const latex = tokens[idx].content;
@@ -42,7 +47,7 @@ export const InlineMath = TiptapInlineMath.extend({
             };
           },
         },
-        serialize(state: any, node: any) {
+        serialize(state: MarkdownSerializerState, node: Node) {
           state.write("$");
           state.write(node.attrs.latex || "");
           state.write("$");

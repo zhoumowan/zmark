@@ -1,17 +1,22 @@
 import { InputRule } from "@tiptap/core";
 import { BlockMath as TiptapBlockMath } from "@tiptap/extension-mathematics";
+import type MarkdownIt from "markdown-it";
+import type StateBlock from "markdown-it/lib/rules_block/state_block.mjs";
+import type Token from "markdown-it/lib/token.mjs";
+import type { Node } from "prosemirror-model";
+import type { MarkdownSerializerState } from "@/types";
 
 export const BlockMath = TiptapBlockMath.extend({
   addStorage() {
     return {
       markdown: {
         parse: {
-          setup(markdownit: any) {
+          setup(markdownit: MarkdownIt) {
             markdownit.block.ruler.before(
               "paragraph",
               "blockMath",
               (
-                state: any,
+                state: StateBlock,
                 startLine: number,
                 endLine: number,
                 silent: boolean,
@@ -84,7 +89,7 @@ export const BlockMath = TiptapBlockMath.extend({
               },
             );
             markdownit.renderer.rules.blockMath = (
-              tokens: any,
+              tokens: Token[],
               idx: number,
             ) => {
               const latex = tokens[idx].content;
@@ -93,7 +98,7 @@ export const BlockMath = TiptapBlockMath.extend({
             };
           },
         },
-        serialize(state: any, node: any) {
+        serialize(state: MarkdownSerializerState, node: Node) {
           state.write("$$\n");
           state.write(node.attrs.latex || "");
           state.write("\n$$\n");

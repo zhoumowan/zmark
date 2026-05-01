@@ -1,6 +1,9 @@
-import { mergeAttributes, Node } from "@tiptap/core";
+import { mergeAttributes, Node as TiptapNode } from "@tiptap/core";
+import type MarkdownIt from "markdown-it";
+import type { Node } from "prosemirror-model";
+import type { MarkdownSerializerState } from "@/types";
 
-export const HtmlDiv = Node.create({
+export const HtmlDiv = TiptapNode.create({
   name: "htmlDiv",
 
   group: "block",
@@ -37,7 +40,7 @@ export const HtmlDiv = Node.create({
   addStorage() {
     return {
       markdown: {
-        serialize(state: any, node: any) {
+        serialize(state: MarkdownSerializerState, node: Node) {
           const align = node.attrs.align;
           if (align) {
             state.write(`<div align="${align}">\n`);
@@ -49,7 +52,7 @@ export const HtmlDiv = Node.create({
           state.closeBlock(node);
         },
         parse: {
-          setup(_markdownit: any) {
+          setup(_markdownit: MarkdownIt) {
             // let tiptap-markdown HTML parser handle it naturally via its tag rules
           },
         },
