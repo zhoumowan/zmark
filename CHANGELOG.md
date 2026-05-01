@@ -1,3 +1,10 @@
+# [1.17.0](https://github.com/zhoumowan/zmark/compare/v1.16.0...v1.17.0) (2026-05-01)
+
+
+### Features
+
+* 支持图片行内显示与 div 对齐属性 ([c806bfb](https://github.com/zhoumowan/zmark/commit/c806bfbea6e7b538cd14327138715b7b446be529))
+
 # [1.16.0](https://github.com/zhoumowan/zmark/compare/v1.15.0...v1.16.0) (2026-05-01)
 
 
