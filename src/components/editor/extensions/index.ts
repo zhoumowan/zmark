@@ -1,16 +1,14 @@
-import { InputRule, markInputRule, markPasteRule } from "@tiptap/core";
+import { markInputRule, markPasteRule } from "@tiptap/core";
 import BubbleMenu from "@tiptap/extension-bubble-menu";
 import Highlight, { inputRegex, pasteRegex } from "@tiptap/extension-highlight";
 import Image from "@tiptap/extension-image";
 import Link from "@tiptap/extension-link";
 import { ListKit } from "@tiptap/extension-list";
-import { BlockMath, InlineMath } from "@tiptap/extension-mathematics";
 import Subscript from "@tiptap/extension-subscript";
 import Superscript from "@tiptap/extension-superscript";
 import { TextStyleKit } from "@tiptap/extension-text-style";
 import { Placeholder } from "@tiptap/extensions";
 import StarterKit from "@tiptap/starter-kit";
-import { common, createLowlight } from "lowlight";
 import { Markdown } from "tiptap-markdown";
 import { DEFAULT_HIGHLIGHT_COLOR } from "@/consts/highlight";
 import {
@@ -19,10 +17,9 @@ import {
 } from "../slash-command/slash-extension";
 import { CodeBlock } from "./code-block";
 import { Heading } from "./heading";
+import { BlockMath, InlineMath, MultilineMathExtension } from "./math";
 import { Mention } from "./mention";
 import { ZMarkContainer } from "./zmark-container";
-
-const lowlight = createLowlight(common);
 
 export const extensions = [
   Placeholder.configure({
@@ -42,6 +39,7 @@ export const extensions = [
   Heading,
   ZMarkContainer,
   Mention,
+  MultilineMathExtension,
   Markdown.configure({ html: true, transformPastedText: true }),
   BubbleMenu,
   SlashCommand.configure({
@@ -76,9 +74,7 @@ export const extensions = [
   }).configure({
     multicolor: true,
   }),
-  CodeBlock.configure({
-    lowlight,
-  }),
+  CodeBlock,
   Image.configure({
     allowBase64: true,
   }),
@@ -121,51 +117,6 @@ export const extensions = [
       };
     },
   }),
-  InlineMath.extend({
-    addInputRules() {
-      return [
-        new InputRule({
-          find: /(?:^|\s)\$([^$]+)\$/,
-          handler: ({ state, range, match }) => {
-            const { from, to } = range;
-            const latex = match[1];
-            const fullMatch = match[0];
-            const startOffset = fullMatch.startsWith(" ") ? 1 : 0;
-
-            if (latex.trim()) {
-              state.tr.replaceWith(
-                from + startOffset,
-                to,
-                this.type.create({ latex }),
-              );
-            }
-          },
-        }),
-      ];
-    },
-  }).configure({
-    katexOptions: {
-      throwOnError: false,
-    },
-  }),
-  BlockMath.extend({
-    addInputRules() {
-      return [
-        new InputRule({
-          find: /^\$\$([^$]+)\$\$$/,
-          handler: ({ state, range, match }) => {
-            const { from, to } = range;
-            const latex = match[1];
-            if (latex.trim()) {
-              state.tr.replaceWith(from, to, this.type.create({ latex }));
-            }
-          },
-        }),
-      ];
-    },
-  }).configure({
-    katexOptions: {
-      throwOnError: false,
-    },
-  }),
+  InlineMath,
+  BlockMath,
 ];
