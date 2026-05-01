@@ -1,3 +1,10 @@
+# [1.16.0](https://github.com/zhoumowan/zmark/compare/v1.15.0...v1.16.0) (2026-05-01)
+
+
+### Features
+
+* 添加文本对齐功能 ([2a04109](https://github.com/zhoumowan/zmark/commit/2a04109747b681313ea9147b13c474444b79187a))
+
 # [1.15.0](https://github.com/zhoumowan/zmark/compare/v1.14.3...v1.15.0) (2026-05-01)
 
 
