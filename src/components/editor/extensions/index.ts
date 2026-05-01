@@ -17,6 +17,7 @@ import {
 } from "../slash-command/slash-extension";
 import { CodeBlock } from "./code-block";
 import { Heading } from "./heading";
+import { HtmlDiv } from "./html-div";
 import { BlockMath, InlineMath, MultilineMathExtension } from "./math";
 import { Mention } from "./mention";
 import { Paragraph } from "./paragraph";
@@ -42,8 +43,9 @@ export const extensions = [
   Paragraph,
   Heading,
   TextAlign.configure({
-    types: ["heading", "paragraph"],
+    types: ["heading", "paragraph", "htmlDiv"],
   }),
+  HtmlDiv,
   ZMarkContainer,
   Mention,
   MultilineMathExtension,
@@ -82,8 +84,22 @@ export const extensions = [
     multicolor: true,
   }),
   CodeBlock,
-  Image.configure({
+  Image.extend({
+    addStorage() {
+      return {
+        markdown: {
+          serialize(state: any, node: any) {
+            const alt = node.attrs.alt || "";
+            const src = node.attrs.src || "";
+            const title = node.attrs.title ? ` "${node.attrs.title}"` : "";
+            state.write(`![${alt}](${src}${title})`);
+          },
+        },
+      };
+    },
+  }).configure({
     allowBase64: true,
+    inline: true, // 允许图片作为行内元素
   }),
   Link.extend({
     addInputRules() {
@@ -94,6 +110,20 @@ export const extensions = [
           getAttributes: (match) => {
             const url = match[2];
             // 简单的 URL 安全性过滤
+            if (url.startsWith("javascript:") || url.startsWith("vbscript:")) {
+              return { href: "" };
+            }
+            return {
+              href: url,
+            };
+          },
+        }),
+        // Add rule to match <a><img></a> pattern
+        markInputRule({
+          find: /<a\s+href="([^"]+)"[^>]*><img\s+src="([^"]+)"[^>]*><\/a>/,
+          type: this.type,
+          getAttributes: (match) => {
+            const url = match[1];
             if (url.startsWith("javascript:") || url.startsWith("vbscript:")) {
               return { href: "" };
             }

@@ -28,6 +28,7 @@
   }
 
   img {
+    display: inline-block;
     max-width: 50%; 
     min-width: 50px;
     border-radius: 8px; 
@@ -126,6 +127,25 @@
     padding-left: 1rem;
   }
 
+  div[align="center"] {
+    text-align: center;
+    > * {
+      text-align: center;
+    }
+  }
+  div[align="left"] {
+    text-align: left;
+    > * {
+      text-align: left;
+    }
+  }
+  div[align="right"] {
+    text-align: right;
+    > * {
+      text-align: right;
+    }
+  }
+
   [data-type="zmark-container"] {
     --zmark-container-accent: var(--primary);
     --zmark-container-background: color-mix(in oklab, var(--card) 82%, var(--zmark-container-accent) 18%);
@@ -214,6 +234,16 @@
     box-shadow:
       inset 0 1px 0 rgba(255, 255, 255, 0.06),
       0 0 0 1px color-mix(in oklab, var(--zmark-container-accent) 18%, transparent);
+  }
+
+  div[align="center"] {
+    text-align: center;
+  }
+  div[align="left"] {
+    text-align: left;
+  }
+  div[align="right"] {
+    text-align: right;
   }
 
   [data-type="zmark-container"][data-kind="note"] {
