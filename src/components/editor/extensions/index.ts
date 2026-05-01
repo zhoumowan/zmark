@@ -18,6 +18,7 @@ import {
   slashSuggestion,
 } from "../slash-command/slash-extension";
 import { CodeBlock } from "./code-block";
+import { Heading } from "./heading";
 import { Mention } from "./mention";
 import { ZMarkContainer } from "./zmark-container";
 
@@ -36,7 +37,9 @@ export const extensions = [
     listKeymap: false,
     orderedList: false,
     codeBlock: false,
+    heading: false,
   }),
+  Heading,
   ZMarkContainer,
   Mention,
   Markdown.configure({ html: true, transformPastedText: true }),
