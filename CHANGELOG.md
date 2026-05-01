@@ -1,3 +1,17 @@
+# [1.15.0](https://github.com/zhoumowan/zmark/compare/v1.14.3...v1.15.0) (2026-05-01)
+
+
+### Bug Fixes
+
+* 为发送按钮添加次要变体样式 ([18ed45c](https://github.com/zhoumowan/zmark/commit/18ed45c343ce74ca03d2b2d1997569966d53b92e))
+* 修复数学公式渲染问题，支持隔行输入 ([5d421f6](https://github.com/zhoumowan/zmark/commit/5d421f679133b380cf8600af281da268f5f05a8c))
+
+
+### Features
+
+* 添加文件与文件夹导入功能 ([19adc7f](https://github.com/zhoumowan/zmark/commit/19adc7fefd8dbca1afe7264566464df9954a0621))
+* 添加标题扩展并支持文档内链接跳转 ([55b106a](https://github.com/zhoumowan/zmark/commit/55b106a22456c62de9f8cff66eded004bc0221af))
+
 ## [1.14.3](https://github.com/zhoumowan/zmark/compare/v1.14.2...v1.14.3) (2026-04-30)
 
 
