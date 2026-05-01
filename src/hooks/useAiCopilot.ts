@@ -219,6 +219,7 @@ export function useAiCopilot(editor: Editor | null) {
     key: "j",
     onTrigger: toggleCopilot,
     requireMod: true,
+    requireShift: false,
     enabled: Boolean(editor),
   });
 

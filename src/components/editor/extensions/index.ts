@@ -19,6 +19,8 @@ import { CodeBlock } from "./code-block";
 import { Heading } from "./heading";
 import { BlockMath, InlineMath, MultilineMathExtension } from "./math";
 import { Mention } from "./mention";
+import { Paragraph } from "./paragraph";
+import { TextAlign } from "./text-align";
 import { ZMarkContainer } from "./zmark-container";
 
 export const extensions = [
@@ -35,8 +37,13 @@ export const extensions = [
     orderedList: false,
     codeBlock: false,
     heading: false,
+    paragraph: false,
   }),
+  Paragraph,
   Heading,
+  TextAlign.configure({
+    types: ["heading", "paragraph"],
+  }),
   ZMarkContainer,
   Mention,
   MultilineMathExtension,

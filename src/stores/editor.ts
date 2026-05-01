@@ -57,6 +57,12 @@ export function menuBarStateSelector(ctx: EditorStateSnapshot<Editor>) {
     canSubscript: ctx.editor.can().chain().toggleSubscript().run() ?? false,
     isInlineMath: ctx.editor.isActive("inlineMath") ?? false,
 
+    // Text Align
+    isAlignLeft: ctx.editor.isActive({ textAlign: "left" }) ?? false,
+    isAlignCenter: ctx.editor.isActive({ textAlign: "center" }) ?? false,
+    isAlignRight: ctx.editor.isActive({ textAlign: "right" }) ?? false,
+    isAlignJustify: ctx.editor.isActive({ textAlign: "justify" }) ?? false,
+
     // Block types
     isParagraph: ctx.editor.isActive("paragraph") ?? false,
     isHeading1: ctx.editor.isActive("heading", { level: 1 }) ?? false,

@@ -38,6 +38,10 @@ export const useKeyDisplay = () => {
     hardBreak: formatShortcut(["Shift", "Enter"]),
     link: formatShortcut(["Mod", "K"]),
     aiCopilot: formatShortcut(["Mod", "J"]),
+    alignLeft: formatShortcut(["Mod", "Shift", "L"]),
+    alignCenter: formatShortcut(["Mod", "Shift", "E"]),
+    alignRight: formatShortcut(["Mod", "Shift", "R"]),
+    alignJustify: formatShortcut(["Mod", "Shift", "J"]),
   };
 
   return {

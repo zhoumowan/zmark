@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { useMenuBar } from "@/hooks";
 import { handleImageUpload, to } from "@/utils";
+import { AlignPopover } from "./align-popover";
 import { FrontmatterPopover } from "./frontmatter-popover";
 import { HeadingPopover } from "./heading-popover";
 import { HighlightPopover } from "./highlight-popover";
@@ -83,6 +84,8 @@ export const MenuBar = ({
             ))}
 
             <HeadingPopover editor={editor} editorState={editorState} />
+
+            <AlignPopover editor={editor} editorState={editorState} />
 
             {textActions.map((action) => (
               <MenuButton key={action.label} {...action} />

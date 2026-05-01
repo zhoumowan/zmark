@@ -22,4 +22,23 @@ export const Heading = TiptapHeading.extend({
       0,
     ];
   },
+  addStorage() {
+    return {
+      markdown: {
+        serialize(state: any, node: any) {
+          const align = node.attrs.textAlign;
+          if (align && align !== "left") {
+            state.write(`<h${node.attrs.level} align="${align}">`);
+            state.renderInline(node);
+            state.write(`</h${node.attrs.level}>`);
+            state.closeBlock(node);
+          } else {
+            state.write(state.repeat("#", node.attrs.level) + " ");
+            state.renderInline(node);
+            state.closeBlock(node);
+          }
+        },
+      },
+    };
+  },
 });

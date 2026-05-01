@@ -5,6 +5,7 @@ interface UseGlobalShortcutOptions {
   key: string;
   onTrigger: () => void;
   requireMod?: boolean;
+  requireShift?: boolean;
   enabled?: boolean;
 }
 
@@ -12,6 +13,7 @@ export function useGlobalShortcut({
   key,
   onTrigger,
   requireMod = true,
+  requireShift = false,
   enabled = true,
 }: UseGlobalShortcutOptions) {
   const isMac = useIsMac();
@@ -29,6 +31,10 @@ export function useGlobalShortcut({
         if (!hasMod) return;
       }
 
+      if (Boolean(requireShift) !== event.shiftKey) {
+        return;
+      }
+
       event.preventDefault();
       onTrigger();
     };
@@ -37,5 +43,5 @@ export function useGlobalShortcut({
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [enabled, isMac, key, onTrigger, requireMod]);
+  }, [enabled, isMac, key, onTrigger, requireMod, requireShift]);
 }
