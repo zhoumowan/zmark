@@ -1,3 +1,10 @@
+# [1.18.0](https://github.com/zhoumowan/zmark/compare/v1.17.1...v1.18.0) (2026-05-02)
+
+
+### Features
+
+* 添加编辑器自动保存功能 ([5267f41](https://github.com/zhoumowan/zmark/commit/5267f416a5db8a2f1fc91bb7519c4c3cd22f7bdf))
+
 ## [1.17.1](https://github.com/zhoumowan/zmark/compare/v1.17.0...v1.17.1) (2026-05-02)
 
 
