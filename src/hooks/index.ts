@@ -1,5 +1,6 @@
 export * from "./useAiCopilot";
 export * from "./useAsyncAction";
+export * from "./useAutoSave";
 export * from "./useCollaboration";
 export * from "./useColorHighlight";
 export * from "./useEditorEvents";

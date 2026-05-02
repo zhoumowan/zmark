@@ -1,6 +1,7 @@
 import { save } from "@tauri-apps/plugin-dialog";
 import { writeTextFile } from "@tauri-apps/plugin-fs";
 import type { Editor } from "@tiptap/core";
+import { useCallback } from "react";
 import { toast } from "sonner";
 import { useEditorStore } from "@/stores";
 import type { CollabFile } from "@/stores/collab";
@@ -26,68 +27,73 @@ export function useEditorSave({
   currentFile,
   curPath,
 }: UseEditorSaveProps) {
-  const handleSave = async () => {
-    if (!editor) return;
+  const handleSave = useCallback(
+    async (isAutoSave = false) => {
+      if (!editor) return;
 
-    const storage = editor.storage as EditorStorage;
-    const markdown = storage.markdown.getMarkdown();
-    const frontmatter = useEditorStore.getState().frontmatter;
-    const finalMarkdown = stringifyMarkdown(markdown, frontmatter);
+      const storage = editor.storage as EditorStorage;
+      const markdown = storage.markdown.getMarkdown();
+      const frontmatter = useEditorStore.getState().frontmatter;
+      const finalMarkdown = stringifyMarkdown(markdown, frontmatter);
 
-    if (collabId && currentFile) {
-      // 协作模式且没有关联本地文件：调用 Tauri 的另存为对话框
-      const [dialogErr, filePath] = await to(
-        save({
-          filters: [{ name: "Markdown", extensions: ["md"] }],
-          defaultPath: `${currentFile.name}.md`,
-        }),
-      );
+      if (collabId && currentFile) {
+        // 协作模式且没有关联本地文件：调用 Tauri 的另存为对话框
+        if (isAutoSave) return; // 协作模式如果没有本地文件，自动保存时不要弹窗
 
-      if (dialogErr) {
-        logError("Save dialog failed:", dialogErr);
-        toast.error("弹出保存对话框失败");
+        const [dialogErr, filePath] = await to(
+          save({
+            filters: [{ name: "Markdown", extensions: ["md"] }],
+            defaultPath: `${currentFile.name}.md`,
+          }),
+        );
+
+        if (dialogErr) {
+          logError("Save dialog failed:", dialogErr);
+          toast.error("弹出保存对话框失败");
+          return;
+        }
+
+        if (filePath) {
+          const [writeErr] = await to(
+            unresolveMarkdownImages(finalMarkdown, filePath).then(
+              (unresolved) => writeTextFile(filePath, unresolved),
+            ),
+          );
+
+          if (writeErr) {
+            toast.error("写入文件失败");
+            return;
+          }
+
+          toast.success("协作文档已保存到本地");
+        }
         return;
       }
 
-      if (filePath) {
-        const [writeErr] = await to(
-          unresolveMarkdownImages(finalMarkdown, filePath).then((unresolved) =>
-            writeTextFile(filePath, unresolved),
+      if (curPath) {
+        // 单机模式或已关联本地文件的保存逻辑
+        const [writeErr, unresolvedMarkdown] = await to(
+          unresolveMarkdownImages(finalMarkdown, curPath).then((unresolved) =>
+            writeTextFile(curPath, unresolved).then(() => unresolved),
           ),
         );
 
         if (writeErr) {
-          toast.error("写入文件失败");
+          if (!isAutoSave) toast.error("保存失败");
           return;
         }
 
-        toast.success("协作文档已保存到本地");
+        addOrUpdateFile({
+          path: curPath,
+          name: curPath.split("/").pop() || "Untitled",
+          content: unresolvedMarkdown,
+        });
+
+        if (!isAutoSave) toast.success("保存成功");
       }
-      return;
-    }
-
-    if (curPath) {
-      // 单机模式或已关联本地文件的保存逻辑
-      const [writeErr, unresolvedMarkdown] = await to(
-        unresolveMarkdownImages(finalMarkdown, curPath).then((unresolved) =>
-          writeTextFile(curPath, unresolved).then(() => unresolved),
-        ),
-      );
-
-      if (writeErr) {
-        toast.error("保存失败");
-        return;
-      }
-
-      addOrUpdateFile({
-        path: curPath,
-        name: curPath.split("/").pop() || "Untitled",
-        content: unresolvedMarkdown,
-      });
-
-      toast.success("保存成功");
-    }
-  };
+    },
+    [editor, collabId, currentFile, curPath],
+  );
 
   return handleSave;
 }

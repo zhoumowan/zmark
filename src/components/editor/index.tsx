@@ -10,6 +10,7 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import {
+  useAutoSave,
   useCollaboration,
   useEditorEvents,
   useEditorExtensions,
@@ -146,6 +147,7 @@ export default function Editor({
   });
 
   useSaveShortcut(handleSave);
+  useAutoSave(editor, handleSave);
 
   // 恢复正常的显示逻辑
   const showEditor = curPath || collabId;
