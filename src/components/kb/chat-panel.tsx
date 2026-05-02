@@ -325,7 +325,7 @@ export const ChatPanel = () => {
           </Button>
         </div>
 
-        <ScrollArea className="flex-1">
+        <ScrollArea className="flex-1 min-h-0">
           <div className="space-y-2 p-3">
             {!currentKbId && (
               <div className="rounded-xl border border-dashed p-4 text-sm text-muted-foreground">
