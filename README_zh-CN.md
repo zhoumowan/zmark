@@ -50,7 +50,7 @@ ZMark 是一个本地优先的桌面应用程序，它将流畅的 Markdown 编�
 
 ### 智能知识库 (RAG)
 - **本地优先架构**: 你的数据安全地保留在本地。由高性能的 SQLite 数据库驱动 (rusqlite)。
-- **AI 深度集成**: 接入 SiliconFlow API。默认使用 `BAAI/bge-m3` 进行精确的向量嵌入，并采用 `Qwen/Qwen2.5-7B-Instruct` 提供流畅的流式问答体验。
+- **AI 深度集成**: 接入 SiliconFlow API。默认使用 `BAAI/bge-m3` 进行精确的向量嵌入，并采用 `THUDM/GLM-4.1V-9B-Thinking` 提供流畅的流式问答体验。
 - **透明的检索过程**: 可视化 RAG 流程，直观展示参考文档及其相似度，让 AI 回答有迹可循。
 - **全局快速闪记 (Quick Capture)**: 支持通过全局快捷键唤起悬浮窗口，随时随地记录灵感碎片。
 

@@ -50,7 +50,7 @@ ZMark is a local-first desktop application that combines a seamless Markdown edi
 
 ### Intelligent Knowledge Base (RAG)
 - **Local-First Architecture**: Your data stays on your device. Powered by a high-performance SQLite local database (rusqlite).
-- **AI Integration**: Deep integration with SiliconFlow API. Uses `BAAI/bge-m3` for precise vector embeddings and `Qwen/Qwen2.5-7B-Instruct` for fluid, streaming Q&A.
+- **AI Integration**: Deep integration with SiliconFlow API. Uses `BAAI/bge-m3` for precise vector embeddings and `THUDM/GLM-4.1V-9B-Thinking` for fluid, streaming Q&A.
 - **Transparent Retrieval**: Visualizes the RAG process, showing referenced documents and similarity scores alongside AI responses.
 - **Quick Capture**: A global floating window for capturing fleeting thoughts instantly, supported by global shortcuts.
 

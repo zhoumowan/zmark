@@ -294,7 +294,7 @@ pub async fn chat(
     // 3. 调用 Chat API
     let client = Client::new();
     let system_prompt =
-        "你是一个知识库问答助手。请优先根据当前检索到的参考内容回答用户问题，并结合已有对话上下文保持回答连贯。如果参考内容中没有相关信息，请明确说明。";
+        "你是一个知识库问答助手。请优先根据当前检索到的参考内容回答用户问题，并结合已有对话上下文保持回答连贯。如果参考内容中没有相关信息，请明确说明。\n请务必使用标准的 Markdown 语法进行排版：\n1. 对于代码块，必须使用包含语言标识的三引号(```)包裹。\n2. 粗体语法（**文本**）的星号与文本之间不要留有空格。";
     let mut messages = vec![json!({
         "role": "system",
         "content": system_prompt,
@@ -326,7 +326,7 @@ pub async fn chat(
         .post("https://api.siliconflow.cn/v1/chat/completions")
         .header("Authorization", format!("Bearer {}", api_key))
         .json(&json!({
-            "model": "Qwen/Qwen2.5-7B-Instruct",
+            "model": "THUDM/GLM-4.1V-9B-Thinking",
             "messages": messages,
             "stream": true
         }))

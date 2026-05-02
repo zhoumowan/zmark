@@ -14,7 +14,7 @@ pub async fn ai_copilot(
     let messages = vec![
         json!({
             "role": "system",
-            "content": "你是一个专业的AI写作助手。请根据用户的指令处理以下文本。只输出处理后的结果，不要包含任何额外的解释或对话。",
+            "content": "你是一个专业的AI写作助手。请根据用户的指令处理以下文本。只输出处理后的结果，不要包含任何额外的解释或对话。\n请务必使用标准的 Markdown 语法进行排版：\n1. 对于代码块，必须使用包含语言标识的三引号(```)包裹。\n2. 粗体语法（**文本**）的星号与文本之间不要留有空格。",
         }),
         json!({
             "role": "user",
@@ -26,7 +26,7 @@ pub async fn ai_copilot(
         .post("https://api.siliconflow.cn/v1/chat/completions")
         .header("Authorization", format!("Bearer {}", api_key))
         .json(&json!({
-            "model": "Qwen/Qwen2.5-7B-Instruct",
+            "model": "THUDM/GLM-4.1V-9B-Thinking",
             "messages": messages,
             "stream": true
         }))
