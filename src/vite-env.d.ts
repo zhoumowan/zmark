@@ -1,6 +1,5 @@
 /// <reference types="vite/client" />
 
-// biome-ignore lint/correctness/noUnusedVariables: Global interface augmentation
 interface Window {
   __perf_tti?: number;
   runPerfTest?: () => Promise<{
@@ -11,7 +10,6 @@ interface Window {
   }>;
 }
 
-// biome-ignore lint/correctness/noUnusedVariables: Global interface augmentation
 interface Performance {
   memory?: {
     usedJSHeapSize: number;
@@ -20,7 +18,6 @@ interface Performance {
   };
 }
 
-// biome-ignore lint/correctness/noUnusedVariables: Global interface augmentation
 interface ImportMetaEnv {
   readonly VITE_SUPABASE_URL?: string;
   readonly VITE_SUPABASE_ANON_KEY?: string;
