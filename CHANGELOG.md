@@ -1,3 +1,17 @@
+# [1.19.0](https://github.com/zhoumowan/zmark/compare/v1.18.0...v1.19.0) (2026-05-02)
+
+
+### Bug Fixes
+
+* 修复滚动区域高度问题 ([a8dbe41](https://github.com/zhoumowan/zmark/commit/a8dbe41b7a9789ad97b2f64afcfa1950b691ddf4))
+
+
+### Features
+
+* public 图片新增 ([83ca4d8](https://github.com/zhoumowan/zmark/commit/83ca4d82e0a0d1efcae1060d7c9d0dc9e3640224))
+* 将默认 AI 模型从 Qwen 切换为 GLM-4.1V ([d405975](https://github.com/zhoumowan/zmark/commit/d4059751d2d1e27cf34c31440a1e4d760aafd3c0))
+* 添加代码块高亮和数学公式支持 ([16ceb4b](https://github.com/zhoumowan/zmark/commit/16ceb4bde6480e8d425456adb5fe0f46e9e2ce3e))
+
 # [1.18.0](https://github.com/zhoumowan/zmark/compare/v1.17.1...v1.18.0) (2026-05-02)
 
 
