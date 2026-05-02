@@ -114,7 +114,11 @@ export const BlockMath = TiptapBlockMath.extend({
           const { from, to } = range;
           const latex = match[1].replace(/\ufffc/g, "\n");
           if (latex.trim()) {
-            state.tr.replaceWith(from, to, this.type.create({ latex }));
+            state.tr.replaceWith(
+              from,
+              to,
+              this.type.create({ latex: latex.trim() }),
+            );
           }
         },
       }),

@@ -18,19 +18,43 @@ export const InlineMath = TiptapInlineMath.extend({
               (state: StateInline, silent: boolean) => {
                 const start = state.pos;
                 if (state.src.charCodeAt(start) !== 0x24) return false;
-                if (state.src.charCodeAt(start + 1) === 0x24) return false;
+
+                let markerLength = 1;
+                if (state.src.charCodeAt(start + 1) === 0x24) {
+                  markerLength = 2;
+                }
 
                 const max = state.posMax;
-                let match = start + 1;
+                let match = start + markerLength;
                 while (match < max) {
                   if (state.src.charCodeAt(match) === 0x24) {
-                    if (!silent) {
-                      const token = state.push("inlineMath", "", 0);
-                      token.markup = "$";
-                      token.content = state.src.slice(start + 1, match);
+                    if (markerLength === 2) {
+                      if (state.src.charCodeAt(match + 1) === 0x24) {
+                        if (!silent) {
+                          const token = state.push("inlineMath", "", 0);
+                          token.markup = "$$";
+                          token.content = state.src
+                            .slice(start + 2, match)
+                            .trim();
+                        }
+                        state.pos = match + 2;
+                        return true;
+                      }
+                    } else {
+                      if (state.src.charCodeAt(match + 1) !== 0x24) {
+                        if (!silent) {
+                          const token = state.push("inlineMath", "", 0);
+                          token.markup = "$";
+                          token.content = state.src
+                            .slice(start + 1, match)
+                            .trim();
+                        }
+                        state.pos = match + 1;
+                        return true;
+                      } else {
+                        match++;
+                      }
                     }
-                    state.pos = match + 1;
-                    return true;
                   }
                   if (state.src.charCodeAt(match) === 0x5c) match++;
                   match++;
@@ -58,6 +82,23 @@ export const InlineMath = TiptapInlineMath.extend({
   addInputRules() {
     return [
       new InputRule({
+        find: /(?:^|\s)\$\$([^$\n]+)\$\$/,
+        handler: ({ state, range, match }) => {
+          const { from, to } = range;
+          const latex = match[1];
+          const fullMatch = match[0];
+          const startOffset = fullMatch.startsWith(" ") ? 1 : 0;
+
+          if (latex.trim()) {
+            state.tr.replaceWith(
+              from + startOffset,
+              to,
+              this.type.create({ latex: latex.trim() }),
+            );
+          }
+        },
+      }),
+      new InputRule({
         find: /(?:^|\s)\$([^$\n]+)\$/,
         handler: ({ state, range, match }) => {
           const { from, to } = range;
@@ -69,7 +110,7 @@ export const InlineMath = TiptapInlineMath.extend({
             state.tr.replaceWith(
               from + startOffset,
               to,
-              this.type.create({ latex }),
+              this.type.create({ latex: latex.trim() }),
             );
           }
         },

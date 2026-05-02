@@ -55,7 +55,7 @@ export const multilineMathPlugin = new Plugin({
       }
 
       if (found) {
-        const latex = latexLines.join("\n");
+        const latex = latexLines.join("\n").trim();
         const endPos = $pos.after();
 
         const blockMathType = newState.schema.nodes.blockMath;

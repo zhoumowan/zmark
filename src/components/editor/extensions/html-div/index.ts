@@ -5,6 +5,7 @@ import type { MarkdownSerializerState } from "@/types";
 
 export const HtmlDiv = TiptapNode.create({
   name: "htmlDiv",
+  priority: 50,
 
   group: "block",
   content: "block+",
