@@ -30,7 +30,7 @@ import { VersionHistory } from "./version-history";
 export default function Editor({
   mode,
 }: {
-  mode?: "editor" | "kb" | "collab";
+  mode?: "editor" | "kb" | "collab" | "graph";
 }) {
   const { content, curPath: storeCurPath, activeCollabId } = useEditorStore();
   const { files } = useCollabStore();
@@ -64,25 +64,75 @@ export default function Editor({
   );
 
   // 使用自定义 hook 获取 extensions
+  performance.mark("extensions-init-start");
   const activeExtensions = useEditorExtensions({
     collabId,
     ydoc,
     provider,
     userInfo,
   });
+  performance.mark("extensions-init-end");
 
   const { click, paste } = useEditorEvents();
 
+  performance.mark("editor-hook-start");
   const editor = useEditor(
     {
       extensions: activeExtensions,
       // 恢复内容初始化：非协作模式下使用 content，协作模式下由 Yjs 接管
       content: collabId ? undefined : content,
+      // 【核心性能优化】：禁用自动聚焦，避免初始挂载时 Tiptap 触发全量 DOM 选择计算
+      autofocus: false,
+      // 【核心性能优化】：后台模式时不渲染可编辑区域，减小 ProseMirror 树构建压力
+      editable: mode !== "graph",
       editorProps: {
         handleDOMEvents: {
           click,
         },
         handlePaste: paste,
+      },
+      onCreate: () => {
+        performance.mark("editor-ready");
+        try {
+          performance.measure("tti", "app-init", "editor-ready");
+          const tti = performance.getEntriesByName("tti").pop();
+          if (tti) {
+            const msg = `[Performance] TTI (Time to Interactive): ${tti.duration.toFixed(2)} ms`;
+            console.log(
+              `%c${msg}`,
+              "color: #4CAF50; font-weight: bold; font-size: 14px;",
+            );
+            window.__perf_tti = tti.duration;
+          }
+
+          // Measure sub-phases
+          const marks = performance.getEntriesByType("mark");
+          // Deduplicate marks (Vite hot-reloading can cause duplicates)
+          const uniqueMarks = Array.from(new Set(marks.map((m) => m.name))).map(
+            (name) => marks.find((m) => m.name === name),
+          );
+
+          console.log("[Performance] Sub-phases:");
+          uniqueMarks.forEach((m) => {
+            if (m?.name !== "app-init" && m?.name !== "editor-ready") {
+              try {
+                performance.measure(
+                  `phase_${m?.name || ""}`,
+                  "app-init",
+                  m?.name,
+                );
+                const phase = performance
+                  .getEntriesByName(`phase_${m?.name || ""}`)
+                  .pop();
+                console.log(
+                  `  - to ${m?.name || ""}: ${phase?.duration.toFixed(2)} ms`,
+                );
+              } catch (_e) {}
+            }
+          });
+        } catch (_e) {
+          // ignore if app-init not found
+        }
       },
     },
     [content, provider], // 关键：必须将 provider 加入依赖，否则初始 null 变有值时编辑器不会重新初始化

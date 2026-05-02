@@ -1,16 +1,24 @@
 import path from "node:path";
 import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
+import { visualizer } from "rollup-plugin-visualizer";
 import { defineConfig } from "vite";
 
 // import { compression } from "vite-plugin-compression2";
 
 const host = process.env.TAURI_DEV_HOST;
 
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
   plugins: [
     react(),
     tailwindcss(),
+    mode === "analyze" &&
+      visualizer({
+        open: true,
+        filename: "stats.html",
+        gzipSize: true,
+        brotliSize: true,
+      }),
     // compression({
     //   include: [/\.(js)$/, /\.(css)$/, /\.(html)$/],
     //   threshold: 1400,
@@ -47,43 +55,41 @@ export default defineConfig({
   },
 
   build: {
-    chunkSizeWarningLimit: 1000,
+    chunkSizeWarningLimit: 2000,
     rollupOptions: {
       output: {
         manualChunks: (id) => {
           if (id.includes("node_modules")) {
-            if (id.includes("lowlight")) {
-              return "lowlight";
+            if (id.includes("yjs") || id.includes("@hocuspocus")) {
+              return "vendor-collab";
+            }
+            if (id.includes("echarts") || id.includes("zrender")) {
+              return "vendor-echarts";
+            }
+            if (id.includes("katex")) {
+              return "vendor-katex";
+            }
+            if (
+              id.includes("react") ||
+              id.includes("react-dom") ||
+              id.includes("react-router-dom")
+            ) {
+              return "vendor-react";
             }
             if (
               id.includes("@tiptap") ||
               id.includes("tiptap") ||
               id.includes("prosemirror")
             ) {
-              return "editor";
-            }
-            if (
-              id.includes("react-markdown") ||
-              id.includes("remark") ||
-              id.includes("rehype")
-            ) {
-              return "markdown";
-            }
-            if (id.includes("@supabase")) {
-              return "supabase";
-            }
-            if (id.includes("@tauri-apps")) {
-              return "tauri";
+              return "vendor-editor";
             }
             if (
               id.includes("lucide-react") ||
-              id.includes("radix-ui") ||
-              id.includes("class-variance-authority") ||
               id.includes("clsx") ||
               id.includes("tailwind-merge") ||
-              id.includes("sonner")
+              id.includes("radix-ui")
             ) {
-              return "ui";
+              return "vendor-ui";
             }
             return "vendor";
           }
@@ -91,4 +97,4 @@ export default defineConfig({
       },
     },
   },
-});
+}));

@@ -6,6 +6,9 @@ import { ErrorBoundary } from "./components/error-boundary";
 import "./index.css";
 
 import { logDebug, logError, toSync } from "@/utils";
+import "@/utils/perf";
+
+performance.mark("app-init");
 
 // 全局错误捕获
 window.addEventListener("error", (event) => {

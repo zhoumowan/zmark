@@ -120,16 +120,32 @@ const MainApp = () => {
 
   useEffect(() => {
     logDebug("zmark initialized");
-    // 启动时建立搜索索引
-    const buildIndex = async () => {
-      const [err, files] = await to(getAllMarkdownFiles());
-      if (err) {
-        logError("Failed to build search index:", err);
-      } else if (files) {
-        indexFiles(files);
-      }
+    // 启动时建立搜索索引（优化：延迟执行，避免阻塞首屏渲染）
+    const buildIndex = () => {
+      performance.mark("build-index-start");
+      setTimeout(async () => {
+        const [err, files] = await to(getAllMarkdownFiles());
+        if (err) {
+          logError("Failed to build search index:", err);
+        } else if (files) {
+          indexFiles(files);
+        }
+        performance.mark("build-index-end");
+      }, 500);
     };
     buildIndex();
+
+    // 如果处于未登录状态，可以提前认为壳子加载完成
+    if (!session) {
+      performance.mark("shell-ready");
+      try {
+        performance.measure("tti-shell", "app-init", "shell-ready");
+        const tti = performance.getEntriesByName("tti-shell").pop();
+        if (tti) {
+          window.__perf_tti = tti.duration;
+        }
+      } catch (_e) {}
+    }
 
     // 监听文件关联打开
     const handleFileOpen = async (filePath: string) => {
@@ -155,6 +171,7 @@ const MainApp = () => {
     // 检查首次启动参数
     invoke<string[]>("get_app_startup_args")
       .then((args) => {
+        performance.mark("args-checked");
         const fileArg = args.find(
           (arg) => arg.endsWith(".md") || arg.endsWith(".zmark"),
         );
@@ -172,7 +189,7 @@ const MainApp = () => {
     return () => {
       unlistenPromise.then((f) => f());
     };
-  }, []);
+  }, [session]);
 
   useEffect(() => {
     if (isInitializing || session) return;
@@ -180,6 +197,7 @@ const MainApp = () => {
     let cancelled = false;
 
     const mount = async () => {
+      performance.mark("canvas-nest-start");
       const el = loginBackgroundRef.current;
       if (!el) return;
 
@@ -204,6 +222,7 @@ const MainApp = () => {
       }
 
       canvasNestRef.current = instance;
+      performance.mark("canvas-nest-end");
     };
 
     void mount();
