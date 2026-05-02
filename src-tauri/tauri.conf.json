@@ -8,6 +8,9 @@
       "desktop": {
         "schemes": ["zmark"]
       }
+    },
+    "sql": {
+      "enabled": true
     }
   },
   "build": {
