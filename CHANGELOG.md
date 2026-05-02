@@ -1,3 +1,15 @@
+## [1.17.1](https://github.com/zhoumowan/zmark/compare/v1.17.0...v1.17.1) (2026-05-02)
+
+
+### Bug Fixes
+
+* 修复内联数学公式解析和多余空格问题 ([9974f6c](https://github.com/zhoumowan/zmark/commit/9974f6c50b26f4d0540e8a719174ddbbfef07093))
+
+
+### Performance Improvements
+
+* 优化应用启动性能并添加性能评估基础设施 ([2fa95fb](https://github.com/zhoumowan/zmark/commit/2fa95fb92bad846d4737f579b8363d9b827cfae1))
+
 # [1.17.0](https://github.com/zhoumowan/zmark/compare/v1.16.0...v1.17.0) (2026-05-01)
 
 
