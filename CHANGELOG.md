@@ -1,3 +1,10 @@
+# [1.20.0](https://github.com/zhoumowan/zmark/compare/v1.19.0...v1.20.0) (2026-05-02)
+
+
+### Features
+
+* 启用 SQL 功能并添加相关权限 ([bde2dc9](https://github.com/zhoumowan/zmark/commit/bde2dc9e4ccdc83025c4afd3811bf3e639c45fa7))
+
 # [1.19.0](https://github.com/zhoumowan/zmark/compare/v1.18.0...v1.19.0) (2026-05-02)
 
 
