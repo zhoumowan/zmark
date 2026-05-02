@@ -11,7 +11,12 @@ import {
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import ReactMarkdown from "react-markdown";
+import rehypeHighlight from "rehype-highlight";
+import rehypeKatex from "rehype-katex";
 import remarkGfm from "remark-gfm";
+import remarkMath from "remark-math";
+import "katex/dist/katex.min.css";
+import "@/styles/lowlight.scss";
 import { toast } from "sonner";
 import { TruncatedTooltip } from "@/components/common/truncated-tooltip";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -45,6 +50,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "../ui/collapsible";
+import { CodeBlock } from "./CodeBlock";
 
 const ChatAvatar = ({ role }: { role: ChatRole }) => {
   const config = CHAT_ROLE_UI_CONFIG[role];
@@ -69,6 +75,139 @@ const getConversationPreview = (session: ChatSession) => {
 
   const normalized = latestMessage.content.replace(/\s+/g, " ").trim();
   return normalized.length > 56 ? `${normalized.slice(0, 56)}...` : normalized;
+};
+
+const normalizeChatMarkdown = (input: string) => {
+  const raw = input.replace(/\r\n/g, "\n");
+  const lines = raw.split("\n");
+  let inFence = false;
+  let i = 0;
+  const out: string[] = [];
+
+  const isFenceLine = (line: string) => /^\s*```/.test(line);
+  const isMarkdownStructureLine = (line: string) =>
+    /^\s*(#{1,6}\s+|>\s+|(\d+\.|[-*+])\s+)/.test(line);
+
+  const isLikelyCodeLine = (line: string) => {
+    const trimmed = line.trim();
+    if (!trimmed) return false;
+    if (/^(\/\*\*?|\/\/|\*|\*\/)/.test(trimmed)) return true;
+    if (
+      /^(function|const|let|var|class|interface|type|import|export|return|if|for|while|switch|try|catch)\b/.test(
+        trimmed,
+      )
+    ) {
+      return true;
+    }
+    if (/^[{}[\]();,]+$/.test(trimmed)) return true;
+    if (/[;{}]=?>|\bconsole\./.test(trimmed)) return true;
+    if (/^<([A-Za-z][A-Za-z0-9-]*)(\s|>)/.test(trimmed)) return true;
+    if (/^\s*def\s+\w+\s*\(/.test(line)) return true;
+    return false;
+  };
+
+  const detectLang = (codeLines: string[]) => {
+    const joined = codeLines.join("\n");
+    if (/\b(def |print\(|import\s+\w+)/.test(joined)) return "python";
+    if (
+      /\b(function |const |let |var |=>|console\.log|export |import )/.test(
+        joined,
+      )
+    ) {
+      return "javascript";
+    }
+    if (/\b(SELECT|INSERT|UPDATE|DELETE)\b/i.test(joined)) return "sql";
+    if (/<\/?[a-z][\s>]/i.test(joined)) return "html";
+    return "";
+  };
+
+  const fenceCode = (codeLines: string[]) => {
+    const nonEmpty = codeLines.filter((l) => l.trim().length > 0);
+    const indents = nonEmpty.map((l) => (l.match(/^\s*/)?.[0] ?? "").length);
+    const minIndent = indents.length > 0 ? Math.min(...indents) : 0;
+    const trimmed = codeLines.map((l) => l.slice(minIndent));
+
+    const lang = detectLang(trimmed);
+    if (out.length > 0 && out[out.length - 1]?.trim().length > 0) {
+      out.push("");
+    }
+    out.push(`\`\`\`${lang}`);
+    out.push(...trimmed);
+    out.push("```");
+  };
+
+  while (i < lines.length) {
+    const line = lines[i] ?? "";
+
+    if (isFenceLine(line)) {
+      inFence = !inFence;
+      out.push(line);
+      i += 1;
+      continue;
+    }
+
+    if (inFence) {
+      out.push(line);
+      i += 1;
+      continue;
+    }
+
+    const indent = line.match(/^\s*/)?.[0] ?? "";
+    const trimmedStart = line.slice(indent.length);
+    const startsLikeCode =
+      (!isMarkdownStructureLine(line) && isLikelyCodeLine(line)) ||
+      (indent.length >= 2 &&
+        !isMarkdownStructureLine(trimmedStart) &&
+        isLikelyCodeLine(trimmedStart));
+
+    if (!startsLikeCode) {
+      out.push(line);
+      i += 1;
+      continue;
+    }
+
+    const probeLines = [line, lines[i + 1] ?? "", lines[i + 2] ?? ""];
+    const probableCodeCount = probeLines.filter((l) => {
+      const lIndent = l.match(/^\s*/)?.[0] ?? "";
+      const lTrimStart = l.slice(lIndent.length);
+      if (!l.trim()) return false;
+      if (isFenceLine(l)) return false;
+      if (isMarkdownStructureLine(l)) return false;
+      if (isLikelyCodeLine(l)) return true;
+      if (lIndent.length >= 2 && isLikelyCodeLine(lTrimStart)) return true;
+      return false;
+    }).length;
+
+    if (probableCodeCount < 2) {
+      out.push(line);
+      i += 1;
+      continue;
+    }
+
+    const codeLines: string[] = [];
+    while (i < lines.length) {
+      const current = lines[i] ?? "";
+      if (isFenceLine(current)) break;
+      if (!current.trim()) {
+        codeLines.push(current);
+        i += 1;
+        continue;
+      }
+      const currentIndent = current.match(/^\s*/)?.[0] ?? "";
+      const currentTrimStart = current.slice(currentIndent.length);
+      if (isMarkdownStructureLine(current)) break;
+      if (isLikelyCodeLine(current) || isLikelyCodeLine(currentTrimStart)) {
+        codeLines.push(current);
+        i += 1;
+        continue;
+      }
+      break;
+    }
+
+    fenceCode(codeLines);
+  }
+
+  return out.join("\n").trimEnd();
 };
 
 export const ChatPanel = () => {
@@ -453,9 +592,16 @@ export const ChatPanel = () => {
                           </CollapsibleContent>
                         </Collapsible>
                       )}
-                    <div className="prose prose-sm dark:prose-invert max-w-none prose-p:leading-relaxed prose-pre:bg-muted/50 dark:prose-pre:bg-muted/50 prose-pre:p-4 prose-pre:rounded-lg prose-pre:overflow-x-auto prose-code:break-all">
-                      <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                        {msg.content}
+                    <div className="tiptap prose prose-sm dark:prose-invert max-w-none prose-p:leading-relaxed prose-code:break-all">
+                      <ReactMarkdown
+                        remarkPlugins={[remarkGfm, remarkMath]}
+                        rehypePlugins={[rehypeKatex, rehypeHighlight]}
+                        components={{
+                          pre: ({ children }) => <>{children}</>,
+                          code: CodeBlock,
+                        }}
+                      >
+                        {normalizeChatMarkdown(msg.content)}
                       </ReactMarkdown>
                       {CHAT_ROLE_UI_CONFIG[msg.role as ChatRole].features
                         .showCursor &&
