@@ -27,11 +27,7 @@ import { TextAlign } from "./text-align";
 import { ZMarkContainer } from "./zmark-container";
 
 export const extensions = [
-  Placeholder.configure({
-    placeholder: "Write something …",
-  }),
-  TextStyleKit,
-  ListKit,
+  // 基础结构扩展：支撑常见 Markdown 语法（粗体、斜体、列表、段落、标题等）
   StarterKit.configure({
     link: false,
     bulletList: false,
@@ -42,20 +38,37 @@ export const extensions = [
     heading: false,
     paragraph: false,
   }),
+  TextStyleKit,
+  ListKit,
   Paragraph,
   Heading,
+  Superscript.extend({
+    addKeyboardShortcuts() {
+      return {
+        "Mod-Shift-.": () => this.editor.commands.toggleSuperscript(),
+      };
+    },
+  }),
+  Subscript.extend({
+    addKeyboardShortcuts() {
+      return {
+        "Mod-Shift-,": () => this.editor.commands.toggleSubscript(),
+      };
+    },
+  }),
+
+  // 结构化扩展：文档引用、容器、HTML 块、文本对齐等
   TextAlign.configure({
     types: ["heading", "paragraph", "htmlDiv"],
   }),
   HtmlDiv,
   ZMarkContainer,
   Mention,
+
+  // 样式与内容扩展：高亮、链接、图片、代码块以及 Markdown 序列化支持
   MultilineMathExtension,
-  Markdown.configure({ html: true, transformPastedText: true }),
-  BubbleMenu,
-  SlashCommand.configure({
-    suggestion: slashSuggestion,
-  }),
+  InlineMath,
+  BlockMath,
   Highlight.extend({
     addKeyboardShortcuts() {
       return {};
@@ -85,24 +98,6 @@ export const extensions = [
   }).configure({
     multicolor: true,
   }),
-  CodeBlock,
-  Image.extend({
-    addStorage() {
-      return {
-        markdown: {
-          serialize(state: MarkdownSerializerState, node: Node) {
-            const alt = node.attrs.alt || "";
-            const src = node.attrs.src || "";
-            const title = node.attrs.title ? ` "${node.attrs.title}"` : "";
-            state.write(`![${alt}](${src}${title})`);
-          },
-        },
-      };
-    },
-  }).configure({
-    allowBase64: true,
-    inline: true, // 允许图片作为行内元素
-  }),
   Link.extend({
     addInputRules() {
       return [
@@ -111,7 +106,6 @@ export const extensions = [
           type: this.type,
           getAttributes: (match) => {
             const url = match[2];
-            // 简单的 URL 安全性过滤
             if (url.startsWith("javascript:") || url.startsWith("vbscript:")) {
               return { href: "" };
             }
@@ -142,20 +136,32 @@ export const extensions = [
     linkOnPaste: true,
     validate: (url) => !!url && !url.startsWith("javascript:"),
   }),
-  Superscript.extend({
-    addKeyboardShortcuts() {
+  Image.extend({
+    addStorage() {
       return {
-        "Mod-Shift-.": () => this.editor.commands.toggleSuperscript(),
+        markdown: {
+          serialize(state: MarkdownSerializerState, node: Node) {
+            const alt = node.attrs.alt || "";
+            const src = node.attrs.src || "";
+            const title = node.attrs.title ? ` "${node.attrs.title}"` : "";
+            state.write(`![${alt}](${src}${title})`);
+          },
+        },
       };
     },
+  }).configure({
+    allowBase64: true,
+    inline: true,
   }),
-  Subscript.extend({
-    addKeyboardShortcuts() {
-      return {
-        "Mod-Shift-,": () => this.editor.commands.toggleSubscript(),
-      };
-    },
+  CodeBlock,
+  Markdown.configure({ html: true, transformPastedText: true }),
+
+  // 交互扩展：占位符、斜杠命令、行内气泡菜单等，提升写作交互体验
+  Placeholder.configure({
+    placeholder: "Write something …",
   }),
-  InlineMath,
-  BlockMath,
+  BubbleMenu,
+  SlashCommand.configure({
+    suggestion: slashSuggestion,
+  }),
 ];
