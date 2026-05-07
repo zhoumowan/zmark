@@ -1,3 +1,10 @@
+## [1.21.1](https://github.com/zhoumowan/zmark/compare/v1.21.0...v1.21.1) (2026-05-07)
+
+
+### Bug Fixes
+
+* biome ([6784911](https://github.com/zhoumowan/zmark/commit/6784911782396b02f8fea0de9dde769f584b226f))
+
 # [1.21.0](https://github.com/zhoumowan/zmark/compare/v1.20.0...v1.21.0) (2026-05-07)
 
 
