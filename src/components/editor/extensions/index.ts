@@ -1,6 +1,5 @@
-import { markInputRule, markPasteRule } from "@tiptap/core";
+import { markInputRule } from "@tiptap/core";
 import BubbleMenu from "@tiptap/extension-bubble-menu";
-import Highlight, { inputRegex, pasteRegex } from "@tiptap/extension-highlight";
 import Image from "@tiptap/extension-image";
 import Link from "@tiptap/extension-link";
 import { ListKit } from "@tiptap/extension-list";
@@ -11,7 +10,6 @@ import { Placeholder } from "@tiptap/extensions";
 import StarterKit from "@tiptap/starter-kit";
 import type { Node } from "prosemirror-model";
 import { Markdown } from "tiptap-markdown";
-import { DEFAULT_HIGHLIGHT_COLOR } from "@/consts/highlight";
 import type { MarkdownSerializerState } from "@/types";
 import {
   SlashCommand,
@@ -19,6 +17,7 @@ import {
 } from "../slash-command/slash-extension";
 import { CodeBlock } from "./code-block";
 import { Heading } from "./heading";
+import { CustomHighlight as Highlight } from "./highlight";
 import { HtmlDiv } from "./html-div";
 import { BlockMath, InlineMath, MultilineMathExtension } from "./math";
 import { Mention } from "./mention";
@@ -69,35 +68,7 @@ export const extensions = [
   MultilineMathExtension,
   InlineMath,
   BlockMath,
-  Highlight.extend({
-    addKeyboardShortcuts() {
-      return {};
-    },
-    addInputRules() {
-      return [
-        markInputRule({
-          find: inputRegex,
-          type: this.type,
-          getAttributes: () => ({
-            color: DEFAULT_HIGHLIGHT_COLOR,
-          }),
-        }),
-      ];
-    },
-    addPasteRules() {
-      return [
-        markPasteRule({
-          find: pasteRegex,
-          type: this.type,
-          getAttributes: () => ({
-            color: DEFAULT_HIGHLIGHT_COLOR,
-          }),
-        }),
-      ];
-    },
-  }).configure({
-    multicolor: true,
-  }),
+  Highlight,
   Link.extend({
     addInputRules() {
       return [
