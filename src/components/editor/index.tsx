@@ -183,7 +183,7 @@ export default function Editor({
               />
               <div className="flex flex-1 overflow-hidden relative">
                 <div className="flex-1 h-full overflow-y-auto no-scrollbar">
-                  <div className="max-w-[800px] mx-auto">
+                  <div className="max-w-200 mx-auto">
                     {isInlineFrontmatterOpen && (
                       <div className="pt-8 px-6 sm:px-12">
                         <FrontmatterPanel />
