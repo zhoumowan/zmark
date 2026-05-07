@@ -1,3 +1,10 @@
+# [1.21.0](https://github.com/zhoumowan/zmark/compare/v1.20.0...v1.21.0) (2026-05-07)
+
+
+### Features
+
+* 高亮扩展代码抽离与修正保存序列化逻辑 ([40b3e29](https://github.com/zhoumowan/zmark/commit/40b3e291524b6d14b9a28af0df5ded2604645589))
+
 # [1.20.0](https://github.com/zhoumowan/zmark/compare/v1.19.0...v1.20.0) (2026-05-02)
 
 
