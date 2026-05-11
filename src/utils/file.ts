@@ -27,7 +27,7 @@ const MARKDOWNS_DIR_NAME = "markdowns";
 const MARKDOWN_IMAGE_RE = /!\[(.*?)\]\((.*?)\)/g;
 
 function shouldSkipDirEntryName(name: string | null | undefined) {
-  return !name || name.startsWith(".") || name === ".DS_Store";
+  return !name || name.startsWith(".");
 }
 
 async function resolveTargetPath(
