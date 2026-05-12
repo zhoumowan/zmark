@@ -15,6 +15,7 @@ import {
   Strikethrough,
   Subscript,
   Superscript,
+  Table2,
   Undo,
   WrapText,
 } from "lucide-react";
@@ -161,6 +162,12 @@ export const getInsertActions = ({
     shortcut: shortcuts.codeBlock,
     onClick: () => editor.chain().focus().toggleCodeBlock().run(),
     isActive: editorState.isCodeBlock,
+  },
+  {
+    icon: Table2,
+    label: "表格",
+    onClick: () =>
+      editor.chain().focus().insertMarkdownTable({ columns: 3, rows: 2 }).run(),
   },
   {
     icon: Minus,
