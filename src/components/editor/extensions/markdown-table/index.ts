@@ -8,7 +8,7 @@ export interface InsertMarkdownTableOptions {
 const clampCount = (value: number, min = 1, max = 12) =>
   Math.min(max, Math.max(min, value));
 
-const createMarkdownTable = (options: InsertMarkdownTableOptions = {}) => {
+const createMarkdownTableLines = (options: InsertMarkdownTableOptions = {}) => {
   const columnCount = clampCount(options.columns ?? 3);
   const rowCount = clampCount(options.rows ?? 2);
 
@@ -24,9 +24,7 @@ const createMarkdownTable = (options: InsertMarkdownTableOptions = {}) => {
     ),
   );
 
-  return [header, divider, ...rows]
-    .map((cells) => `| ${cells.join(" | ")} |`)
-    .join("\n");
+  return [header, divider, ...rows].map((cells) => `| ${cells.join(" | ")} |`);
 };
 
 declare module "@tiptap/core" {
@@ -45,7 +43,14 @@ export const MarkdownTable = Extension.create({
       insertMarkdownTable:
         (options?: InsertMarkdownTableOptions) =>
         ({ commands }) => {
-          return commands.insertContent(`\n${createMarkdownTable(options)}\n`);
+          const lines = createMarkdownTableLines(options);
+          return commands.insertContent([
+            ...lines.map((line) => ({
+              type: "paragraph",
+              content: [{ type: "text", text: line }],
+            })),
+            { type: "paragraph" },
+          ]);
         },
     };
   },
