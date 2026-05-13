@@ -1,3 +1,10 @@
+## [1.22.2](https://github.com/zhoumowan/zmark/compare/v1.22.1...v1.22.2) (2026-05-13)
+
+
+### Reverts
+
+* Revert "feat: 测试" ([f004e11](https://github.com/zhoumowan/zmark/commit/f004e11a83d26191d5d3b3747efd1a00ada09048))
+
 ## [1.22.1](https://github.com/zhoumowan/zmark/compare/v1.22.0...v1.22.1) (2026-05-13)
 
 
