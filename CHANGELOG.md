@@ -1,3 +1,11 @@
+# [1.24.0](https://github.com/zhoumowan/zmark/compare/v1.23.6...v1.24.0) (2026-05-13)
+
+
+### Features
+
+* change signing key ([cb39a32](https://github.com/zhoumowan/zmark/commit/cb39a320c38211f46eb75ddd1819b94dadc732b6))
+* 测试 ([7c28517](https://github.com/zhoumowan/zmark/commit/7c28517bc21d5d30593737589fd60ff2602188c9))
+
 ## [1.23.6](https://github.com/zhoumowan/zmark/compare/v1.23.5...v1.23.6) (2026-05-13)
 
 
