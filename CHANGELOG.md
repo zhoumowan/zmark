@@ -1,3 +1,10 @@
+## [1.21.2](https://github.com/zhoumowan/zmark/compare/v1.21.1...v1.21.2) (2026-05-13)
+
+
+### Bug Fixes
+
+* 删除文件 但是目的是 re action ([f6455e3](https://github.com/zhoumowan/zmark/commit/f6455e30bc0ab3db252b5d8c50b4aefec4e667e2))
+
 ## [1.21.1](https://github.com/zhoumowan/zmark/compare/v1.21.0...v1.21.1) (2026-05-07)
 
 
