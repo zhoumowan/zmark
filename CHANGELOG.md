@@ -1,3 +1,10 @@
+## [1.22.1](https://github.com/zhoumowan/zmark/compare/v1.22.0...v1.22.1) (2026-05-13)
+
+
+### Bug Fixes
+
+* environments ([8cac704](https://github.com/zhoumowan/zmark/commit/8cac70412fe1143775742d77803618ae1754e9d3))
+
 # [1.22.0](https://github.com/zhoumowan/zmark/compare/v1.21.2...v1.22.0) (2026-05-13)
 
 
