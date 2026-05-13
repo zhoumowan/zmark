@@ -98,8 +98,8 @@ export function QuickCaptureWindow() {
             </span>
             <Button
               onClick={handleSave}
+              variant={"secondary"}
               disabled={saving || !content.trim()}
-              className="bg-zinc-900 text-white hover:bg-zinc-800 dark:bg-white dark:text-zinc-900 dark:hover:bg-zinc-200"
             >
               {saving && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
               保存
