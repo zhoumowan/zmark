@@ -16,7 +16,7 @@
       "endpoints": [
         "https://github.com/zhoumowan/zmark/releases/latest/download/latest.json"
       ],
-      "pubkey": "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsrL9dHcZ6LieBF/ftt0S\nPMJmvGyVK0oRbqkSQ+YdbPz/mONaGBCAVMs+NwJClYljdQNiU4axSetcu3MwgkDG\nWdkbU6dN5+zTewgEFvjNhDR0rc7wjE9ZF1k11+hXoE8fWFL6rsuxtkAXrJMUjUPP\nFVbrH3KrRRN6gJ/U8BSyW3A7j0cAK390Q3kE3IWrhcaHWzfmH9JfmVAQmGlak7Xt\ne/+MVxM4zP3HRYPGdywehK7aMOsCq65b1vzZmldyxndSAT2v1Fz1Hw3Q6oIsv7ij\nNj8Ez8wNqRQIxRGixDyG4wRUO4hISinEg2wp3RcadHYUFrxR9pPV3R11nw2hqj3M\neQIDAQAB\n-----END PUBLIC KEY-----",
+      "pubkey": "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA43+OeUcIe+vQlLP4DLNp\noEW19jFkyGsxIjeRn6UUyklUHuBZXT4JtCfNFdRCt0w9oYijieRXXyxKE7AXnFY/\nqIJU5CJn6eqK7H2idL3sAV3LfMZMhzss5n4flSkknPS/D54CWsB/EOlrP/sVkQeb\no4LhHXR1seeg6/ppW0++/tWECF41f9dpsR/N9k09PjOaOkWGI4067s5ZUv5MG6aG\njFX6xGPrJhV6Y8tIIBInvDkUW4vmfC/A+p7ytXjfzBbOO4nO6+Df4kjDjet+cOt6\nBCjruX5WaHTYTD2ybl2kDMg+cJ6KBULIOb3KqWXE7bJleNoZ5x5f1KBzWr2EY4hG\nkQIDAQAB\n-----END PUBLIC KEY-----",
       "dialog": true,
       "installMode": "promptPassive"
     }
@@ -35,8 +35,7 @@
         "width": 1200,
         "height": 800,
         "visible": true,
-        "fullscreen": false,
-        "devtools": true
+        "fullscreen": false
       },
       {
         "title": "Quick Capture",
