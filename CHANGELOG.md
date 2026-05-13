@@ -1,3 +1,10 @@
+# [1.23.0](https://github.com/zhoumowan/zmark/compare/v1.22.2...v1.23.0) (2026-05-13)
+
+
+### Features
+
+* add application auto-updater feature ([a38b358](https://github.com/zhoumowan/zmark/commit/a38b35853b59ed4687b773ca7227fd0da01d3977))
+
 ## [1.22.2](https://github.com/zhoumowan/zmark/compare/v1.22.1...v1.22.2) (2026-05-13)
 
 
