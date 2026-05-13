@@ -152,6 +152,11 @@ jobs:
         run: |
           npm version ${{ needs.release.outputs.version }} --no-git-tag-version
 
+      - name: Sync version to tauri.conf.json
+        run: |
+          sed -i 's/"version": "[^"]*"/"version": "${{ needs.release.outputs.version }}"/' src-tauri/tauri.conf.json
+          cat src-tauri/tauri.conf.json | grep '"version"'
+
       # =========================
       # Build + Release (Tauri)
       # =========================
