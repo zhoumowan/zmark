@@ -1,3 +1,10 @@
+## [1.23.4](https://github.com/zhoumowan/zmark/compare/v1.23.3...v1.23.4) (2026-05-13)
+
+
+### Bug Fixes
+
+* module ([db563b9](https://github.com/zhoumowan/zmark/commit/db563b924bf29d27f8db0ba75cb8c32a562f67dd))
+
 ## [1.23.3](https://github.com/zhoumowan/zmark/compare/v1.23.2...v1.23.3) (2026-05-13)
 
 
