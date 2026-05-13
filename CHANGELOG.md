@@ -1,3 +1,10 @@
+## [1.23.5](https://github.com/zhoumowan/zmark/compare/v1.23.4...v1.23.5) (2026-05-13)
+
+
+### Bug Fixes
+
+* rust build error warning ([b03caea](https://github.com/zhoumowan/zmark/commit/b03caeaa3ee2f9da00a5544ec1f5bc6e66936ef3))
+
 ## [1.23.4](https://github.com/zhoumowan/zmark/compare/v1.23.3...v1.23.4) (2026-05-13)
 
 
