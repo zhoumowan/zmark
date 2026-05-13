@@ -154,6 +154,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
           VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+          VITE_COLLAB_URL: ${{ secrets.VITE_COLLAB_URL }}
+          VITE_SILICONFLOW_API_KEY: ${{ secrets.VITE_SILICONFLOW_API_KEY }}
         with:
           tagName: v${{ needs.release.outputs.version }}
           releaseName: "zmark v${{ needs.release.outputs.version }}"
