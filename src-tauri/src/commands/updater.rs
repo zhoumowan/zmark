@@ -1,4 +1,4 @@
-use tauri::{AppHandle, Manager};
+use tauri::AppHandle;
 use tauri_plugin_updater::UpdaterExt;
 
 #[derive(serde::Serialize)]
@@ -13,7 +13,9 @@ pub struct UpdateCheckResult {
 pub async fn check_for_update(app: AppHandle) -> Result<UpdateCheckResult, String> {
     let current_version = app.package_info().version.to_string();
 
-    match app.updater().check().await {
+    let updater = app.updater().map_err(|e| format!("获取更新器失败: {}", e))?;
+    
+    match updater.check().await {
         Ok(Some(update)) => {
             Ok(UpdateCheckResult {
                 available: true,
@@ -38,9 +40,11 @@ pub async fn check_for_update(app: AppHandle) -> Result<UpdateCheckResult, Strin
 
 #[tauri::command]
 pub async fn install_update(app: AppHandle) -> Result<(), String> {
-    match app.updater().check().await {
+    let updater = app.updater().map_err(|e| format!("获取更新器失败: {}", e))?;
+    
+    match updater.check().await {
         Ok(Some(update)) => {
-            update.download_and_install(|_, _| {}).await.map_err(|e| {
+            update.download_and_install(|_, _| {}, || {}).await.map_err(|e| {
                 format!("安装更新失败: {}", e)
             })?;
             Ok(())
