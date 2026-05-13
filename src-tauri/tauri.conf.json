@@ -11,6 +11,14 @@
     },
     "sql": {
       "enabled": true
+    },
+    "updater": {
+      "endpoints": [
+        "https://github.com/zhoumowan/zmark/releases/latest/download/latest.json"
+      ],
+      "pubkey": "",
+      "dialog": true,
+      "installMode": "promptPassive"
     }
   },
   "build": {

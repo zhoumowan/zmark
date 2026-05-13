@@ -4,3 +4,4 @@ pub mod runner;
 pub mod ai;
 pub mod tray;
 pub mod startup;
+pub mod updater;

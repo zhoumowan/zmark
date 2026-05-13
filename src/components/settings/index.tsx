@@ -11,6 +11,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { UpdaterCard } from "@/components/updater";
 import { useAsyncAction } from "@/hooks";
 import { useAuthStore } from "@/stores";
 
@@ -46,67 +47,69 @@ export const AccountSettingsPage = () => {
     },
   );
 
-  if (!user) return null;
-
   return (
     <div className="flex h-full w-full overflow-auto p-6">
-      <div className="w-full max-w-xl mx-auto">
-        <Card>
-          <CardHeader>
-            <CardTitle>设置</CardTitle>
-            <CardDescription>仅支持修改展示名称与头像。</CardDescription>
-          </CardHeader>
-          <CardContent className="grid gap-4">
-            <div className="flex items-center gap-3">
-              <Avatar size="lg">
-                <AvatarImage src={avatarUrl || user.avatar_url || ""} />
-                <AvatarFallback>
-                  {(name || user.email || "U").charAt(0).toUpperCase()}
-                </AvatarFallback>
-              </Avatar>
-              <div className="flex flex-col">
-                <div className="text-sm font-medium">{name || "用户"}</div>
-                <div className="text-xs text-muted-foreground">
-                  {user.email || ""}
+      <div className="w-full max-w-xl mx-auto space-y-6">
+        <UpdaterCard />
+
+        {user && (
+          <Card>
+            <CardHeader>
+              <CardTitle>账户设置</CardTitle>
+              <CardDescription>仅支持修改展示名称与头像。</CardDescription>
+            </CardHeader>
+            <CardContent className="grid gap-4">
+              <div className="flex items-center gap-3">
+                <Avatar size="lg">
+                  <AvatarImage src={avatarUrl || user.avatar_url || ""} />
+                  <AvatarFallback>
+                    {(name || user.email || "U").charAt(0).toUpperCase()}
+                  </AvatarFallback>
+                </Avatar>
+                <div className="flex flex-col">
+                  <div className="text-sm font-medium">{name || "用户"}</div>
+                  <div className="text-xs text-muted-foreground">
+                    {user.email || ""}
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div className="grid gap-1">
-              <div className="text-xs text-muted-foreground">展示名称</div>
-              <Input
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                disabled={loading || isSaving}
-              />
-            </div>
+              <div className="grid gap-1">
+                <div className="text-xs text-muted-foreground">展示名称</div>
+                <Input
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  disabled={loading || isSaving}
+                />
+              </div>
 
-            <div className="grid gap-1">
-              <div className="text-xs text-muted-foreground">头像 URL</div>
-              <Input
-                value={avatarUrl}
-                onChange={(e) => setAvatarUrl(e.target.value)}
+              <div className="grid gap-1">
+                <div className="text-xs text-muted-foreground">头像 URL</div>
+                <Input
+                  value={avatarUrl}
+                  onChange={(e) => setAvatarUrl(e.target.value)}
+                  disabled={loading || isSaving}
+                />
+              </div>
+            </CardContent>
+            <CardFooter className="justify-end gap-2">
+              <Button
+                variant="secondary"
+                onClick={() => save()}
                 disabled={loading || isSaving}
-              />
-            </div>
-          </CardContent>
-          <CardFooter className="justify-end gap-2">
-            <Button
-              variant="secondary"
-              onClick={() => save()}
-              disabled={loading || isSaving}
-            >
-              {loading || isSaving ? (
-                <>
-                  <Loader2 className="size-4 animate-spin" />
-                  保存中
-                </>
-              ) : (
-                "保存"
-              )}
-            </Button>
-          </CardFooter>
-        </Card>
+              >
+                {loading || isSaving ? (
+                  <>
+                    <Loader2 className="size-4 animate-spin" />
+                    保存中
+                  </>
+                ) : (
+                  "保存"
+                )}
+              </Button>
+            </CardFooter>
+          </Card>
+        )}
       </div>
     </div>
   );
