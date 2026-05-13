@@ -27,8 +27,7 @@
         "width": 1200,
         "height": 800,
         "visible": true,
-        "fullscreen": false,
-        "devtools": true
+        "fullscreen": false
       },
       {
         "title": "Quick Capture",

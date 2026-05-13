@@ -1,7 +1,7 @@
 import { HocuspocusProvider } from "@hocuspocus/provider";
 import { useEffect, useState } from "react";
 import * as Y from "yjs";
-import { base64ToUint8, toSync, uint8ToBase64 } from "@/utils";
+import { base64ToUint8, logDebug, toSync, uint8ToBase64 } from "@/utils";
 import { supabase } from "@/utils/supabase-client";
 import { TauriSqlitePersistence } from "@/utils/y-sqlite";
 
@@ -104,32 +104,14 @@ export function useCollaboration(collabId: string | null) {
     const collaborationUrl =
       import.meta.env.VITE_COLLAB_URL ?? "ws://localhost:1234";
 
-    console.log(
-      "[Collab] 🚀 Connecting to:",
-      collaborationUrl,
-      "room:",
-      collabId,
-    );
-    console.log("[Collab] 🌐 Environment:", import.meta.env.MODE);
-
     const prov = new HocuspocusProvider({
       url: collaborationUrl,
-      name: collabId,
+      name: collabId, // 使用文档ID作为房间号
       document: ydoc,
-      onConnect() {
-        console.log("[Collab] ✅ Connected successfully");
-      },
-      onSynced() {
-        console.log("[Collab] 🔄 Synced");
-      },
-      onDisconnect(data) {
-        console.error("[Collab] ❌ Disconnected:", data);
-      },
-      onAuthenticationFailed(data) {
-        console.error("[Collab] ❌ Auth failed:", data);
-      },
-      onStatus(data) {
-        console.log("[Collab] 📶 Status:", data);
+      onConnect() {},
+      onSynced() {},
+      onDisconnect() {
+        logDebug("CRDT Disconnected");
       },
     });
 

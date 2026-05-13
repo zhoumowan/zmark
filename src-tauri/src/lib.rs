@@ -25,10 +25,7 @@ pub fn run() {
                 println!("Deep link received in single-instance: {}", url);
                 // 发送 "deep-link-received" 事件给前端
                 let _ = app.emit("deep-link-received", url);
-            } else if let Some(file_arg) = argv
-                .iter()
-                .find(|arg| arg.ends_with(".md") || arg.ends_with(".zmark"))
-            {
+            } else if let Some(file_arg) = argv.iter().find(|arg| arg.ends_with(".md") || arg.ends_with(".zmark")) {
                 println!("File open received in single-instance: {}", file_arg);
                 let _ = app.emit("file-open-received", file_arg);
             } else {
@@ -62,7 +59,11 @@ pub fn run() {
             let show_item = MenuItem::with_id(app, "show", "显示 zmark", true, None::<&str>)?;
             let quit_item = MenuItem::with_id(app, "quit", "退出", true, None::<&str>)?;
             let tray_menu = MenuBuilder::new(app)
-                .items(&[&show_item, &PredefinedMenuItem::separator(app)?, &quit_item])
+                .items(&[
+                    &show_item,
+                    &PredefinedMenuItem::separator(app)?,
+                    &quit_item,
+                ])
                 .build()?;
 
             TrayIconBuilder::with_id("main-tray")
@@ -94,10 +95,11 @@ pub fn run() {
                 })
                 .build(app)?;
 
-            {
-                let window = app.get_webview_window("main").unwrap();
-                window.open_devtools();
-            }
+            // #[cfg(debug_assertions)]
+            // {
+            //     let window = app.get_webview_window("main").unwrap();
+            //     window.open_devtools();
+            // }
 
             // 阻止关闭，改为隐藏到系统托盘/后台，保持协作连接或窗口实例继续运行。
             for label in ["main", "capture"] {
