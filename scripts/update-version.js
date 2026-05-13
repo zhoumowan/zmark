@@ -1,13 +1,15 @@
-const fs = require("fs");
-const path = require("path");
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
 
 const version = process.argv[2];
 
 if (!version) {
-  console.error("Usage: node update-version.js <version>");
+  console.error("Usage: node scripts/update-version.js <version>");
   process.exit(1);
 }
 
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const tauriConfPath = path.join(
   __dirname,
   "..",
