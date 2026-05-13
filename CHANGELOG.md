@@ -1,3 +1,10 @@
+## [1.23.1](https://github.com/zhoumowan/zmark/compare/v1.23.0...v1.23.1) (2026-05-13)
+
+
+### Bug Fixes
+
+* version manage ([eede0be](https://github.com/zhoumowan/zmark/commit/eede0be7d21a3e0097621431217dcb567e36cd8e))
+
 # [1.23.0](https://github.com/zhoumowan/zmark/compare/v1.22.2...v1.23.0) (2026-05-13)
 
 
