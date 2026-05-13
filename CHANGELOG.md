@@ -1,3 +1,10 @@
+## [1.23.6](https://github.com/zhoumowan/zmark/compare/v1.23.5...v1.23.6) (2026-05-13)
+
+
+### Bug Fixes
+
+* add tauri signing ([f976c65](https://github.com/zhoumowan/zmark/commit/f976c658a1d87c2e2c3caacd648586da5979793c))
+
 ## [1.23.5](https://github.com/zhoumowan/zmark/compare/v1.23.4...v1.23.5) (2026-05-13)
 
 
