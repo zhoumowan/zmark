@@ -1,6 +1,6 @@
 [package]
 name = "zmark"
-version = "${npm_package_version}"
+version = "1.6.2"
 description = "A Tauri App"
 authors = ["you"]
 edition = "2021"

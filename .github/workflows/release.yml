@@ -149,19 +149,10 @@ jobs:
       # Update version before build
       # =========================
       - name: Update package.json version
-        run: |
-          npm version ${{ needs.release.outputs.version }} --no-git-tag-version
+        run: npm version ${{ needs.release.outputs.version }} --no-git-tag-version
 
-      - name: Sync version to tauri.conf.json
-        run: |
-          node -e "
-            const fs = require('fs');
-            const path = 'src-tauri/tauri.conf.json';
-            const content = fs.readFileSync(path, 'utf-8');
-            const updated = content.replace(/\"version\": \"[^\"]*\"/, '\"version\": \"${{ needs.release.outputs.version }}\"');
-            fs.writeFileSync(path, updated);
-            console.log('Updated version:', JSON.parse(fs.readFileSync(path, 'utf-8')).version);
-          "
+      - name: Sync version to tauri.conf.json and Cargo.toml
+        run: node scripts/update-version.js ${{ needs.release.outputs.version }}
 
       # =========================
       # Build + Release (Tauri)
