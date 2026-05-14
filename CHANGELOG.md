@@ -1,3 +1,10 @@
+## [1.24.1](https://github.com/zhoumowan/zmark/compare/v1.24.0...v1.24.1) (2026-05-14)
+
+
+### Bug Fixes
+
+* **github actions, tauri:** 配置自动生成更新器工件和启用更新 json ([4e204f1](https://github.com/zhoumowan/zmark/commit/4e204f1641ab7f7f01a652bc6c48643c5dde6974))
+
 # [1.24.0](https://github.com/zhoumowan/zmark/compare/v1.23.6...v1.24.0) (2026-05-13)
 
 
