@@ -11,7 +11,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { UpdaterCard } from "@/components/updater";
 import { useAsyncAction } from "@/hooks";
 import { useAuthStore } from "@/stores";
 
@@ -50,8 +49,6 @@ export const AccountSettingsPage = () => {
   return (
     <div className="flex h-full w-full overflow-auto p-6">
       <div className="w-full max-w-xl mx-auto space-y-6">
-        <UpdaterCard />
-
         {user && (
           <Card>
             <CardHeader>

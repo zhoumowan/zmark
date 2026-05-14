@@ -58,7 +58,6 @@ pub fn run() {
         .plugin(tauri_plugin_dialog::init())
         .plugin(tauri_plugin_global_shortcut::Builder::new().build())
         .plugin(tauri_plugin_sql::Builder::default().build())
-        .plugin(tauri_plugin_updater::Builder::new().build())
         .setup(|app| {
             let show_item = MenuItem::with_id(app, "show", "显示 zmark", true, None::<&str>)?;
             let quit_item = MenuItem::with_id(app, "quit", "退出", true, None::<&str>)?;
@@ -140,9 +139,7 @@ pub fn run() {
             commands::tray::show_window,
             commands::tray::is_window_visible,
             commands::tray::show_capture_window,
-            commands::tray::hide_capture_window,
-            commands::updater::check_for_update,
-            commands::updater::install_update
+            commands::tray::hide_capture_window
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

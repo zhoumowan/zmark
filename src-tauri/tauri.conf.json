@@ -11,14 +11,6 @@
     },
     "sql": {
       "enabled": true
-    },
-    "updater": {
-      "endpoints": [
-        "https://github.com/zhoumowan/zmark/releases/latest/download/latest.json"
-      ],
-      "pubkey": "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAvP3Ip1lwjUQuvHvNTPE3\nHh3Zx+dMC5yRpeZIYlG/ienAPiutnbmur4E1dPduy6VTcUadbBAG2oiora7O5UB7\nLFgk/dur+WHQt30DpK5Wxtq/r53NN+GlJviLWDBV6d8U69a5xdado6lT+6Efo5cm\neHJ7ANDv4vEr0pY3qCXIHtNpM/Pc6KbCbOHL2g1e/k5j8SqHgPXeIvGx7zaAEWnW\n3NvKem+OPFr3GGnUWNallg1Mh7CJkyBDAHCnNmOoD2DWQB8AvhvZmARr5Beh42/o\nvdHJpKizYIrk3JzF2N+ROl76GQLMrrMqBcsmxDB+BsFMBXMjKLvIWcgACr/bDWp4\nxwIDAQAB\n-----END PUBLIC KEY-----",
-      "dialog": true,
-      "installMode": "promptPassive"
     }
   },
   "build": {
@@ -63,7 +55,6 @@
   "bundle": {
     "active": true,
     "targets": "all",
-    "createUpdaterArtifacts": true,
     "fileAssociations": [
       {
         "ext": ["md"],
