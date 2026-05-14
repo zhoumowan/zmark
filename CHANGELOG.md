@@ -1,3 +1,10 @@
+## [1.24.3](https://github.com/zhoumowan/zmark/compare/v1.24.2...v1.24.3) (2026-05-14)
+
+
+### Bug Fixes
+
+* decode script ([2c36d0d](https://github.com/zhoumowan/zmark/commit/2c36d0da4691ba42010184a07e41c5b465b8050d))
+
 ## [1.24.2](https://github.com/zhoumowan/zmark/compare/v1.24.1...v1.24.2) (2026-05-14)
 
 
