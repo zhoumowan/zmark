@@ -146,6 +146,15 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       # =========================
+      # Update version before build
+      # =========================
+      - name: Update package.json version
+        run: npm version ${{ needs.release.outputs.version }} --no-git-tag-version
+
+      - name: Sync version to tauri.conf.json and Cargo.toml
+        run: node scripts/update-version.js ${{ needs.release.outputs.version }}
+
+      # =========================
       # Build + Release (Tauri)
       # =========================
       - name: Build & Release Tauri App
@@ -154,6 +163,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
           VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+          VITE_COLLAB_URL: ${{ secrets.VITE_COLLAB_URL }}
+          VITE_SILICONFLOW_API_KEY: ${{ secrets.VITE_SILICONFLOW_API_KEY }}
         with:
           tagName: v${{ needs.release.outputs.version }}
           releaseName: "zmark v${{ needs.release.outputs.version }}"
