@@ -1,3 +1,10 @@
+## [1.24.2](https://github.com/zhoumowan/zmark/compare/v1.24.1...v1.24.2) (2026-05-14)
+
+
+### Bug Fixes
+
+* update key ([f1da286](https://github.com/zhoumowan/zmark/commit/f1da286efccd4c66b6453c7c962b76c4bdad4756))
+
 ## [1.24.1](https://github.com/zhoumowan/zmark/compare/v1.24.0...v1.24.1) (2026-05-14)
 
 
