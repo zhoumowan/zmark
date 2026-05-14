@@ -16,7 +16,7 @@
       "endpoints": [
         "https://github.com/zhoumowan/zmark/releases/latest/download/latest.json"
       ],
-      "pubkey": "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAx5PUWrMVbopQpVsIHrJa\n6ozm9+S0TbisvgDVYjNvJiONbq1upODMUUFsqFgCV4vARJeqvC1oE3R2v9wWab87\nwpFOAk9GbVhqQ8EFI6+aBq74VA0u+sx0LFfIxxns3RSWazm+a4NmAbcxkZICSBAm\n12SAi79/jY/dXSHdyARo+2bW2OmXsDIuLOThEMmwRqg8EB+N3gho3UU4WGw3qC5S\n4BnTUPiKDWqc6T5bj28B+RJVnGAOSO6UUVeDMtmRvq3OAh8xEd6+GAQFyI5y9Adl\nKjQGDo83cvOOC1xtliRxn77WRMZv8fYKckHVwEWlmqYDA9EY0AO/pomRxaIXJ/oa\nGQIDAQAB\n-----END PUBLIC KEY-----",
+      "pubkey": "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAvP3Ip1lwjUQuvHvNTPE3\nHh3Zx+dMC5yRpeZIYlG/ienAPiutnbmur4E1dPduy6VTcUadbBAG2oiora7O5UB7\nLFgk/dur+WHQt30DpK5Wxtq/r53NN+GlJviLWDBV6d8U69a5xdado6lT+6Efo5cm\neHJ7ANDv4vEr0pY3qCXIHtNpM/Pc6KbCbOHL2g1e/k5j8SqHgPXeIvGx7zaAEWnW\n3NvKem+OPFr3GGnUWNallg1Mh7CJkyBDAHCnNmOoD2DWQB8AvhvZmARr5Beh42/o\nvdHJpKizYIrk3JzF2N+ROl76GQLMrrMqBcsmxDB+BsFMBXMjKLvIWcgACr/bDWp4\nxwIDAQAB\n-----END PUBLIC KEY-----",
       "dialog": true,
       "installMode": "promptPassive"
     }
