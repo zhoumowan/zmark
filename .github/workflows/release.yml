@@ -157,8 +157,14 @@ jobs:
       # =========================
       # Build + Release (Tauri)
       # =========================
-      - name: Decode signing key
-        run: echo "${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}" | base64 -d > signing_key.pem
+      - name: Decode signing key and set environment variable
+        id: decode-key
+        run: |
+          node scripts/decode-key.js "${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}" "${{ github.workspace }}/signing_key.pem"
+          SIGNING_KEY=$(cat "${{ github.workspace }}/signing_key.pem")
+          echo "TAURI_SIGNING_PRIVATE_KEY<<EOF" >> "$GITHUB_ENV"
+          echo "$SIGNING_KEY" >> "$GITHUB_ENV"
+          echo "EOF" >> "$GITHUB_ENV"
 
       - name: Build & Release Tauri App
         uses: tauri-apps/tauri-action@v0
@@ -168,7 +174,6 @@ jobs:
           VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
           VITE_COLLAB_URL: ${{ secrets.VITE_COLLAB_URL }}
           VITE_SILICONFLOW_API_KEY: ${{ secrets.VITE_SILICONFLOW_API_KEY }}
-          TAURI_SIGNING_PRIVATE_KEY: ${{ github.workspace }}/signing_key.pem
           TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
         with:
           tagName: v${{ needs.release.outputs.version }}
