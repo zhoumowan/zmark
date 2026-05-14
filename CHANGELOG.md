@@ -1,3 +1,10 @@
+# [1.22.0](https://github.com/zhoumowan/zmark/compare/v1.21.1...v1.22.0) (2026-05-14)
+
+
+### Features
+
+* 版本稳定化 ([0d5c256](https://github.com/zhoumowan/zmark/commit/0d5c256ff0f6b765e69ff66470190f78369de89d))
+
 ## [1.21.1](https://github.com/zhoumowan/zmark/compare/v1.21.0...v1.21.1) (2026-05-07)
 
 
