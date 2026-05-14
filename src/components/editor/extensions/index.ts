@@ -19,6 +19,7 @@ import { CodeBlock } from "./code-block";
 import { Heading } from "./heading";
 import { CustomHighlight as Highlight } from "./highlight";
 import { HtmlDiv } from "./html-div";
+import { MarkdownTable } from "./markdown-table";
 import { BlockMath, InlineMath, MultilineMathExtension } from "./math";
 import { Mention } from "./mention";
 import { Paragraph } from "./paragraph";
@@ -125,6 +126,7 @@ export const extensions = [
     inline: true,
   }),
   CodeBlock,
+  MarkdownTable,
   Markdown.configure({ html: true, transformPastedText: true }),
 
   // 交互扩展：占位符、斜杠命令、行内气泡菜单等，提升写作交互体验
