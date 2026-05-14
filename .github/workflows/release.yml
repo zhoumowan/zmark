@@ -173,6 +173,7 @@ jobs:
           releaseBody: "Auto release by enterprise CI 🚀"
           releaseDraft: false
           prerelease: false
+          includeUpdaterJson: true
 
       # =========================
       # Upload artifact fallback（保险）
