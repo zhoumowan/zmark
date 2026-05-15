@@ -46,7 +46,11 @@ export function useEditorEvents() {
       if (!anchor) return false;
 
       const href = anchor.getAttribute("href");
-      if (!href) return false;
+      if (!href) {
+        event.preventDefault();
+        event.stopPropagation();
+        return true;
+      }
 
       const { metaKey, ctrlKey } = event;
       const isHttp = href.startsWith("http://") || href.startsWith("https://");
