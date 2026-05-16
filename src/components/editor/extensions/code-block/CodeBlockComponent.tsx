@@ -23,7 +23,11 @@ export const CodeBlockComponent = (props: NodeViewProps) => {
   const [isRunning, setIsRunning] = useState(false);
 
   const language = node.attrs.language || "text";
-  const isRunnable = language === "javascript" || language === "js";
+  const isRunnable =
+    language === "javascript" ||
+    language === "js" ||
+    language === "python" ||
+    language === "py";
 
   const handleCopy = () => {
     navigator.clipboard.writeText(node.textContent);
