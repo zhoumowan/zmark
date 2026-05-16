@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="drawio" version="26.0.0">
+  <diagram name="协作编辑模式时序图">
+    <mxGraphModel dx="1434" dy="780" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1500" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- 标题 -->
+        <mxCell id="title" value="协作编辑模式时序图" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontStyle=1;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="40" y="20" width="280" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- Actors -->
+        <mxCell id="a1" value="User" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#000000;fontColor=#000000;fontSize=12;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="60" y="60" width="100" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="a2" value="CollabSidebar" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#000000;fontColor=#000000;fontSize=12;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="220" y="60" width="120" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="a3" value="Editor" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#000000;fontColor=#000000;fontSize=12;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="400" y="60" width="100" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="a4" value="useCollaboration" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#000000;fontColor=#000000;fontSize=12;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="560" y="60" width="140" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="a5" value="Y.Doc" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#000000;fontColor=#000000;fontSize=12;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="760" y="60" width="100" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="a6" value="TauriSQLite" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#000000;fontColor=#000000;fontSize=12;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="920" y="60" width="100" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="a7" value="Supabase" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#000000;fontColor=#000000;fontSize=12;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="1080" y="60" width="100" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="a8" value="Hocuspocus Server" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#000000;fontColor=#000000;fontSize=12;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="1240" y="60" width="140" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- Lifelines (thin dashed rectangles) -->
+        <mxCell id="ll1" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#999999;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="109" y="110" width="2" height="740" as="geometry" />
+        </mxCell>
+        <mxCell id="ll2" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#999999;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="279" y="110" width="2" height="740" as="geometry" />
+        </mxCell>
+        <mxCell id="ll3" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#999999;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="449" y="110" width="2" height="740" as="geometry" />
+        </mxCell>
+        <mxCell id="ll4" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#999999;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="629" y="110" width="2" height="740" as="geometry" />
+        </mxCell>
+        <mxCell id="ll5" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#999999;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="809" y="110" width="2" height="740" as="geometry" />
+        </mxCell>
+        <mxCell id="ll6" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#999999;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="969" y="110" width="2" height="740" as="geometry" />
+        </mxCell>
+        <mxCell id="ll7" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#999999;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="1129" y="110" width="2" height="740" as="geometry" />
+        </mxCell>
+        <mxCell id="ll8" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#999999;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="1309" y="110" width="2" height="740" as="geometry" />
+        </mxCell>
+
+        <!-- m1: User -> CollabSidebar (y=150, exitY=0.054) -->
+        <mxCell id="m1" value="创建 / 加入文档" style="edgeStyle=none;html=1;strokeColor=#333333;fontSize=11;endArrow=block;exitX=1;exitY=0.054;entryX=0;entryY=0.054;" edge="1" parent="1" source="ll1" target="ll2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- m2: CollabSidebar -> Editor (y=190) -->
+        <mxCell id="m2" value="setActiveCollabId" style="edgeStyle=none;html=1;strokeColor=#333333;fontSize=11;endArrow=block;exitX=1;exitY=0.108;entryX=0;entryY=0.108;" edge="1" parent="1" source="ll2" target="ll3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- m3: Editor -> useCollaboration (y=230) -->
+        <mxCell id="m3" value="useCollaboration(collabId)" style="edgeStyle=none;html=1;strokeColor=#333333;fontSize=11;endArrow=block;exitX=1;exitY=0.162;entryX=0;entryY=0.162;" edge="1" parent="1" source="ll3" target="ll4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- m4: useCollaboration -> Y.Doc (y=270) -->
+        <mxCell id="m4" value="new Y.Doc()" style="edgeStyle=none;html=1;strokeColor=#333333;fontSize=11;endArrow=block;exitX=1;exitY=0.216;entryX=0;entryY=0.216;" edge="1" parent="1" source="ll4" target="ll5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- m5: useCollaboration -> TauriSQLite (y=310) -->
+        <mxCell id="m5" value="init persistence" style="edgeStyle=none;html=1;strokeColor=#333333;fontSize=11;endArrow=block;exitX=1;exitY=0.27;entryX=0;entryY=0.27;" edge="1" parent="1" source="ll4" target="ll6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- m6: TauriSQLite -> Y.Doc (y=350) -->
+        <mxCell id="m6" value="Y.applyUpdate(local)" style="edgeStyle=none;html=1;strokeColor=#333333;fontSize=11;endArrow=block;exitX=0;exitY=0.324;entryX=1;entryY=0.324;" edge="1" parent="1" source="ll6" target="ll5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- m7: useCollaboration -> Supabase (y=390) -->
+        <mxCell id="m7" value="restore y_update" style="edgeStyle=none;html=1;strokeColor=#333333;fontSize=11;endArrow=block;exitX=1;exitY=0.378;entryX=0;entryY=0.378;" edge="1" parent="1" source="ll4" target="ll7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- m8: Supabase -> useCollaboration (y=430, dashed return) -->
+        <mxCell id="m8" value="return cloud data" style="edgeStyle=none;html=1;strokeColor=#333333;fontSize=11;endArrow=open;dashed=1;exitX=0;exitY=0.432;entryX=1;entryY=0.432;" edge="1" parent="1" source="ll7" target="ll4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- m9: useCollaboration -> Y.Doc (y=470) -->
+        <mxCell id="m9" value="Y.applyUpdate(cloud)" style="edgeStyle=none;html=1;strokeColor=#333333;fontSize=11;endArrow=block;exitX=1;exitY=0.486;entryX=0;entryY=0.486;" edge="1" parent="1" source="ll4" target="ll5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- m10: useCollaboration -> Hocuspocus Server (y=510) -->
+        <mxCell id="m10" value="WS connect" style="edgeStyle=none;html=1;strokeColor=#333333;fontSize=11;endArrow=block;exitX=1;exitY=0.54;entryX=0;entryY=0.54;" edge="1" parent="1" source="ll4" target="ll8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- m11: Hocuspocus Server -> Y.Doc (y=550) -->
+        <mxCell id="m11" value="sync state" style="edgeStyle=none;html=1;strokeColor=#333333;fontSize=11;endArrow=block;exitX=0;exitY=0.595;entryX=1;entryY=0.595;" edge="1" parent="1" source="ll8" target="ll5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- m12: Editor -> Y.Doc (y=590) -->
+        <mxCell id="m12" value="useEditor(content: undefined)" style="edgeStyle=none;html=1;strokeColor=#333333;fontSize=11;endArrow=block;exitX=1;exitY=0.649;entryX=0;entryY=0.649;" edge="1" parent="1" source="ll3" target="ll5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- m13: User -> Editor (y=630) -->
+        <mxCell id="m13" value="编辑操作" style="edgeStyle=none;html=1;strokeColor=#333333;fontSize=11;endArrow=block;exitX=1;exitY=0.703;entryX=0;entryY=0.703;" edge="1" parent="1" source="ll1" target="ll3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- m14: Editor -> Y.Doc (y=670) -->
+        <mxCell id="m14" value="Yjs update" style="edgeStyle=none;html=1;strokeColor=#333333;fontSize=11;endArrow=block;exitX=1;exitY=0.757;entryX=0;entryY=0.757;" edge="1" parent="1" source="ll3" target="ll5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- m15: Y.Doc -> Hocuspocus Server (y=710) -->
+        <mxCell id="m15" value="broadcast" style="edgeStyle=none;html=1;strokeColor=#333333;fontSize=11;endArrow=block;exitX=1;exitY=0.811;entryX=0;entryY=0.811;" edge="1" parent="1" source="ll5" target="ll8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- m16: Y.Doc -> TauriSQLite (y=750, dashed) -->
+        <mxCell id="m16" value="debounced save (1500ms)" style="edgeStyle=none;html=1;strokeColor=#333333;fontSize=11;endArrow=open;dashed=1;exitX=1;exitY=0.865;entryX=0;entryY=0.865;" edge="1" parent="1" source="ll5" target="ll6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- m17: Y.Doc -> Supabase (y=790, dashed) -->
+        <mxCell id="m17" value="debounced upsert (1500ms)" style="edgeStyle=none;html=1;strokeColor=#333333;fontSize=11;endArrow=open;dashed=1;exitX=1;exitY=0.919;entryX=0;entryY=0.919;" edge="1" parent="1" source="ll5" target="ll7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
