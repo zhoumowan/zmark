@@ -204,6 +204,46 @@ pub async fn delete_document(app: AppHandle, doc_id: String) -> std::result::Res
 }
 
 #[tauri::command]
+pub async fn rename_knowledge_base(
+    app: AppHandle,
+    kb_id: String,
+    name: String,
+) -> std::result::Result<KnowledgeBase, String> {
+    let conn = get_db_conn(&app).map_err(|e: anyhow::Error| e.to_string())?;
+    conn.execute(
+        "UPDATE knowledge_bases SET name = ?1 WHERE id = ?2",
+        params![name, kb_id],
+    )
+    .map_err(|e: rusqlite::Error| e.to_string())?;
+
+    let mut stmt = conn
+        .prepare("SELECT id, name, created_at FROM knowledge_bases WHERE id = ?1")
+        .map_err(|e: rusqlite::Error| e.to_string())?;
+    let kb = stmt
+        .query_row(params![kb_id], |row| {
+            Ok(KnowledgeBase {
+                id: row.get(0)?,
+                name: row.get(1)?,
+                created_at: row.get(2)?,
+            })
+        })
+        .map_err(|e: rusqlite::Error| e.to_string())?;
+
+    Ok(kb)
+}
+
+#[tauri::command]
+pub async fn delete_knowledge_base(
+    app: AppHandle,
+    kb_id: String,
+) -> std::result::Result<(), String> {
+    let conn = get_db_conn(&app).map_err(|e: anyhow::Error| e.to_string())?;
+    conn.execute("DELETE FROM knowledge_bases WHERE id = ?1", params![kb_id])
+        .map_err(|e: rusqlite::Error| e.to_string())?;
+    Ok(())
+}
+
+#[tauri::command]
 pub async fn chat(
     app: AppHandle,
     kb_id: String,
@@ -326,7 +366,7 @@ pub async fn chat(
         .post("https://api.siliconflow.cn/v1/chat/completions")
         .header("Authorization", format!("Bearer {}", api_key))
         .json(&json!({
-            "model": "THUDM/GLM-4.1V-9B-Thinking",
+            "model": "Qwen/Qwen3-8B",
             "messages": messages,
             "stream": true
         }))

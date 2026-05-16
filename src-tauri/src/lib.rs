@@ -132,6 +132,8 @@ pub fn run() {
             commands::knowledge_base::add_document,
             commands::knowledge_base::list_documents,
             commands::knowledge_base::delete_document,
+            commands::knowledge_base::rename_knowledge_base,
+            commands::knowledge_base::delete_knowledge_base,
             commands::knowledge_base::chat,
             commands::git::git_file_history,
             commands::git::git_file_content,

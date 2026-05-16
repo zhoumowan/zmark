@@ -83,6 +83,8 @@ interface KbState {
   fetchKnowledgeBases: () => Promise<void>;
   fetchDocuments: (kbId: string) => Promise<void>;
   createKnowledgeBase: (name: string) => Promise<void>;
+  renameKnowledgeBase: (kbId: string, name: string) => Promise<void>;
+  deleteKnowledgeBase: (kbId: string) => Promise<void>;
   addDocument: (
     kbId: string,
     filename: string,
@@ -162,6 +164,51 @@ export const useKbStore = create<KbState>()(
             currentKbId: state.currentKbId || newKb.id,
           }));
         }
+      },
+
+      renameKnowledgeBase: async (kbId, name) => {
+        const [err, updatedKb] = await to(
+          invoke<KnowledgeBase>("rename_knowledge_base", {
+            kbId,
+            name,
+          }),
+        );
+        if (err) {
+          logError("Failed to rename knowledge base:", err);
+          throw err;
+        }
+        if (updatedKb) {
+          set((state) => ({
+            knowledgeBases: state.knowledgeBases.map((kb) =>
+              kb.id === kbId ? updatedKb : kb,
+            ),
+          }));
+        }
+      },
+
+      deleteKnowledgeBase: async (kbId) => {
+        const [err] = await to(invoke("delete_knowledge_base", { kbId }));
+        if (err) {
+          logError("Failed to delete knowledge base:", err);
+          throw err;
+        }
+        set((state) => {
+          const nextKbs = state.knowledgeBases.filter((kb) => kb.id !== kbId);
+          const nextKbId =
+            state.currentKbId === kbId
+              ? (nextKbs[0]?.id ?? null)
+              : state.currentKbId;
+          return {
+            knowledgeBases: nextKbs,
+            currentKbId: nextKbId,
+            documents: nextKbId ? state.documents : [],
+            currentConversationId: resolveConversationId(
+              nextKbId,
+              state.currentConversationId,
+              state.chatSessions,
+            ),
+          };
+        });
       },
 
       addDocument: async (kbId, filename, content) => {

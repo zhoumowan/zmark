@@ -26,7 +26,7 @@ pub async fn ai_copilot(
         .post("https://api.siliconflow.cn/v1/chat/completions")
         .header("Authorization", format!("Bearer {}", api_key))
         .json(&json!({
-            "model": "THUDM/GLM-4.1V-9B-Thinking",
+            "model": "Qwen/Qwen3-8B",
             "messages": messages,
             "stream": true
         }))
