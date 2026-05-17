@@ -292,10 +292,18 @@ export const ChatPanel = () => {
       toast.error("AI 回复中，暂时无法删除对话");
       return;
     }
-    deleteConversation(conversationId);
+    setDeleteTargetId(conversationId);
+  };
+
+  const confirmDeleteConversation = () => {
+    if (deleteTargetId) {
+      deleteConversation(deleteTargetId);
+      setDeleteTargetId(null);
+    }
   };
 
   const [open, setOpen] = useState(false);
+  const [deleteTargetId, setDeleteTargetId] = useState<string | null>(null);
 
   return (
     <div className="flex h-full bg-background relative">
@@ -347,7 +355,7 @@ export const ChatPanel = () => {
                 // biome-ignore lint/a11y/useKeyWithClickEvents: <temp>
                 <div
                   key={session.id}
-                  className="cursor-pointer"
+                  className="cursor-pointer group"
                   onClick={() => selectConversation(session.id)}
                 >
                   <Card
@@ -499,6 +507,31 @@ export const ChatPanel = () => {
             </Dialog>
           </div>
         </header>
+
+        <Dialog
+          open={Boolean(deleteTargetId)}
+          onOpenChange={(open) => !open && setDeleteTargetId(null)}
+        >
+          <DialogContent aria-describedby={undefined}>
+            <DialogHeader>
+              <DialogTitle>确认删除对话</DialogTitle>
+            </DialogHeader>
+            <p className="text-sm text-muted-foreground">
+              此操作将永久删除该对话及其所有历史消息，无法恢复。是否继续？
+            </p>
+            <DialogFooter>
+              <Button
+                variant="secondary"
+                onClick={() => setDeleteTargetId(null)}
+              >
+                取消
+              </Button>
+              <Button variant="destructive" onClick={confirmDeleteConversation}>
+                删除
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
 
         <div className="flex-1 min-h-0">
           <ScrollArea className="h-full p-4" ref={scrollRef}>

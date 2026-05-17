@@ -26,6 +26,28 @@ const buildConversationTitle = (question: string) => {
   return normalized.length > 24 ? `${normalized.slice(0, 24)}...` : normalized;
 };
 
+const generateUniqueTitle = (
+  baseTitle: string,
+  kbId: string,
+  chatSessions: ChatSession[],
+  excludeSessionId?: string,
+): string => {
+  const sameKbTitles = new Set(
+    chatSessions
+      .filter((s) => s.kbId === kbId && s.id !== excludeSessionId)
+      .map((s) => s.title),
+  );
+  if (!sameKbTitles.has(baseTitle)) return baseTitle;
+
+  let counter = 1;
+  let candidate = `${baseTitle} (${counter})`;
+  while (sameKbTitles.has(candidate)) {
+    counter++;
+    candidate = `${baseTitle} (${counter})`;
+  }
+  return candidate;
+};
+
 const createEmptySession = (kbId: string): ChatSession => {
   const timestamp = Date.now();
   return {
@@ -245,10 +267,15 @@ export const useKbStore = create<KbState>()(
       },
 
       createConversation: () => {
-        const { currentKbId } = get();
+        const { currentKbId, chatSessions } = get();
         if (!currentKbId) return null;
 
         const newSession = createEmptySession(currentKbId);
+        newSession.title = generateUniqueTitle(
+          newSession.title,
+          currentKbId,
+          chatSessions,
+        );
         set((state) => ({
           chatSessions: sortSessions([newSession, ...state.chatSessions]),
           currentConversationId: newSession.id,
@@ -320,7 +347,12 @@ export const useKbStore = create<KbState>()(
           ) ?? {
             id: conversationId,
             kbId: currentKbId,
-            title: buildConversationTitle(trimmedQuestion),
+            title: generateUniqueTitle(
+              buildConversationTitle(trimmedQuestion),
+              currentKbId,
+              state.chatSessions,
+              conversationId,
+            ),
             createdAt: timestamp,
             updatedAt: timestamp,
             messages: [],
@@ -330,12 +362,17 @@ export const useKbStore = create<KbState>()(
             { role: CHAT_ROLE.USER, content: trimmedQuestion },
             { role: CHAT_ROLE.ASSISTANT, content: "" },
           ];
+          const isFirstMessage = baseSession.messages.length === 0;
           const nextSession: ChatSession = {
             ...baseSession,
-            title:
-              baseSession.messages.length === 0
-                ? buildConversationTitle(trimmedQuestion)
-                : baseSession.title,
+            title: isFirstMessage
+              ? generateUniqueTitle(
+                  buildConversationTitle(trimmedQuestion),
+                  currentKbId,
+                  state.chatSessions,
+                  conversationId,
+                )
+              : baseSession.title,
             updatedAt: timestamp,
             messages: nextMessages,
           };
