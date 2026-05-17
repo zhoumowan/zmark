@@ -1,3 +1,15 @@
+# [1.23.0](https://github.com/zhoumowan/zmark/compare/v1.22.0...v1.23.0) (2026-05-17)
+
+
+### Features
+
+* add chat session management ([16520ee](https://github.com/zhoumowan/zmark/commit/16520eeae9564d933230eef698b629f613f63c5c))
+* add running support for py code ([a21cd14](https://github.com/zhoumowan/zmark/commit/a21cd14754dac26ddfcc6284f4d99c6ea36c3828))
+* add support for kb delete and rename ([f0c8bdb](https://github.com/zhoumowan/zmark/commit/f0c8bdba38a18ae4d6ae3bcf98236e612063b62a))
+* add support for kb file limit when uploading ([5a74564](https://github.com/zhoumowan/zmark/commit/5a745640fbae2e58f9c5ecf758c7f7f35fd90af7))
+* strengthen superscript and subscript, refactor code ([e8fbc65](https://github.com/zhoumowan/zmark/commit/e8fbc6547dd917ef858040d8833a33a63b22a992))
+* 增强链接处理，添加恶意 URL 检查和默认事件处理 ([7339595](https://github.com/zhoumowan/zmark/commit/73395951278ec87b7ca9b6f84b5b269a0c2b1704))
+
 # [1.22.0](https://github.com/zhoumowan/zmark/compare/v1.21.1...v1.22.0) (2026-05-14)
 
 
