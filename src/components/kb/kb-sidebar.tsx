@@ -2,6 +2,7 @@ import { open } from "@tauri-apps/plugin-dialog";
 import { readTextFile } from "@tauri-apps/plugin-fs";
 import {
   File,
+  FileWarning,
   Library,
   MoreVertical,
   Pencil,
@@ -84,6 +85,19 @@ export function KbSidebar({
   const [renameKbName, setRenameKbName] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
   const [isKbSelectOpen, setIsKbSelectOpen] = useState(false);
+
+  const [duplicateDialog, setDuplicateDialog] = useState<{
+    open: boolean;
+    filename: string;
+    onResolve: (action: "overwrite" | "rename" | "skip") => void;
+  } | null>(null);
+
+  const [renameDialog, setRenameDialog] = useState<{
+    open: boolean;
+    originalFilename: string;
+    onResolve: (newName: string | null) => void;
+  } | null>(null);
+  const [renameValue, setRenameValue] = useState("");
 
   useEffect(() => {
     fetchKnowledgeBases();
@@ -199,6 +213,8 @@ export function KbSidebar({
     toast.success(`${filename} 添加成功`, { id: toastId });
   };
 
+  const MAX_DOCUMENT_CONTENT_SIZE = 5 * 1024 * 1024; // 5MB
+
   const handleAddDocument = async () => {
     if (!currentKbId) return;
     const [openErr, selected] = await to(
@@ -217,13 +233,76 @@ export function KbSidebar({
 
     for (const filePath of selected) {
       const filename = getDisplayFilename(filePath);
-      const loadingToast = toast.loading(`正在处理 ${filename}...`);
       const [readErr, text] = await to(readTextFile(filePath));
       if (readErr) {
-        showAddDocumentResult(filename, loadingToast, readErr);
+        toast.error(`${filename} 读取失败: ${readErr}`);
         continue;
       }
 
+      if (!text || text.trim().length === 0) {
+        toast.error(`${filename} 内容为空，无法上传`);
+        continue;
+      }
+
+      if (text.length > MAX_DOCUMENT_CONTENT_SIZE) {
+        toast.error(`${filename} 文件内容超过 5MB 限制，无法上传`);
+        continue;
+      }
+
+      const existingDoc = documents.find((d) => d.filename === filename);
+      if (existingDoc) {
+        const action = await new Promise<"overwrite" | "rename" | "skip">(
+          (resolve) => {
+            setDuplicateDialog({
+              open: true,
+              filename,
+              onResolve: resolve,
+            });
+          },
+        );
+        setDuplicateDialog(null);
+
+        if (action === "skip") {
+          continue;
+        }
+
+        if (action === "overwrite") {
+          const loadingToast = toast.loading(`正在覆盖 ${filename}...`);
+          const [delErr] = await to(deleteDocument(existingDoc.id));
+          if (delErr) {
+            toast.error(`${filename} 覆盖失败: ${delErr}`, {
+              id: loadingToast,
+            });
+            continue;
+          }
+          const [addErr] = await to(addDocument(currentKbId, filename, text));
+          showAddDocumentResult(filename, loadingToast, addErr);
+          continue;
+        }
+
+        if (action === "rename") {
+          const newName = await new Promise<string | null>((resolve) => {
+            setRenameValue("");
+            setRenameDialog({
+              open: true,
+              originalFilename: filename,
+              onResolve: resolve,
+            });
+          });
+          setRenameDialog(null);
+
+          if (!newName) {
+            continue;
+          }
+
+          const loadingToast = toast.loading(`正在上传 ${newName}...`);
+          const [addErr] = await to(addDocument(currentKbId, newName, text));
+          showAddDocumentResult(newName, loadingToast, addErr);
+          continue;
+        }
+      }
+
+      const loadingToast = toast.loading(`正在处理 ${filename}...`);
       const [addErr] = await to(addDocument(currentKbId, filename, text));
       showAddDocumentResult(filename, loadingToast, addErr);
     }
@@ -432,6 +511,100 @@ export function KbSidebar({
               disabled={isDeletingKb}
             >
               删除
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog
+        open={duplicateDialog?.open ?? false}
+        onOpenChange={(open) => {
+          if (!open && duplicateDialog) {
+            duplicateDialog.onResolve("skip");
+          }
+        }}
+      >
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <FileWarning className="h-5 w-5 text-amber-500" />
+              文件已存在
+            </DialogTitle>
+            <DialogDescription>
+              知识库中已存在名为「{duplicateDialog?.filename}
+              」的文档，请选择处理方式
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter className="gap-2 sm:gap-0">
+            <Button
+              variant="outline"
+              onClick={() => duplicateDialog?.onResolve("skip")}
+            >
+              跳过
+            </Button>
+            <Button
+              variant="secondary"
+              onClick={() => duplicateDialog?.onResolve("rename")}
+            >
+              重命名
+            </Button>
+            <Button
+              variant="destructive"
+              onClick={() => duplicateDialog?.onResolve("overwrite")}
+            >
+              覆盖
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog
+        open={renameDialog?.open ?? false}
+        onOpenChange={(open) => {
+          if (!open && renameDialog) {
+            renameDialog.onResolve(null);
+          }
+        }}
+      >
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>重命名文件</DialogTitle>
+            <DialogDescription>
+              请输入新的文件名（包含 .md 后缀）
+            </DialogDescription>
+          </DialogHeader>
+          <div className="grid gap-4 py-4">
+            <Input
+              placeholder="新文件名"
+              value={renameValue}
+              onChange={(e) => setRenameValue(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && renameValue.trim()) {
+                  e.preventDefault();
+                  renameDialog?.onResolve(renameValue.trim());
+                }
+              }}
+              autoFocus
+            />
+          </div>
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => renameDialog?.onResolve(null)}
+            >
+              取消
+            </Button>
+            <Button
+              variant="secondary"
+              onClick={() => {
+                const name = renameValue.trim();
+                if (name) {
+                  renameDialog?.onResolve(name);
+                }
+              }}
+              disabled={!renameValue.trim()}
+            >
+              确认
             </Button>
           </DialogFooter>
         </DialogContent>
