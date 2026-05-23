@@ -1,265 +1,272 @@
-<mxfile host="65bd71144e">
-    <diagram name="ZMark宏观业务流程与模式切换" id="0">
-        <mxGraphModel dx="2131" dy="1137" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1200" math="0" shadow="0">
-            <root>
-                <mxCell id="0"/>
-                <mxCell id="1" parent="0"/>
-                <mxCell id="title" value="&lt;b&gt;ZMark 宏观业务流程与模式切换关系图&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=18;fontColor=#000000;" parent="1" vertex="1">
-                    <mxGeometry x="395" y="70" width="800" height="40" as="geometry"/>
-                </mxCell>
-                <mxCell id="appLayer" value="应用层 (Tauri Desktop)" style="swimlane;startSize=30;fillColor=#cccccc;strokeColor=#000000;fontStyle=1;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="135" y="130" width="1330" height="210" as="geometry"/>
-                </mxCell>
-                <mxCell id="tauriApp" value="Tauri App 启动&lt;br/&gt;(Rust Backend + Web Frontend)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=12;" parent="appLayer" vertex="1">
-                    <mxGeometry x="50" y="40" width="160" height="70" as="geometry"/>
-                </mxCell>
-                <mxCell id="mainWindow" value="主窗口 (main)&lt;br/&gt;MainApp" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=12;" parent="appLayer" vertex="1">
-                    <mxGeometry x="670" y="40" width="140" height="70" as="geometry"/>
-                </mxCell>
-                <mxCell id="captureWindow" value="灵感捕获窗口 (capture)&lt;br/&gt;QuickCaptureWindow" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=12;" parent="appLayer" vertex="1">
-                    <mxGeometry x="660" y="130" width="160" height="50" as="geometry"/>
-                </mxCell>
-                <mxCell id="shortcutTrigger" value="全局快捷键&lt;br/&gt;Ctrl/Cmd+Shift+Space" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=11;" parent="appLayer" vertex="1">
-                    <mxGeometry x="50" y="130" width="160" height="50" as="geometry"/>
-                </mxCell>
-                <mxCell id="edge1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;startArrow=none;startFill=0;" parent="appLayer" source="tauriApp" target="mainWindow" edge="1">
-                    <mxGeometry relative="1" as="geometry"/>
-                </mxCell>
-                <mxCell id="edge2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="appLayer" source="shortcutTrigger" target="captureWindow" edge="1">
-                    <mxGeometry relative="1" as="geometry"/>
-                </mxCell>
-                <mxCell id="edge3" value="独立窗口" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;dashed=1;endArrow=none;endFill=0;" parent="appLayer" source="captureWindow" target="tauriApp" edge="1">
-                    <mxGeometry relative="1" as="geometry">
-                        <Array as="points">
-                            <mxPoint x="270" y="155"/>
-                            <mxPoint x="270" y="75"/>
-                        </Array>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="fileAssoc" value="文件关联打开&lt;br/&gt;.md / .zmark" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=11;" parent="appLayer" vertex="1">
-                    <mxGeometry x="1170" y="50" width="130" height="50" as="geometry"/>
-                </mxCell>
-                <mxCell id="edge4" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="appLayer" source="mainWindow" target="fileAssoc" edge="1">
-                    <mxGeometry relative="1" as="geometry"/>
-                </mxCell>
-                <mxCell id="authLayer" value="认证层 (Auth Flow)" style="swimlane;startSize=30;fillColor=#cccccc;strokeColor=#000000;fontStyle=1;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="135" y="350" width="1330" height="180" as="geometry"/>
-                </mxCell>
-                <mxCell id="authInit" value="Auth 初始化&lt;br/&gt;(isInitializing)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=12;" parent="authLayer" vertex="1">
-                    <mxGeometry x="40" y="60" width="140" height="60" as="geometry"/>
-                </mxCell>
-                <mxCell id="loadingState" value="加载中...&lt;br/&gt;Loader Spinner" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#666666;fontSize=11;dashed=1;" parent="authLayer" vertex="1">
-                    <mxGeometry x="40" y="130" width="140" height="40" as="geometry"/>
-                </mxCell>
-                <mxCell id="authCheck" value="已登录?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=12;" parent="authLayer" vertex="1">
-                    <mxGeometry x="280" y="50" width="120" height="80" as="geometry"/>
-                </mxCell>
-                <mxCell id="loginPage" value="登录页面&lt;br/&gt;GitHub OAuth / Magic Link&lt;br/&gt;(CanvasNest 背景)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=12;" parent="authLayer" vertex="1">
-                    <mxGeometry x="520" y="60" width="180" height="70" as="geometry"/>
-                </mxCell>
-                <mxCell id="authStore" value="Zustand&lt;br/&gt;authStore" style="shape=cylinder3;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=11;" parent="authLayer" vertex="1">
-                    <mxGeometry x="820" y="55" width="100" height="70" as="geometry"/>
-                </mxCell>
-                <mxCell id="edge5" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="authLayer" source="authInit" target="authCheck" edge="1">
-                    <mxGeometry relative="1" as="geometry"/>
-                </mxCell>
-                <mxCell id="edge6" value="否" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="authLayer" source="authCheck" target="loginPage" edge="1">
-                    <mxGeometry relative="1" as="geometry"/>
-                </mxCell>
-                <mxCell id="edge7" value="是" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="authLayer" source="authCheck" target="mainContainer" edge="1">
-                    <mxGeometry relative="1" as="geometry">
-                        <Array as="points">
-                            <mxPoint x="340" y="150"/>
-                            <mxPoint x="760" y="150"/>
-                        </Array>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="edge8" value="读写" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;dashed=1;" parent="authLayer" source="loginPage" target="authStore" edge="1">
-                    <mxGeometry relative="1" as="geometry"/>
-                </mxCell>
-                <mxCell id="supabase" value="Supabase Auth&lt;br/&gt;(Session / User)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=11;" parent="authLayer" vertex="1">
-                    <mxGeometry x="1000" y="60" width="120" height="60" as="geometry"/>
-                </mxCell>
-                <mxCell id="edge9" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="authLayer" source="authStore" target="supabase" edge="1">
-                    <mxGeometry relative="1" as="geometry"/>
-                </mxCell>
-                <mxCell id="mainContainer" value="主界面容器 (SidebarProvider + 全局导航)" style="swimlane;startSize=30;fillColor=#cccccc;strokeColor=#000000;fontStyle=1;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="135" y="550" width="1330" height="540" as="geometry"/>
-                </mxCell>
-                <mxCell id="globalNav" value="全局左侧导航栏&lt;br/&gt;(w-12 图标栏)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dddddd;strokeColor=#000000;fontSize=11;" parent="mainContainer" vertex="1">
-                    <mxGeometry x="20" y="50" width="100" height="470" as="geometry"/>
-                </mxCell>
-                <mxCell id="navEditor" value="编辑器" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=11;" parent="globalNav" vertex="1">
-                    <mxGeometry x="15" y="53.40909090909091" width="70" height="32.04545454545455" as="geometry"/>
-                </mxCell>
-                <mxCell id="navKb" value="知识库" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=11;" parent="globalNav" vertex="1">
-                    <mxGeometry x="15" y="106.81818181818181" width="70" height="32.04545454545455" as="geometry"/>
-                </mxCell>
-                <mxCell id="navCollab" value="协同编辑" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=11;" parent="globalNav" vertex="1">
-                    <mxGeometry x="15" y="160.22727272727272" width="70" height="32.04545454545455" as="geometry"/>
-                </mxCell>
-                <mxCell id="navGraph" value="图谱" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=11;" parent="globalNav" vertex="1">
-                    <mxGeometry x="15" y="213.63636363636363" width="70" height="32.04545454545455" as="geometry"/>
-                </mxCell>
-                <mxCell id="navSettings" value="设置&lt;br/&gt;(右下角)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=11;" parent="globalNav" vertex="1">
-                    <mxGeometry x="15" y="373.8636363636363" width="70" height="42.72727272727273" as="geometry"/>
-                </mxCell>
-                <mxCell id="navLogout" value="退出登录" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=11;" parent="globalNav" vertex="1">
-                    <mxGeometry x="15" y="427.27272727272725" width="70" height="32.04545454545455" as="geometry"/>
-                </mxCell>
-                <mxCell id="modeSwitchLabel" value="setMode() 切换" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=11;fontColor=#000000;fontStyle=2;" parent="mainContainer" vertex="1">
-                    <mxGeometry x="20" width="100" height="30" as="geometry"/>
-                </mxCell>
-                <mxCell id="editorMode" value="Editor 模式" style="swimlane;startSize=25;fillColor=#e8e8e8;strokeColor=#000000;fontStyle=1;html=1;" parent="mainContainer" vertex="1">
-                    <mxGeometry x="150" y="50" width="280" height="200" as="geometry"/>
-                </mxCell>
-                <mxCell id="appSidebar" value="AppSidebar&lt;br/&gt;(文件树/大纲)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=11;" parent="editorMode" vertex="1">
-                    <mxGeometry x="20" y="40" width="100" height="50" as="geometry"/>
-                </mxCell>
-                <mxCell id="editorComp" value="Editor 组件&lt;br/&gt;(TipTap Markdown)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=11;" parent="editorMode" vertex="1">
-                    <mxGeometry x="150" y="40" width="110" height="50" as="geometry"/>
-                </mxCell>
-                <mxCell id="editorStore" value="&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;editorStore&lt;/span&gt;&lt;/div&gt;(content, curPath,&lt;br&gt;frontmatter)" style="shape=cylinder3;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=10;" parent="editorMode" vertex="1">
-                    <mxGeometry x="40" y="110" width="90" height="80" as="geometry"/>
-                </mxCell>
-                <mxCell id="searchCmd" value="SearchCommand&lt;br/&gt;(全局搜索)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=10;" parent="editorMode" vertex="1">
-                    <mxGeometry x="160" y="115" width="90" height="50" as="geometry"/>
-                </mxCell>
-                <mxCell id="edge10" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="editorMode" source="appSidebar" target="editorStore" edge="1">
-                    <mxGeometry relative="1" as="geometry"/>
-                </mxCell>
-                <mxCell id="kbMode" value="KB 知识库模式" style="swimlane;startSize=25;fillColor=#e8e8e8;strokeColor=#000000;fontStyle=1;html=1;" parent="mainContainer" vertex="1">
-                    <mxGeometry x="460" y="50" width="260" height="200" as="geometry"/>
-                </mxCell>
-                <mxCell id="kbSidebar" value="KbSidebar&lt;br/&gt;(知识库导航)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=11;" parent="kbMode" vertex="1">
-                    <mxGeometry x="20" y="40" width="100" height="50" as="geometry"/>
-                </mxCell>
-                <mxCell id="chatPanel" value="ChatPanel&lt;br/&gt;(AI 问答)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=11;" parent="kbMode" vertex="1">
-                    <mxGeometry x="150" y="40" width="90" height="50" as="geometry"/>
-                </mxCell>
-                <mxCell id="kbStore" value="&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;kbStore&lt;/span&gt;&lt;/div&gt;" style="shape=cylinder3;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=10;" parent="kbMode" vertex="1">
-                    <mxGeometry x="50" y="120" width="70" height="60" as="geometry"/>
-                </mxCell>
-                <mxCell id="searchStore" value="&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;searchStore&lt;br&gt;(索引/搜索)" style="shape=cylinder3;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=10;" parent="kbMode" vertex="1">
-                    <mxGeometry x="150" y="120" width="80" height="60" as="geometry"/>
-                </mxCell>
-                <mxCell id="collabMode" value="Collab 协同编辑模式" style="swimlane;startSize=25;fillColor=#e8e8e8;strokeColor=#000000;fontStyle=1;html=1;" parent="mainContainer" vertex="1">
-                    <mxGeometry x="750" y="50" width="260" height="200" as="geometry"/>
-                </mxCell>
-                <mxCell id="collabSidebar" value="CollabSidebar&lt;br/&gt;(协作空间列表)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=11;" parent="collabMode" vertex="1">
-                    <mxGeometry x="20" y="40" width="110" height="50" as="geometry"/>
-                </mxCell>
-                <mxCell id="collabEditor" value="Editor 组件&lt;br/&gt;(mode=collab)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=11;" parent="collabMode" vertex="1">
-                    <mxGeometry x="160" y="40" width="90" height="50" as="geometry"/>
-                </mxCell>
-                <mxCell id="collabStore" value="&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;collabStore&lt;br&gt;(Yjs/Hocuspocus)" style="shape=cylinder3;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=10;" parent="collabMode" vertex="1">
-                    <mxGeometry x="60" y="120" width="100" height="70" as="geometry"/>
-                </mxCell>
-                <mxCell id="edge11" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="collabMode" source="collabSidebar" target="collabStore" edge="1">
-                    <mxGeometry relative="1" as="geometry"/>
-                </mxCell>
-                <mxCell id="graphMode" value="Graph 图谱模式" style="swimlane;startSize=25;fillColor=#e8e8e8;strokeColor=#000000;fontStyle=1;html=1;" parent="mainContainer" vertex="1">
-                    <mxGeometry x="1040" y="50" width="260" height="200" as="geometry"/>
-                </mxCell>
-                <mxCell id="graphAppSidebar" value="AppSidebar&lt;br/&gt;(文件树)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=11;" parent="graphMode" vertex="1">
-                    <mxGeometry x="20" y="40" width="90" height="50" as="geometry"/>
-                </mxCell>
-                <mxCell id="graphView" value="GraphView&lt;br/&gt;(知识图谱可视化)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=11;" parent="graphMode" vertex="1">
-                    <mxGeometry x="140" y="40" width="100" height="50" as="geometry"/>
-                </mxCell>
-                <mxCell id="settingsMode" value="Settings 设置模式" style="swimlane;startSize=25;fillColor=#e8e8e8;strokeColor=#000000;fontStyle=1;html=1;" parent="mainContainer" vertex="1">
-                    <mxGeometry x="160" y="320" width="280" height="200" as="geometry"/>
-                </mxCell>
-                <mxCell id="settingsPage" value="AccountSettingsPage&lt;br/&gt;(无 SidebarProvider)&lt;br/&gt;账号 / 主题 / 通用设置" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=11;" parent="settingsMode" vertex="1">
-                    <mxGeometry x="40" y="50" width="200" height="70" as="geometry"/>
-                </mxCell>
-                <mxCell id="themeProvider" value="ThemeProvider&lt;br/&gt;(全局主题)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=10;" parent="settingsMode" vertex="1">
-                    <mxGeometry x="50" y="140" width="80" height="40" as="geometry"/>
-                </mxCell>
-                <mxCell id="themeToggle" value="ThemeToggle&lt;br/&gt;(暗黑/明亮)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=10;" parent="settingsMode" vertex="1">
-                    <mxGeometry x="150" y="140" width="80" height="40" as="geometry"/>
-                </mxCell>
-                <mxCell id="navToEditor" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="mainContainer" source="navEditor" target="editorMode" edge="1">
-                    <mxGeometry relative="1" as="geometry"/>
-                </mxCell>
-                <mxCell id="navToKb" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" parent="mainContainer" source="navKb" target="kbMode" edge="1">
-                    <mxGeometry relative="1" as="geometry">
-                        <Array as="points">
-                            <mxPoint x="130" y="173"/>
-                            <mxPoint x="130" y="280"/>
-                            <mxPoint x="590" y="280"/>
-                        </Array>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="navToCollab" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" parent="mainContainer" source="navCollab" target="collabMode" edge="1">
-                    <mxGeometry relative="1" as="geometry">
-                        <Array as="points">
-                            <mxPoint x="140" y="226"/>
-                            <mxPoint x="140" y="300"/>
-                            <mxPoint x="880" y="300"/>
-                        </Array>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="navToGraph" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" parent="mainContainer" source="navGraph" target="graphMode" edge="1">
-                    <mxGeometry relative="1" as="geometry">
-                        <Array as="points">
-                            <mxPoint x="70" y="310"/>
-                            <mxPoint x="1170" y="310"/>
-                        </Array>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="navToSettings" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="mainContainer" source="navSettings" target="settingsMode" edge="1">
-                    <mxGeometry relative="1" as="geometry">
-                        <Array as="points">
-                            <mxPoint x="133" y="445"/>
-                            <mxPoint x="133" y="420"/>
-                        </Array>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="graphToEditorEdge" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;dashed=1;fontColor=#000000;fontSize=10;" parent="mainContainer" source="graphView" target="editorComp" edge="1">
-                    <mxGeometry relative="1" as="geometry">
-                        <Array as="points">
-                            <mxPoint x="1230" y="290"/>
-                            <mxPoint x="355" y="290"/>
-                        </Array>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="infraBox" value="全局基础设施" style="swimlane;startSize=25;fillColor=#e8e8e8;strokeColor=#000000;fontStyle=1;html=1;dashed=1;" parent="mainContainer" vertex="1">
-                    <mxGeometry x="470" y="320" width="840" height="200" as="geometry"/>
-                </mxCell>
-                <mxCell id="tauriInvoke" value="Tauri Commands&lt;br/&gt;(invoke / listen)&lt;br/&gt;Rust Backend" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=11;" parent="infraBox" vertex="1">
-                    <mxGeometry x="30" y="50" width="130" height="60" as="geometry"/>
-                </mxCell>
-                <mxCell id="fsPlugin" value="FS Plugin&lt;br/&gt;(readTextFile)&lt;br/&gt;Tray Plugin" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=11;" parent="infraBox" vertex="1">
-                    <mxGeometry x="190" y="50" width="120" height="60" as="geometry"/>
-                </mxCell>
-                <mxCell id="supabaseClient" value="Supabase Client&lt;br/&gt;(Auth / Realtime)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=11;" parent="infraBox" vertex="1">
-                    <mxGeometry x="340" y="50" width="130" height="60" as="geometry"/>
-                </mxCell>
-                <mxCell id="zustand" value="Zustand&lt;br/&gt;全局状态管理" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=11;" parent="infraBox" vertex="1">
-                    <mxGeometry x="500" y="50" width="120" height="60" as="geometry"/>
-                </mxCell>
-                <mxCell id="utils" value="Utils&lt;br/&gt;(搜索索引 / 图片解析 /&lt;br/&gt;frontmatter / tray)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=11;" parent="infraBox" vertex="1">
-                    <mxGeometry x="650" y="50" width="150" height="60" as="geometry"/>
-                </mxCell>
-                <mxCell id="uiComponents" value="UI 组件库&lt;br/&gt;(shadcn/ui +&lt;br/&gt;Tailwind 4)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=11;" parent="infraBox" vertex="1">
-                    <mxGeometry x="30" y="130" width="120" height="50" as="geometry"/>
-                </mxCell>
-                <mxCell id="toaster" value="Sonner&lt;br/&gt;(Toast 通知)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=11;" parent="infraBox" vertex="1">
-                    <mxGeometry x="170" y="130" width="100" height="50" as="geometry"/>
-                </mxCell>
-                <mxCell id="tooltipProv" value="TooltipProvider&lt;br/&gt;ThemeProvider" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=11;" parent="infraBox" vertex="1">
-                    <mxGeometry x="290" y="130" width="130" height="50" as="geometry"/>
-                </mxCell>
-                <mxCell id="fileToEditor" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;dashed=1;fontSize=10;" parent="1" source="fileAssoc" target="editorMode" edge="1">
-                    <mxGeometry relative="1" as="geometry">
-                        <Array as="points">
-                            <mxPoint x="720" y="510"/>
-                            <mxPoint x="385" y="510"/>
-                        </Array>
-                    </mxGeometry>
-                </mxCell>
-            </root>
-        </mxGraphModel>
-    </diagram>
+<mxfile host="Electron">
+  <diagram name="ZMark宏观业务流程与模式切换" id="0">
+    <mxGraphModel dx="1483" dy="985" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1200" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="appLayer" parent="1" style="swimlane;startSize=30;fillColor=#cccccc;strokeColor=#000000;fontStyle=1;html=1;fontFamily=Times New Roman;fontSize=20;" value="&lt;font face=&quot;宋体&quot;&gt;应用层&lt;/font&gt; (Tauri Desktop)" vertex="1">
+          <mxGeometry height="210" width="1400" x="110" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="tauriApp" parent="appLayer" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=20;fontFamily=Times New Roman;" value="Tauri App &lt;font face=&quot;宋体&quot;&gt;启动&lt;br&gt;&lt;/font&gt;(Rust Backend + Web Frontend)" vertex="1">
+          <mxGeometry height="70" width="280" x="50" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="mainWindow" parent="appLayer" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=20;fontFamily=Times New Roman;" value="&lt;font face=&quot;宋体&quot;&gt;主窗口&lt;/font&gt; (main)&lt;br&gt;MainApp" vertex="1">
+          <mxGeometry height="70" width="260" x="670" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="captureWindow" parent="appLayer" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=20;fontFamily=Times New Roman;" value="&lt;font face=&quot;宋体&quot;&gt;灵感捕获窗口&lt;/font&gt; (capture)&lt;br&gt;QuickCaptureWindow" vertex="1">
+          <mxGeometry height="70" width="330" x="665" y="135" as="geometry" />
+        </mxCell>
+        <mxCell id="shortcutTrigger" parent="appLayer" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=20;fontFamily=Times New Roman;" value="&lt;font face=&quot;宋体&quot;&gt;全局快捷键&lt;/font&gt;&lt;br&gt;Ctrl/Cmd+Shift+Space" vertex="1">
+          <mxGeometry height="60" width="290" x="50" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="edge1" edge="1" parent="appLayer" source="tauriApp" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;startArrow=none;startFill=0;fontFamily=Times New Roman;fontSize=20;" target="mainWindow" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge2" edge="1" parent="appLayer" source="shortcutTrigger" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontFamily=Times New Roman;fontSize=20;" target="captureWindow" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge3" edge="1" parent="appLayer" source="captureWindow" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;dashed=1;endArrow=none;endFill=0;fontFamily=Times New Roman;fontSize=20;" target="tauriApp" value="&lt;font face=&quot;宋体&quot;&gt;独立窗口&lt;/font&gt;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="475" y="155" />
+              <mxPoint x="475" y="75" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fileAssoc" parent="appLayer" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=20;fontFamily=Times New Roman;" value="&lt;font face=&quot;宋体&quot;&gt;文件关联打开&lt;/font&gt;&lt;br&gt;.md / .zmark" vertex="1">
+          <mxGeometry height="60" width="190" x="1115" y="45" as="geometry" />
+        </mxCell>
+        <mxCell id="edge4" edge="1" parent="appLayer" source="mainWindow" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontFamily=Times New Roman;fontSize=20;" target="fileAssoc" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="authLayer" parent="1" style="swimlane;startSize=30;fillColor=#cccccc;strokeColor=#000000;fontStyle=1;html=1;fontFamily=Times New Roman;fontSize=20;" value="&lt;font face=&quot;宋体&quot;&gt;认证层&lt;/font&gt; (Auth Flow)" vertex="1">
+          <mxGeometry height="180" width="1400" x="110" y="350" as="geometry" />
+        </mxCell>
+        <mxCell id="authInit" parent="authLayer" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=20;fontFamily=Times New Roman;" value="Auth &lt;font face=&quot;宋体&quot;&gt;初始化&lt;/font&gt;&lt;br&gt;(isInitializing)" vertex="1">
+          <mxGeometry height="60" width="140" x="40" y="52.5" as="geometry" />
+        </mxCell>
+        <mxCell id="loadingState" parent="authLayer" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#666666;fontSize=20;dashed=1;fontFamily=Times New Roman;" value="&lt;font face=&quot;宋体&quot;&gt;加载中...&lt;/font&gt;&lt;br&gt;Loader Spinner" vertex="1">
+          <mxGeometry height="50" width="160" x="40" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="authCheck" parent="authLayer" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=20;fontFamily=Times New Roman;" value="&lt;font face=&quot;宋体&quot;&gt;已登录?&lt;/font&gt;" vertex="1">
+          <mxGeometry height="80" width="120" x="275" y="42.5" as="geometry" />
+        </mxCell>
+        <mxCell id="loginPage" parent="authLayer" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=20;fontFamily=Times New Roman;" value="&lt;font face=&quot;宋体&quot;&gt;登录页面&lt;/font&gt;&lt;br&gt;GitHub OAuth / Magic Link&lt;br&gt;(CanvasNest &lt;font face=&quot;宋体&quot;&gt;背景&lt;/font&gt;)" vertex="1">
+          <mxGeometry height="85" width="270" x="480" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="authStore" parent="authLayer" style="shape=cylinder3;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=20;fontFamily=Times New Roman;" value="&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;Zustand&lt;/span&gt;&lt;/div&gt;authStore" vertex="1">
+          <mxGeometry height="80" width="100" x="885" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="edge5" edge="1" parent="authLayer" source="authInit" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontFamily=Times New Roman;fontSize=20;" target="authCheck" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge6" edge="1" parent="authLayer" source="authCheck" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontFamily=Times New Roman;fontSize=20;" target="loginPage" value="&lt;font face=&quot;宋体&quot;&gt;否&lt;/font&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge7" edge="1" parent="authLayer" source="authCheck" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontFamily=Times New Roman;fontSize=20;" target="mainContainer" value="是">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="340" y="150" />
+              <mxPoint x="665" y="150" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge8" edge="1" parent="authLayer" source="loginPage" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;dashed=1;fontFamily=Times New Roman;fontSize=20;" target="authStore" value="&lt;font face=&quot;宋体&quot;&gt;读写&lt;/font&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="supabase" parent="authLayer" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=20;fontFamily=Times New Roman;" value="Supabase Auth&lt;br&gt;(Session / User)" vertex="1">
+          <mxGeometry height="60" width="165" x="1020" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="edge9" edge="1" parent="authLayer" source="authStore" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontFamily=Times New Roman;fontSize=20;" target="supabase" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="mainContainer" parent="1" style="swimlane;startSize=30;fillColor=#cccccc;strokeColor=#000000;fontStyle=1;html=1;fontFamily=Times New Roman;fontSize=20;" value="&lt;font face=&quot;宋体&quot;&gt;主界面容器 (&lt;/font&gt;&lt;font face=&quot;Times New Roman&quot;&gt;SidebarProvider&lt;/font&gt;&lt;font face=&quot;宋体&quot;&gt; + 全局导航)&lt;/font&gt;" vertex="1">
+          <mxGeometry height="540" width="1400" x="110" y="550" as="geometry" />
+        </mxCell>
+        <mxCell id="globalNav" parent="mainContainer" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dddddd;strokeColor=#000000;fontSize=20;fontFamily=Times New Roman;" value="&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;font face=&quot;宋体&quot;&gt;全局左侧导航栏&lt;/font&gt;" vertex="1">
+          <mxGeometry height="470" width="110" x="20" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="navEditor" parent="globalNav" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=20;fontFamily=宋体;" value="编辑器" vertex="1">
+          <mxGeometry height="32.04545454545455" width="70" x="15" y="9.99909090909091" as="geometry" />
+        </mxCell>
+        <mxCell id="navKb" parent="globalNav" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=20;fontFamily=宋体;" value="知识库" vertex="1">
+          <mxGeometry height="32.04545454545455" width="70" x="15" y="69.99818181818182" as="geometry" />
+        </mxCell>
+        <mxCell id="navCollab" parent="globalNav" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=20;fontFamily=宋体;" value="协同编辑" vertex="1">
+          <mxGeometry height="32.05" width="85" x="7.5" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="navGraph" parent="globalNav" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=20;fontFamily=宋体;" value="图谱" vertex="1">
+          <mxGeometry height="32.04545454545455" width="70" x="15" y="167.95636363636362" as="geometry" />
+        </mxCell>
+        <mxCell id="navSettings" parent="globalNav" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=20;fontFamily=宋体;" value="设置" vertex="1">
+          <mxGeometry height="30" width="95" x="7.5" y="370" as="geometry" />
+        </mxCell>
+        <mxCell id="navLogout" parent="globalNav" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=20;fontFamily=宋体;" value="退出登录" vertex="1">
+          <mxGeometry height="39.32" width="95" x="7.5" y="420" as="geometry" />
+        </mxCell>
+        <mxCell id="054E4DkS11MN0tVQiZHr-8" parent="globalNav" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=20;fontFamily=宋体;" value="主题切换" vertex="1">
+          <mxGeometry height="32.05" width="95" x="7.5" y="330" as="geometry" />
+        </mxCell>
+        <mxCell id="modeSwitchLabel" parent="mainContainer" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=20;fontColor=#000000;fontStyle=2;fontFamily=Times New Roman;" value="setMode() &lt;font face=&quot;宋体&quot;&gt;切换&lt;/font&gt;" vertex="1">
+          <mxGeometry height="30" width="100" x="20" as="geometry" />
+        </mxCell>
+        <mxCell id="editorMode" parent="mainContainer" style="swimlane;startSize=25;fillColor=#e8e8e8;strokeColor=#000000;fontStyle=1;html=1;fontFamily=Times New Roman;fontSize=20;" value="Editor &lt;font face=&quot;宋体&quot;&gt;模式&lt;/font&gt;" vertex="1">
+          <mxGeometry height="230" width="310" x="150" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="appSidebar" parent="editorMode" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=20;fontFamily=Times New Roman;" value="AppSidebar&lt;br&gt;&lt;font face=&quot;宋体&quot;&gt;(文件树/大纲)&lt;/font&gt;" vertex="1">
+          <mxGeometry height="50" width="140" x="10" y="35" as="geometry" />
+        </mxCell>
+        <mxCell id="editorComp" parent="editorMode" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=20;fontFamily=Times New Roman;" value="Editor &lt;font face=&quot;宋体&quot;&gt;组件&lt;/font&gt;&lt;br&gt;(TipTap Markdown)" vertex="1">
+          <mxGeometry height="85" width="125" x="165" y="35" as="geometry" />
+        </mxCell>
+        <mxCell id="editorStore" parent="editorMode" style="shape=cylinder3;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=20;fontFamily=Times New Roman;" value="&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;editorStore&lt;/span&gt;&lt;/div&gt;(content, curPath,&lt;br&gt;frontmatter)" vertex="1">
+          <mxGeometry height="110" width="170" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="searchCmd" parent="editorMode" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=20;fontFamily=Times New Roman;" value="SearchCommand&lt;br&gt;&lt;font face=&quot;宋体&quot;&gt;(全局搜索)&lt;/font&gt;" vertex="1">
+          <mxGeometry height="60" width="130" x="165" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="edge10" edge="1" parent="editorMode" source="appSidebar" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontFamily=Times New Roman;fontSize=20;" target="editorStore" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="kbMode" parent="mainContainer" style="swimlane;startSize=25;fillColor=#e8e8e8;strokeColor=#000000;fontStyle=1;html=1;fontFamily=Times New Roman;fontSize=20;" value="KB &lt;font face=&quot;宋体&quot;&gt;知识库模式&lt;/font&gt;" vertex="1">
+          <mxGeometry height="230" width="270" x="470" y="45" as="geometry" />
+        </mxCell>
+        <mxCell id="kbSidebar" parent="kbMode" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=20;fontFamily=Times New Roman;" value="KbSidebar&lt;br&gt;&lt;font face=&quot;宋体&quot;&gt;(知识库导航)&lt;/font&gt;" vertex="1">
+          <mxGeometry height="50" width="135" x="15" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="chatPanel" parent="kbMode" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=20;fontFamily=Times New Roman;" value="ChatPanel&lt;br&gt;(AI &lt;font face=&quot;宋体&quot;&gt;问答&lt;/font&gt;)" vertex="1">
+          <mxGeometry height="50" width="90" x="165" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="kbStore" parent="kbMode" style="shape=cylinder3;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=20;fontFamily=Times New Roman;" value="&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;kbStore&lt;/span&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="70" x="35" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="searchStore" parent="kbMode" style="shape=cylinder3;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=20;fontFamily=Times New Roman;" value="&lt;div&gt;&lt;br&gt;&lt;/div&gt;searchStore&lt;br&gt;&lt;font face=&quot;宋体&quot;&gt;(索引/搜索)&lt;/font&gt;" vertex="1">
+          <mxGeometry height="90" width="120" x="135" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="collabMode" parent="mainContainer" style="swimlane;startSize=25;fillColor=#e8e8e8;strokeColor=#000000;fontStyle=1;html=1;fontFamily=Times New Roman;fontSize=20;" value="Collab &lt;font face=&quot;宋体&quot;&gt;协同编辑模式&lt;/font&gt;" vertex="1">
+          <mxGeometry height="220" width="355" x="760" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="collabSidebar" parent="collabMode" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=20;fontFamily=Times New Roman;" value="CollabSidebar&lt;br&gt;&lt;font face=&quot;宋体&quot;&gt;(协作空间列表)&lt;/font&gt;" vertex="1">
+          <mxGeometry height="50" width="170" x="20" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="collabEditor" parent="collabMode" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=20;fontFamily=Times New Roman;" value="Editor 组件&lt;br&gt;(mode=collab)" vertex="1">
+          <mxGeometry height="50" width="140" x="205" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="collabStore" parent="collabMode" style="shape=cylinder3;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=20;fontFamily=Times New Roman;" value="&lt;div&gt;&lt;br&gt;&lt;/div&gt;collabStore&lt;br&gt;(Yjs/Hocuspocus)" vertex="1">
+          <mxGeometry height="90" width="210" x="40" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="edge11" edge="1" parent="collabMode" source="collabSidebar" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontFamily=Times New Roman;fontSize=20;" target="collabStore" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="graphMode" parent="mainContainer" style="swimlane;startSize=25;fillColor=#e8e8e8;strokeColor=#000000;fontStyle=1;html=1;fontFamily=Times New Roman;fontSize=20;" value="Graph &lt;font face=&quot;宋体&quot;&gt;图谱模式&lt;/font&gt;" vertex="1">
+          <mxGeometry height="200" width="260" x="1120" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="graphAppSidebar" parent="graphMode" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=20;fontFamily=Times New Roman;" value="AppSidebar&lt;br&gt;&lt;font face=&quot;宋体&quot;&gt;(文件树)&lt;/font&gt;" vertex="1">
+          <mxGeometry height="50" width="210" x="30" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="graphView" parent="graphMode" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=20;fontFamily=Times New Roman;" value="GraphView&lt;br&gt;&lt;font face=&quot;宋体&quot;&gt;(知识图谱可视化)&lt;/font&gt;" vertex="1">
+          <mxGeometry height="50" width="210" x="30" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="settingsMode" parent="mainContainer" style="swimlane;startSize=25;fillColor=#e8e8e8;strokeColor=#000000;fontStyle=1;html=1;fontFamily=Times New Roman;fontSize=20;" value="&lt;font face=&quot;Times New Roman&quot;&gt;Settings &lt;/font&gt;&lt;font face=&quot;宋体&quot;&gt;设置模式&lt;/font&gt;" vertex="1">
+          <mxGeometry height="200" width="280" x="150" y="330" as="geometry" />
+        </mxCell>
+        <mxCell id="settingsPage" parent="settingsMode" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=20;fontFamily=宋体;" value="&lt;font face=&quot;Times New Roman&quot;&gt;AccountSettingsPage&lt;/font&gt;&lt;br&gt;(无 &lt;font face=&quot;Times New Roman&quot;&gt;SidebarProvider&lt;/font&gt;)&lt;br&gt;账号/主题/通用设置" vertex="1">
+          <mxGeometry height="70" width="200" x="40" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="themeProvider" parent="settingsMode" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=20;fontFamily=Times New Roman;" value="ThemeProvider&lt;br&gt;&lt;font face=&quot;宋体&quot;&gt;(全局主题)&lt;/font&gt;" vertex="1">
+          <mxGeometry height="70" width="125" x="5" y="125" as="geometry" />
+        </mxCell>
+        <mxCell id="themeToggle" parent="settingsMode" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=20;fontFamily=Times New Roman;" value="ThemeToggle&lt;br&gt;&lt;font face=&quot;宋体&quot;&gt;(暗黑/明亮)&lt;/font&gt;" vertex="1">
+          <mxGeometry height="75" width="125" x="145" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="navToEditor" edge="1" parent="mainContainer" source="navEditor" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontFamily=Times New Roman;fontSize=20;" target="editorMode" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="140" y="76" />
+              <mxPoint x="140" y="165" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="navToKb" edge="1" parent="mainContainer" source="navKb" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;fontFamily=Times New Roman;fontSize=20;" target="kbMode" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="120" y="136" />
+              <mxPoint x="120" y="290" />
+              <mxPoint x="605" y="290" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="navToCollab" edge="1" parent="mainContainer" source="navCollab" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;fontFamily=Times New Roman;fontSize=20;" target="collabMode" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="113" y="226" />
+              <mxPoint x="140" y="226" />
+              <mxPoint x="140" y="310" />
+              <mxPoint x="937" y="310" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="navToGraph" edge="1" parent="mainContainer" source="navGraph" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.75;entryY=1;entryDx=0;entryDy=0;fontFamily=Times New Roman;fontSize=20;" target="graphMode" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="70" y="320" />
+              <mxPoint x="1315" y="320" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="navToSettings" edge="1" parent="mainContainer" source="navSettings" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;fontFamily=Times New Roman;fontSize=20;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="135" y="445" />
+              <mxPoint x="135" y="390" />
+            </Array>
+            <mxPoint x="150" y="390" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="graphToEditorEdge" edge="1" parent="mainContainer" source="graphView" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;dashed=1;fontColor=#000000;fontSize=20;fontFamily=Times New Roman;" target="editorComp" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1240" y="300" />
+              <mxPoint x="378" y="300" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="infraBox" parent="mainContainer" style="swimlane;startSize=25;fillColor=#e8e8e8;strokeColor=#000000;fontStyle=1;html=1;dashed=1;fontFamily=Times New Roman;fontSize=20;" value="&lt;font face=&quot;宋体&quot;&gt;全局基础设施&lt;/font&gt;" vertex="1">
+          <mxGeometry height="200" width="850" x="460" y="330" as="geometry" />
+        </mxCell>
+        <mxCell id="tauriInvoke" parent="infraBox" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=20;fontFamily=Times New Roman;" value="Tauri Commands&lt;br&gt;(invoke / listen)&lt;br&gt;Rust Backend" vertex="1">
+          <mxGeometry height="70" width="190" x="165" y="122.5" as="geometry" />
+        </mxCell>
+        <mxCell id="supabaseClient" parent="infraBox" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=20;fontFamily=Times New Roman;" value="Supabase Client&lt;br&gt;(Auth / Realtime)" vertex="1">
+          <mxGeometry height="60" width="175" x="450" y="45" as="geometry" />
+        </mxCell>
+        <mxCell id="zustand" parent="infraBox" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=20;fontFamily=Times New Roman;" value="Zustand&lt;br&gt;&lt;font face=&quot;宋体&quot;&gt;全局状态管理&lt;/font&gt;" vertex="1">
+          <mxGeometry height="65" width="155" x="540" y="125" as="geometry" />
+        </mxCell>
+        <mxCell id="utils" parent="infraBox" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=20;fontFamily=Times New Roman;" value="Utils&lt;br&gt;&lt;font face=&quot;宋体&quot;&gt;(搜索索引/图片解析/&lt;/font&gt;frontmatter / tray)" vertex="1">
+          <mxGeometry height="70" width="200" x="645" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="uiComponents" parent="infraBox" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=20;fontFamily=Times New Roman;" value="UI &lt;font face=&quot;宋体&quot;&gt;组件库&lt;/font&gt;&lt;br&gt;(shadcn/ui +Tailwind 4)" vertex="1">
+          <mxGeometry height="70" width="270" x="170" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="toaster" parent="infraBox" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=20;fontFamily=Times New Roman;" value="Sonner&lt;br&gt;(Toast &lt;font face=&quot;宋体&quot;&gt;通知&lt;/font&gt;)" vertex="1">
+          <mxGeometry height="65" width="155" x="370" y="125" as="geometry" />
+        </mxCell>
+        <mxCell id="tooltipProv" parent="infraBox" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=20;fontFamily=Times New Roman;" value="TooltipProvider&lt;br&gt;ThemeProvider" vertex="1">
+          <mxGeometry height="65" width="130" x="715" y="125" as="geometry" />
+        </mxCell>
+        <mxCell id="fsPlugin" parent="infraBox" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=20;fontFamily=Times New Roman;" value="FS Plugin&lt;br&gt;(readTextFile)&lt;br&gt;Tray Plugin" vertex="1">
+          <mxGeometry height="147.5" width="140" x="10" y="42.5" as="geometry" />
+        </mxCell>
+        <mxCell id="fileToEditor" edge="1" parent="1" source="fileAssoc" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;dashed=1;fontSize=20;fontFamily=Times New Roman;" target="editorMode" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="720" y="510" />
+              <mxPoint x="385" y="510" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
 </mxfile>

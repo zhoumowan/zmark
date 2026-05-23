@@ -1,273 +1,249 @@
-<mxfile host="65bd71144e">
-    <diagram name="ZMark 系统架构" id="QIP10d8qzgB5OqJQFjEH">
-        <mxGraphModel dx="746" dy="448" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1200" math="0" shadow="0">
-            <root>
-                <mxCell id="0"/>
-                <mxCell id="1" parent="0"/>
-                <mxCell id="title" value="&lt;b&gt;ZMark 系统架构图&lt;/b&gt;&#xa;本地优先的 Markdown 编辑器与知识库" style="text;html=1;align=center;verticalAlign=middle;fontSize=18;fontFamily=Georgia;" parent="1" vertex="1">
-                    <mxGeometry x="580" y="20" width="440" height="50" as="geometry"/>
-                </mxCell>
-                <mxCell id="layer-presentation" value="表现层（React 19 + Tailwind CSS 4）" style="swimlane;startSize=30;fontSize=13;fontFamily=Georgia;fillColor=#f8f9fa;strokeColor=#495057;strokeWidth=1.5;rounded=1;" parent="1" vertex="1">
-                    <mxGeometry x="80" y="100" width="1440" height="320" as="geometry"/>
-                </mxCell>
-                <mxCell id="mod-editor" value="&lt;b&gt;编辑器模块&lt;/b&gt;&#xa;Tiptap + ProseMirror&#xa;块级 WYSIWYG" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e9ecef;strokeColor=#495057;fontSize=11;fontFamily=Georgia;" parent="layer-presentation" vertex="1">
-                    <mxGeometry x="30" y="50" width="160" height="70" as="geometry"/>
-                </mxCell>
-                <mxCell id="editor-sub1" value="斜杠命令&#xa;浮动菜单&#xa;菜单栏" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f1f3f5;strokeColor=#868e96;fontSize=9;fontFamily=Georgia;" parent="layer-presentation" vertex="1">
-                    <mxGeometry x="30" y="135" width="72" height="55" as="geometry"/>
-                </mxCell>
-                <mxCell id="editor-sub2" value="Frontmatter&#xa;属性面板&#xa;版本历史" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f1f3f5;strokeColor=#868e96;fontSize=9;fontFamily=Georgia;" parent="layer-presentation" vertex="1">
-                    <mxGeometry x="118" y="135" width="72" height="55" as="geometry"/>
-                </mxCell>
-                <mxCell id="editor-sub3" value="搜索命令&#xa;目录导航&#xa;文件索引" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f1f3f5;strokeColor=#868e96;fontSize=9;fontFamily=Georgia;" parent="layer-presentation" vertex="1">
-                    <mxGeometry x="30" y="205" width="72" height="55" as="geometry"/>
-                </mxCell>
-                <mxCell id="editor-sub4" value="扩展插件&#xa;(代码/数学/&#xa;高亮)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f1f3f5;strokeColor=#868e96;fontSize=9;fontFamily=Georgia;" parent="layer-presentation" vertex="1">
-                    <mxGeometry x="118" y="205" width="72" height="55" as="geometry"/>
-                </mxCell>
-                <mxCell id="mod-kb" value="&lt;b&gt;知识库模块&lt;/b&gt;&#xa;RAG 问答系统&#xa;SiliconFlow API" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e9ecef;strokeColor=#495057;fontSize=11;fontFamily=Georgia;" parent="layer-presentation" vertex="1">
-                    <mxGeometry x="240" y="50" width="160" height="70" as="geometry"/>
-                </mxCell>
-                <mxCell id="kb-sub1" value="对话面板&#xa;(流式输出)&#xa;思考过程" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f1f3f5;strokeColor=#868e96;fontSize=9;fontFamily=Georgia;" parent="layer-presentation" vertex="1">
-                    <mxGeometry x="240" y="135" width="72" height="55" as="geometry"/>
-                </mxCell>
-                <mxCell id="kb-sub2" value="文档管理&#xa;(增删改查)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f1f3f5;strokeColor=#868e96;fontSize=9;fontFamily=Georgia;" parent="layer-presentation" vertex="1">
-                    <mxGeometry x="328" y="135" width="72" height="55" as="geometry"/>
-                </mxCell>
-                <mxCell id="kb-sub3" value="向量检索&#xa;(Top-K)&#xa;相似度排序" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f1f3f5;strokeColor=#868e96;fontSize=9;fontFamily=Georgia;" parent="layer-presentation" vertex="1">
-                    <mxGeometry x="240" y="205" width="72" height="55" as="geometry"/>
-                </mxCell>
-                <mxCell id="kb-sub4" value="会话管理&#xa;历史记录" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f1f3f5;strokeColor=#868e96;fontSize=9;fontFamily=Georgia;" parent="layer-presentation" vertex="1">
-                    <mxGeometry x="328" y="205" width="72" height="55" as="geometry"/>
-                </mxCell>
-                <mxCell id="mod-graph" value="&lt;b&gt;图谱视图&lt;/b&gt;&#xa;交互式节点&#xa;文档关系图" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e9ecef;strokeColor=#495057;fontSize=11;fontFamily=Georgia;" parent="layer-presentation" vertex="1">
-                    <mxGeometry x="450" y="50" width="140" height="70" as="geometry"/>
-                </mxCell>
-                <mxCell id="mod-collab" value="&lt;b&gt;协同编辑&lt;/b&gt;&#xa;Yjs + Hocuspocus&#xa;CRDT 同步" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e9ecef;strokeColor=#495057;fontSize=11;fontFamily=Georgia;" parent="layer-presentation" vertex="1">
-                    <mxGeometry x="630" y="50" width="150" height="70" as="geometry"/>
-                </mxCell>
-                <mxCell id="collab-sub1" value="本地 SQLite&#xa;持久化&#xa;(y-sqlite)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f1f3f5;strokeColor=#868e96;fontSize=9;fontFamily=Georgia;" parent="layer-presentation" vertex="1">
-                    <mxGeometry x="630" y="135" width="68" height="50" as="geometry"/>
-                </mxCell>
-                <mxCell id="collab-sub2" value="Supabase&#xa;云端同步&#xa;(y_update)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f1f3f5;strokeColor=#868e96;fontSize=9;fontFamily=Georgia;" parent="layer-presentation" vertex="1">
-                    <mxGeometry x="712" y="135" width="68" height="50" as="geometry"/>
-                </mxCell>
-                <mxCell id="mod-capture" value="&lt;b&gt;快速捕获&lt;/b&gt;&#xa;全局快捷键&#xa;浮动窗口" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e9ecef;strokeColor=#495057;fontSize=11;fontFamily=Georgia;" parent="layer-presentation" vertex="1">
-                    <mxGeometry x="820" y="50" width="150" height="70" as="geometry"/>
-                </mxCell>
-                <mxCell id="mod-auth" value="&lt;b&gt;用户认证&lt;/b&gt;&#xa;Supabase Auth&#xa;GitHub / 魔法链接" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e9ecef;strokeColor=#495057;fontSize=11;fontFamily=Georgia;" parent="layer-presentation" vertex="1">
-                    <mxGeometry x="1010" y="50" width="150" height="70" as="geometry"/>
-                </mxCell>
-                <mxCell id="mod-settings" value="&lt;b&gt;系统设置&lt;/b&gt;&#xa;主题 / 账户&#xa;API 密钥" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e9ecef;strokeColor=#495057;fontSize=11;fontFamily=Georgia;" parent="layer-presentation" vertex="1">
-                    <mxGeometry x="1200" y="50" width="120" height="70" as="geometry"/>
-                </mxCell>
-                <mxCell id="mod-ui" value="&lt;b&gt;UI 组件库&lt;/b&gt;&#xa;shadcn/ui&#xa;Lucide 图标" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e9ecef;strokeColor=#495057;fontSize=11;fontFamily=Georgia;" parent="layer-presentation" vertex="1">
-                    <mxGeometry x="1200" y="150" width="120" height="60" as="geometry"/>
-                </mxCell>
-                <mxCell id="mod-common" value="&lt;b&gt;通用组件&lt;/b&gt;&#xa;主题提供者&#xa;错误边界&#xa;消息提示" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e9ecef;strokeColor=#495057;fontSize=10;fontFamily=Georgia;" parent="layer-presentation" vertex="1">
-                    <mxGeometry x="1200" y="230" width="120" height="65" as="geometry"/>
-                </mxCell>
-                <mxCell id="mod-appshell" value="&lt;b&gt;应用外壳&lt;/b&gt;&#xa;侧边栏导航&#xa;模式路由&#xa;(编辑器/知识库/协同/图谱)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dee2e6;strokeColor=#343a40;fontSize=11;fontFamily=Georgia;strokeWidth=2;" parent="layer-presentation" vertex="1">
-                    <mxGeometry x="1010" y="150" width="150" height="145" as="geometry"/>
-                </mxCell>
-                <mxCell id="layer-state" value="状态管理层（Zustand）" style="swimlane;startSize=30;fontSize=13;fontFamily=Georgia;fillColor=#f8f9fa;strokeColor=#495057;strokeWidth=1.5;rounded=1;" parent="1" vertex="1">
-                    <mxGeometry x="80" y="470" width="1440" height="120" as="geometry"/>
-                </mxCell>
-                <mxCell id="store-editor" value="&lt;b&gt;EditorStore&lt;/b&gt;&#xa;内容 / 路径&#xa;Frontmatter&#xa;协同 ID" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e9ecef;strokeColor=#495057;fontSize=10;fontFamily=Georgia;" parent="layer-state" vertex="1">
-                    <mxGeometry x="200" y="45" width="110" height="65" as="geometry"/>
-                </mxCell>
-                <mxCell id="store-kb" value="&lt;b&gt;KBStore&lt;/b&gt;&#xa;(持久化)&#xa;对话 / 文档&#xa;API 密钥" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e9ecef;strokeColor=#495057;fontSize=10;fontFamily=Georgia;" parent="layer-state" vertex="1">
-                    <mxGeometry x="370" y="45" width="110" height="65" as="geometry"/>
-                </mxCell>
-                <mxCell id="store-auth" value="&lt;b&gt;AuthStore&lt;/b&gt;&#xa;会话 / 用户&#xa;GitHub OAuth&#xa;魔法链接" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e9ecef;strokeColor=#495057;fontSize=10;fontFamily=Georgia;" parent="layer-state" vertex="1">
-                    <mxGeometry x="930" y="45" width="110" height="65" as="geometry"/>
-                </mxCell>
-                <mxCell id="store-collab" value="&lt;b&gt;CollabStore&lt;/b&gt;&#xa;(持久化)&#xa;文件列表&#xa;最近访问" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e9ecef;strokeColor=#495057;fontSize=10;fontFamily=Georgia;" parent="layer-state" vertex="1">
-                    <mxGeometry x="650" y="45" width="110" height="65" as="geometry"/>
-                </mxCell>
-                <mxCell id="store-search" value="&lt;b&gt;SearchStore&lt;/b&gt;&#xa;文件索引&#xa;模糊搜索" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e9ecef;strokeColor=#495057;fontSize=10;fontFamily=Georgia;" parent="layer-state" vertex="1">
-                    <mxGeometry x="1060" y="45" width="110" height="65" as="geometry"/>
-                </mxCell>
-                <mxCell id="layer-bridge" value="Tauri 桥接层（IPC）" style="swimlane;startSize=30;fontSize=13;fontFamily=Georgia;fillColor=#f8f9fa;strokeColor=#495057;strokeWidth=1.5;rounded=1;" parent="1" vertex="1">
-                    <mxGeometry x="80" y="650" width="1440" height="100" as="geometry"/>
-                </mxCell>
-                <mxCell id="bridge-invoke" value="&lt;b&gt;invoke()&lt;/b&gt;&#xa;前端 → Rust&#xa;命令调用" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e9ecef;strokeColor=#495057;fontSize=10;fontFamily=Georgia;" parent="layer-bridge" vertex="1">
-                    <mxGeometry x="210" y="40" width="120" height="50" as="geometry"/>
-                </mxCell>
-                <mxCell id="bridge-listen" value="&lt;b&gt;listen()&lt;/b&gt;&#xa;Rust → 前端&#xa;事件监听" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e9ecef;strokeColor=#495057;fontSize=10;fontFamily=Georgia;" parent="layer-bridge" vertex="1">
-                    <mxGeometry x="440" y="40" width="120" height="50" as="geometry"/>
-                </mxCell>
-                <mxCell id="bridge-plugins" value="&lt;b&gt;Tauri 插件&lt;/b&gt;&#xa;文件系统 / 对话框 / Shell&#xa;全局快捷键&#xa;深度链接 / SQL" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e9ecef;strokeColor=#495057;fontSize=10;fontFamily=Georgia;" parent="layer-bridge" vertex="1">
-                    <mxGeometry x="1050" y="35" width="130" height="60" as="geometry"/>
-                </mxCell>
-                <mxCell id="bridge-window" value="&lt;b&gt;窗口管理&lt;/b&gt;&#xa;主窗口 / 捕获窗口&#xa;托盘 / 最小化" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e9ecef;strokeColor=#495057;fontSize=10;fontFamily=Georgia;" parent="layer-bridge" vertex="1">
-                    <mxGeometry x="720" y="40" width="120" height="50" as="geometry"/>
-                </mxCell>
-                <mxCell id="layer-backend" value="后端层（Tauri 2 + Rust）" style="swimlane;startSize=30;fontSize=13;fontFamily=Georgia;fillColor=#f8f9fa;strokeColor=#495057;strokeWidth=1.5;rounded=1;" parent="1" vertex="1">
-                    <mxGeometry x="80" y="780" width="1440" height="200" as="geometry"/>
-                </mxCell>
-                <mxCell id="cmd-kb" value="&lt;b&gt;知识库命令&lt;/b&gt;&#xa;创建知识库 / 列出知识库&#xa;添加文档 / 列出文档&#xa;删除文档 / 对话" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e9ecef;strokeColor=#495057;fontSize=10;fontFamily=Georgia;" parent="layer-backend" vertex="1">
-                    <mxGeometry x="205" y="70" width="130" height="75" as="geometry"/>
-                </mxCell>
-                <mxCell id="cmd-ai" value="&lt;b&gt;AI 助手&lt;/b&gt;&#xa;ai_copilot&#xa;SiliconFlow API" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e9ecef;strokeColor=#495057;fontSize=10;fontFamily=Georgia;" parent="layer-backend" vertex="1">
-                    <mxGeometry x="370" y="70" width="110" height="75" as="geometry"/>
-                </mxCell>
-                <mxCell id="cmd-git" value="&lt;b&gt;Git 历史&lt;/b&gt;&#xa;git_file_history&#xa;git_file_content" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e9ecef;strokeColor=#495057;fontSize=10;fontFamily=Georgia;" parent="layer-backend" vertex="1">
-                    <mxGeometry x="510" y="70" width="110" height="75" as="geometry"/>
-                </mxCell>
-                <mxCell id="cmd-runner" value="&lt;b&gt;代码执行&lt;/b&gt;&#xa;run_python&#xa;(沙箱环境)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e9ecef;strokeColor=#495057;fontSize=10;fontFamily=Georgia;" parent="layer-backend" vertex="1">
-                    <mxGeometry x="650" y="70" width="110" height="75" as="geometry"/>
-                </mxCell>
-                <mxCell id="cmd-tray" value="&lt;b&gt;托盘与窗口&lt;/b&gt;&#xa;minimize_to_tray&#xa;show_capture_window&#xa;hide_capture_window" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e9ecef;strokeColor=#495057;fontSize=10;fontFamily=Georgia;" parent="layer-backend" vertex="1">
-                    <mxGeometry x="790" y="70" width="130" height="75" as="geometry"/>
-                </mxCell>
-                <mxCell id="cmd-startup" value="&lt;b&gt;启动管理&lt;/b&gt;&#xa;get_app_startup_args&#xa;文件关联" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e9ecef;strokeColor=#495057;fontSize=10;fontFamily=Georgia;" parent="layer-backend" vertex="1">
-                    <mxGeometry x="950" y="70" width="120" height="75" as="geometry"/>
-                </mxCell>
-                <mxCell id="ext-supabase" value="&lt;b&gt;Supabase&lt;/b&gt;&#xa;认证 (OAuth)&#xa;collab_documents&#xa;(云端)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f1f3f5;strokeColor=#868e96;fontSize=10;fontFamily=Georgia;dashed=1;" parent="layer-backend" vertex="1">
-                    <mxGeometry x="1300" y="45" width="120" height="75" as="geometry"/>
-                </mxCell>
-                <mxCell id="e1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#868e96;" parent="1" source="mod-editor" target="store-editor" edge="1">
-                    <mxGeometry relative="1" as="geometry"/>
-                </mxCell>
-                <mxCell id="e2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#868e96;" parent="1" source="mod-kb" target="store-kb" edge="1">
-                    <mxGeometry relative="1" as="geometry"/>
-                </mxCell>
-                <mxCell id="e3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#868e96;" parent="1" source="mod-auth" target="store-auth" edge="1">
-                    <mxGeometry relative="1" as="geometry">
-                        <Array as="points">
-                            <mxPoint x="1165" y="240"/>
-                            <mxPoint x="1065" y="240"/>
-                        </Array>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="e5" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#868e96;fontSize=9;fontFamily=Georgia;" parent="1" source="store-kb" target="bridge-invoke" edge="1">
-                    <mxGeometry relative="1" as="geometry">
-                        <Array as="points">
-                            <mxPoint x="505" y="610"/>
-                            <mxPoint x="350" y="610"/>
-                        </Array>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="e6" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.75;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#868e96;fontSize=9;fontFamily=Georgia;" parent="1" source="store-kb" target="bridge-listen" edge="1">
-                    <mxGeometry relative="1" as="geometry">
-                        <Array as="points">
-                            <mxPoint x="533" y="610"/>
-                            <mxPoint x="580" y="610"/>
-                        </Array>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="e7" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#868e96;" parent="1" source="bridge-invoke" target="cmd-kb" edge="1">
-                    <mxGeometry relative="1" as="geometry">
-                        <Array as="points">
-                            <mxPoint x="350" y="820"/>
-                            <mxPoint x="350" y="820"/>
-                        </Array>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="e8" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#868e96;" parent="1" source="bridge-plugins" target="cmd-tray" edge="1">
-                    <mxGeometry relative="1" as="geometry"/>
-                </mxCell>
-                <mxCell id="e9" value="SQL" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#868e96;fontSize=9;fontFamily=Georgia;" parent="1" source="cmd-kb" target="db-sqlite" edge="1">
-                    <mxGeometry relative="1" as="geometry"/>
-                </mxCell>
-                <mxCell id="e10" value="HTTP" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.75;entryY=0;entryDx=0;entryDy=0;strokeColor=#868e96;fontSize=9;fontFamily=Georgia;dashed=1;" parent="1" source="cmd-ai" target="ext-siliconflow" edge="1">
-                    <mxGeometry relative="1" as="geometry"/>
-                </mxCell>
-                <mxCell id="e12" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#868e96;fontSize=9;fontFamily=Georgia;" parent="1" source="cmd-startup" target="fs-local" edge="1">
-                    <mxGeometry relative="1" as="geometry">
-                        <Array as="points">
-                            <mxPoint x="1090" y="1000"/>
-                            <mxPoint x="805" y="1000"/>
-                        </Array>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="e13" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.75;entryY=0;entryDx=0;entryDy=0;strokeColor=#adb5bd;fontSize=9;fontFamily=Georgia;" parent="1" source="mod-graph" target="store-editor" edge="1">
-                    <mxGeometry relative="1" as="geometry">
-                        <Array as="points">
-                            <mxPoint x="600" y="440"/>
-                            <mxPoint x="363" y="440"/>
-                            <mxPoint x="363" y="480"/>
-                        </Array>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="e14" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.25;entryY=0;entryDx=0;entryDy=0;strokeColor=#adb5bd;fontSize=9;fontFamily=Georgia;" parent="1" source="mod-capture" target="store-editor" edge="1">
-                    <mxGeometry relative="1" as="geometry">
-                        <Array as="points">
-                            <mxPoint x="975" y="380"/>
-                            <mxPoint x="308" y="380"/>
-                            <mxPoint x="308" y="460"/>
-                        </Array>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="legend-box" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#dee2e6;strokeWidth=1;" parent="1" vertex="1">
-                    <mxGeometry x="1190" y="1040" width="270" height="100" as="geometry"/>
-                </mxCell>
-                <mxCell id="legend-title" value="&lt;b&gt;图例&lt;/b&gt;" style="text;html=1;align=left;verticalAlign=middle;fontSize=11;fontFamily=Georgia;" parent="1" vertex="1">
-                    <mxGeometry x="1205" y="1045" width="80" height="20" as="geometry"/>
-                </mxCell>
-                <mxCell id="legend-solid" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e9ecef;strokeColor=#495057;" parent="1" vertex="1">
-                    <mxGeometry x="1205" y="1075" width="20" height="15" as="geometry"/>
-                </mxCell>
-                <mxCell id="legend-solid-text" value="内部组件" style="text;html=1;align=left;verticalAlign=middle;fontSize=10;fontFamily=Georgia;" parent="1" vertex="1">
-                    <mxGeometry x="1230" y="1072" width="120" height="20" as="geometry"/>
-                </mxCell>
-                <mxCell id="legend-dashed" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f1f3f5;strokeColor=#868e96;dashed=1;" parent="1" vertex="1">
-                    <mxGeometry x="1205" y="1100" width="20" height="15" as="geometry"/>
-                </mxCell>
-                <mxCell id="legend-dashed-text" value="外部服务（云端）" style="text;html=1;align=left;verticalAlign=middle;fontSize=10;fontFamily=Georgia;" parent="1" vertex="1">
-                    <mxGeometry x="1230" y="1097" width="150" height="20" as="geometry"/>
-                </mxCell>
-                <mxCell id="legend-cylinder" value="" style="shape=cylinder3;whiteSpace=wrap;html=1;fillColor=#e9ecef;strokeColor=#495057;" parent="1" vertex="1">
-                    <mxGeometry x="1370" y="1075" width="20" height="18" as="geometry"/>
-                </mxCell>
-                <mxCell id="legend-cylinder-text" value="数据存储" style="text;html=1;align=left;verticalAlign=middle;fontSize=10;fontFamily=Georgia;" parent="1" vertex="1">
-                    <mxGeometry x="1395" y="1072" width="100" height="20" as="geometry"/>
-                </mxCell>
-                <mxCell id="legend-swimlane" value="" style="swimlane;startSize=15;fillColor=#f8f9fa;strokeColor=#495057;" parent="1" vertex="1">
-                    <mxGeometry x="1370" y="1100" width="30" height="15" as="geometry"/>
-                </mxCell>
-                <mxCell id="legend-swimlane-text" value="层边界" style="text;html=1;align=left;verticalAlign=middle;fontSize=10;fontFamily=Georgia;" parent="1" vertex="1">
-                    <mxGeometry x="1405" y="1097" width="100" height="20" as="geometry"/>
-                </mxCell>
-                <mxCell id="tech-frontend" value="React 19 · TypeScript · Vite · Tailwind CSS 4 · shadcn/ui" style="text;html=1;align=center;verticalAlign=middle;fontSize=9;fontFamily=Georgia;fontStyle=2;fontColor=#868e96;" parent="1" vertex="1">
-                    <mxGeometry x="30" y="80" width="350" height="20" as="geometry"/>
-                </mxCell>
-                <mxCell id="tech-bridge" value="Tauri 2 · IPC (invoke/listen) · Tauri 插件" style="text;html=1;align=center;verticalAlign=middle;fontSize=9;fontFamily=Georgia;fontStyle=2;fontColor=#868e96;" parent="1" vertex="1">
-                    <mxGeometry x="30" y="620" width="280" height="20" as="geometry"/>
-                </mxCell>
-                <mxCell id="tech-backend" value="Rust · rusqlite · reqwest · tokio · serde" style="text;html=1;align=center;verticalAlign=middle;fontSize=9;fontFamily=Georgia;fontStyle=2;fontColor=#868e96;" parent="1" vertex="1">
-                    <mxGeometry x="30" y="760" width="260" height="20" as="geometry"/>
-                </mxCell>
-                <mxCell id="1_DeqHiBFRh1fsYoy-l3-2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#868e96;" edge="1" parent="1" source="mod-collab" target="store-collab">
-                    <mxGeometry relative="1" as="geometry">
-                        <Array as="points">
-                            <mxPoint x="785" y="370"/>
-                            <mxPoint x="785" y="370"/>
-                        </Array>
-                        <mxPoint x="792" y="310" as="sourcePoint"/>
-                        <mxPoint x="692" y="605" as="targetPoint"/>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="tech-state" value="Zustand · zustand/middleware (persist)" style="text;html=1;align=center;verticalAlign=middle;fontSize=9;fontFamily=Georgia;fontStyle=2;fontColor=#868e96;" parent="1" vertex="1">
-                    <mxGeometry x="40" y="450" width="250" height="20" as="geometry"/>
-                </mxCell>
-                <mxCell id="ext-siliconflow" value="&lt;b&gt;SiliconFlow API&lt;/b&gt;&#xa;向量嵌入: BAAI/bge-m3&#xa;对话: GLM-4.1V-9B&#xa;(云端)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f1f3f5;strokeColor=#868e96;fontSize=10;fontFamily=Georgia;dashed=1;" parent="1" vertex="1">
-                    <mxGeometry x="285" y="1094.5" width="140" height="75" as="geometry"/>
-                </mxCell>
-                <mxCell id="db-sqlite" value="&lt;div&gt;&lt;b&gt;&lt;br&gt;&lt;/b&gt;&lt;/div&gt;&lt;b&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;SQLite (rusqlite)&lt;/b&gt;&lt;br&gt;knowledge_bases&lt;br&gt;documents&lt;br&gt;chunks (向量)" style="shape=cylinder3;whiteSpace=wrap;html=1;fillColor=#e9ecef;strokeColor=#495057;fontSize=10;fontFamily=Georgia;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" parent="1" vertex="1">
-                    <mxGeometry x="80" y="1070" width="130" height="110" as="geometry"/>
-                </mxCell>
-                <mxCell id="fs-local" value="&lt;div&gt;&lt;b&gt;&lt;br&gt;&lt;/b&gt;&lt;/div&gt;&lt;b&gt;&lt;div&gt;&lt;b&gt;&lt;br&gt;&lt;/b&gt;&lt;/div&gt;本地文件系统&lt;/b&gt;&lt;br&gt;Markdown 文件&lt;br&gt;图片 / 资源" style="shape=cylinder3;whiteSpace=wrap;html=1;fillColor=#e9ecef;strokeColor=#495057;fontSize=10;fontFamily=Georgia;" parent="1" vertex="1">
-                    <mxGeometry x="740" y="1087" width="130" height="90" as="geometry"/>
-                </mxCell>
-                <mxCell id="1_DeqHiBFRh1fsYoy-l3-3" value="HTTP" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.474;exitY=0.998;exitDx=0;exitDy=0;entryX=0.443;entryY=0.022;entryDx=0;entryDy=0;strokeColor=#868e96;fontSize=9;fontFamily=Georgia;dashed=1;exitPerimeter=0;entryPerimeter=0;" edge="1" parent="1" source="cmd-kb" target="ext-siliconflow">
-                    <mxGeometry relative="1" as="geometry">
-                        <mxPoint x="515" y="935" as="sourcePoint"/>
-                        <mxPoint x="400" y="1105" as="targetPoint"/>
-                    </mxGeometry>
-                </mxCell>
-            </root>
-        </mxGraphModel>
-    </diagram>
+<mxfile host="Electron">
+  <diagram name="ZMark 系统架构" id="QIP10d8qzgB5OqJQFjEH">
+    <mxGraphModel dx="1697" dy="1127" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1200" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="vxEY62eHWzYFVGTMC2I3-1" edge="1" parent="1" source="layer-presentation" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="store-collab" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="layer-presentation" parent="1" style="swimlane;startSize=30;fontSize=20;fontFamily=Times New Roman;fillColor=#f8f9fa;strokeColor=#495057;strokeWidth=1.5;rounded=1;" value=" " vertex="1">
+          <mxGeometry height="320" width="1360" x="80" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="mod-editor" parent="layer-presentation" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e9ecef;strokeColor=#495057;fontSize=20;fontFamily=Times New Roman;" value="&lt;b&gt;&lt;font face=&quot;宋体&quot;&gt;编辑器模块&lt;/font&gt;&lt;/b&gt;" vertex="1">
+          <mxGeometry height="70" width="240" x="10" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="editor-sub1" parent="layer-presentation" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f1f3f5;strokeColor=#868e96;fontSize=20;fontFamily=宋体;" value="斜杠命令&#xa;浮动菜单&#xa;菜单栏" vertex="1">
+          <mxGeometry height="70" width="110" x="10" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="editor-sub2" parent="layer-presentation" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f1f3f5;strokeColor=#868e96;fontSize=20;fontFamily=宋体;" value="&lt;font face=&quot;Times New Roman&quot;&gt;Frontmatter&lt;/font&gt;&lt;br&gt;面板&lt;br&gt;版本历史" vertex="1">
+          <mxGeometry height="70" width="110" x="130" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="editor-sub3" parent="layer-presentation" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f1f3f5;strokeColor=#868e96;fontSize=20;fontFamily=宋体;" value="搜索命令&#xa;目录导航&#xa;文件索引" vertex="1">
+          <mxGeometry height="70" width="120" x="130" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="editor-sub4" parent="layer-presentation" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f1f3f5;strokeColor=#868e96;fontSize=20;fontFamily=宋体;" value="扩展插件&lt;br&gt;(公式等)" vertex="1">
+          <mxGeometry height="70" width="112" x="8" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="mod-kb" parent="layer-presentation" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e9ecef;strokeColor=#495057;fontSize=20;fontFamily=Times New Roman;" value="&lt;b&gt;&lt;font face=&quot;宋体&quot;&gt;知识库模块&lt;/font&gt;&lt;/b&gt;" vertex="1">
+          <mxGeometry height="70" width="250" x="270" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="kb-sub1" parent="layer-presentation" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f1f3f5;strokeColor=#868e96;fontSize=20;fontFamily=宋体;" value="对话面板&#xa;(流式输出)&#xa;思考过程" vertex="1">
+          <mxGeometry height="70" width="120" x="270" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="kb-sub3" parent="layer-presentation" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f1f3f5;strokeColor=#868e96;fontSize=20;fontFamily=宋体;" value="向量检索&lt;br&gt;&lt;font face=&quot;Times New Roman&quot;&gt;(Top-K)&lt;/font&gt;&lt;br&gt;相似度排序" vertex="1">
+          <mxGeometry height="70" width="120" x="400" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="kb-sub4" parent="layer-presentation" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f1f3f5;strokeColor=#868e96;fontSize=20;fontFamily=宋体;" value="会话管理&#xa;历史记录" vertex="1">
+          <mxGeometry height="70" width="130" x="390" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="mod-collab" parent="layer-presentation" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e9ecef;strokeColor=#495057;fontSize=20;fontFamily=Times New Roman;" value="&lt;b&gt;&lt;font face=&quot;宋体&quot;&gt;协同编辑&lt;/font&gt;&lt;/b&gt;" vertex="1">
+          <mxGeometry height="70" width="150" x="554" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="collab-sub1" parent="layer-presentation" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f1f3f5;strokeColor=#868e96;fontSize=20;fontFamily=Times New Roman;" value="&lt;font face=&quot;宋体&quot;&gt;本地 &lt;/font&gt;SQLite&lt;br&gt;&lt;font face=&quot;宋体&quot;&gt;持久化&lt;/font&gt;&lt;br&gt;(y-sqlite)" vertex="1">
+          <mxGeometry height="75" width="146" x="554" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="collab-sub2" parent="layer-presentation" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f1f3f5;strokeColor=#868e96;fontSize=20;fontFamily=Times New Roman;" value="Supabase&lt;br&gt;&lt;font face=&quot;宋体&quot;&gt;云端同步&lt;/font&gt;&lt;br&gt;(y_update)" vertex="1">
+          <mxGeometry height="75" width="146" x="554" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="mod-capture" parent="layer-presentation" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e9ecef;strokeColor=#495057;fontSize=20;fontFamily=宋体;" value="&lt;b&gt;快速捕获&lt;/b&gt;" vertex="1">
+          <mxGeometry height="70" width="150" x="720" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="mod-auth" parent="layer-presentation" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e9ecef;strokeColor=#495057;fontSize=20;fontFamily=Times New Roman;" value="&lt;b&gt;&lt;font face=&quot;宋体&quot;&gt;用户认证&lt;/font&gt;&lt;/b&gt;&lt;br&gt;Supabase Auth&lt;br&gt;GitHub / Magic Link" vertex="1">
+          <mxGeometry height="70" width="250" x="910" y="42.5" as="geometry" />
+        </mxCell>
+        <mxCell id="mod-settings" parent="layer-presentation" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e9ecef;strokeColor=#495057;fontSize=20;fontFamily=Times New Roman;" value="&lt;b style=&quot;font-family: 宋体;&quot;&gt;系统设置&lt;/b&gt;&lt;br&gt;&lt;font face=&quot;宋体&quot;&gt;主题/账户&lt;/font&gt;&lt;br&gt;&lt;font face=&quot;Times New Roman&quot;&gt;API &lt;/font&gt;&lt;font face=&quot;宋体&quot;&gt;密钥&lt;/font&gt;" vertex="1">
+          <mxGeometry height="80" width="160" x="1190" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="mod-ui" parent="layer-presentation" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e9ecef;strokeColor=#495057;fontSize=20;fontFamily=Times New Roman;" value="&lt;b&gt;UI &lt;font face=&quot;宋体&quot;&gt;组件库&lt;/font&gt;&lt;/b&gt;&lt;br&gt;shadcn/ui&lt;br&gt;Lucide&lt;font face=&quot;宋体&quot;&gt;图标&lt;/font&gt;" vertex="1">
+          <mxGeometry height="80" width="160" x="1190" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="mod-common" parent="layer-presentation" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e9ecef;strokeColor=#495057;fontSize=20;fontFamily=宋体;" value="&lt;b&gt;通用组件&lt;/b&gt;&#xa;主题提供者&#xa;错误边界&#xa;消息提示" vertex="1">
+          <mxGeometry height="95" width="160" x="1190" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="mod-appshell" parent="layer-presentation" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dee2e6;strokeColor=#343a40;fontSize=20;fontFamily=宋体;strokeWidth=1;" value="&lt;b&gt;应用外壳&lt;/b&gt;&#xa;侧边栏导航&#xa;模式路由&#xa;(编辑器/知识库/协同/图谱)" vertex="1">
+          <mxGeometry height="145" width="150" x="1000" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="kb-sub2" parent="layer-presentation" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f1f3f5;strokeColor=#868e96;fontSize=20;fontFamily=宋体;" value="文档管理&#xa;(增删改查)" vertex="1">
+          <mxGeometry height="70" width="110" x="270" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="mod-graph" parent="layer-presentation" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e9ecef;strokeColor=#495057;fontSize=20;fontFamily=宋体;" value="&lt;b&gt;图谱视图&lt;/b&gt;" vertex="1">
+          <mxGeometry height="70" width="140" x="720" y="42.5" as="geometry" />
+        </mxCell>
+        <mxCell id="layer-state" parent="1" style="swimlane;startSize=30;fontSize=20;fontFamily=宋体;fillColor=#f8f9fa;strokeColor=#495057;strokeWidth=1.5;rounded=1;" value="" vertex="1">
+          <mxGeometry height="120" width="1360" x="80" y="440" as="geometry" />
+        </mxCell>
+        <mxCell id="store-editor" parent="layer-state" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e9ecef;strokeColor=#495057;fontSize=20;fontFamily=Times New Roman;" value="&lt;b&gt;EditorStore&lt;/b&gt;&lt;br&gt;&lt;font face=&quot;宋体&quot;&gt;内容/路径/协同&lt;/font&gt;&lt;font face=&quot;Times New Roman&quot;&gt;ID&lt;/font&gt;&lt;br&gt;Frontmatter" vertex="1">
+          <mxGeometry height="70" width="240" x="70" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="store-kb" parent="layer-state" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e9ecef;strokeColor=#495057;fontSize=20;fontFamily=Times New Roman;" value="&lt;b&gt;KBStore&lt;/b&gt;&lt;div&gt;&lt;b&gt;&lt;font face=&quot;宋体&quot;&gt;持久化&lt;/font&gt;&lt;br&gt;&lt;/b&gt;&lt;font face=&quot;宋体&quot;&gt;对话/文档/&lt;/font&gt;API &lt;font face=&quot;宋体&quot;&gt;密钥&lt;/font&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="70" width="220" x="380" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="store-auth" parent="layer-state" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e9ecef;strokeColor=#495057;fontSize=20;fontFamily=Times New Roman;" value="&lt;b&gt;AuthStore&lt;/b&gt;&lt;br&gt;GitHub OAuth&lt;br&gt;Magic Link" vertex="1">
+          <mxGeometry height="70" width="210" x="930" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="store-collab" parent="layer-state" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e9ecef;strokeColor=#495057;fontSize=20;fontFamily=Times New Roman;" value="&lt;b&gt;CollabStore&lt;/b&gt;&lt;br&gt;&lt;font face=&quot;宋体&quot;&gt;&lt;b&gt;持久化&lt;/b&gt;&lt;/font&gt;&lt;div&gt;&lt;font face=&quot;宋体&quot;&gt;文件列表/最近访问&lt;/font&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="70" width="250" x="650" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="store-search" parent="layer-state" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e9ecef;strokeColor=#495057;fontSize=20;fontFamily=Times New Roman;" value="&lt;b&gt;SearchStore&lt;/b&gt;&lt;br&gt;&lt;font face=&quot;宋体&quot;&gt;文件索引&lt;br&gt;模糊搜索&lt;/font&gt;" vertex="1">
+          <mxGeometry height="70" width="160" x="1160" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="layer-bridge" parent="1" style="swimlane;startSize=30;fontSize=20;fontFamily=Georgia;fillColor=#f8f9fa;strokeColor=#495057;strokeWidth=1.5;rounded=1;" value="" vertex="1">
+          <mxGeometry height="120" width="1355" x="85" y="580" as="geometry" />
+        </mxCell>
+        <mxCell id="bridge-invoke" parent="layer-bridge" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e9ecef;strokeColor=#495057;fontSize=20;fontFamily=Times New Roman;" value="&lt;b&gt;invoke()&lt;/b&gt;&lt;br&gt;&lt;font face=&quot;宋体&quot;&gt;前端&lt;/font&gt; → Rust&lt;br&gt;&lt;font face=&quot;宋体&quot;&gt;命令调用&lt;/font&gt;" vertex="1">
+          <mxGeometry height="70" width="140" x="210" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="bridge-listen" parent="layer-bridge" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e9ecef;strokeColor=#495057;fontSize=20;fontFamily=Times New Roman;" value="&lt;b&gt;listen()&lt;/b&gt;&lt;br&gt;Rust → &lt;font face=&quot;宋体&quot;&gt;前端&lt;/font&gt;&lt;br&gt;&lt;font face=&quot;宋体&quot;&gt;事件监听&lt;/font&gt;" vertex="1">
+          <mxGeometry height="70" width="150" x="435" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="bridge-plugins" parent="layer-bridge" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e9ecef;strokeColor=#495057;fontSize=20;fontFamily=Times New Roman;" value="&lt;b&gt;Tauri &lt;font face=&quot;宋体&quot;&gt;插件&lt;/font&gt;&lt;/b&gt;&lt;font face=&quot;宋体&quot;&gt;&lt;br&gt;文件系统/对话框/&lt;/font&gt; Shell&lt;br&gt;&lt;font face=&quot;宋体&quot;&gt;全局快捷键/深度链接/&lt;/font&gt;SQL" vertex="1">
+          <mxGeometry height="75" width="330" x="910" y="35" as="geometry" />
+        </mxCell>
+        <mxCell id="bridge-window" parent="layer-bridge" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e9ecef;strokeColor=#495057;fontSize=20;fontFamily=Times New Roman;" value="&lt;font face=&quot;宋体&quot;&gt;&lt;b&gt;窗口管理&lt;/b&gt;&lt;br&gt;主窗口/捕获窗口&lt;br&gt;托盘/最小化&lt;/font&gt;" vertex="1">
+          <mxGeometry height="70" width="170" x="675" y="37.5" as="geometry" />
+        </mxCell>
+        <mxCell id="layer-backend" parent="1" style="swimlane;startSize=30;fontSize=20;fontFamily=Times New Roman;fillColor=#f8f9fa;strokeColor=#495057;strokeWidth=1.5;rounded=1;" value="" vertex="1">
+          <mxGeometry height="200" width="1360" x="80" y="720" as="geometry" />
+        </mxCell>
+        <mxCell id="cmd-kb" parent="layer-backend" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e9ecef;strokeColor=#495057;fontSize=20;fontFamily=宋体;" value="&lt;b&gt;知识库命令&lt;/b&gt;&lt;br&gt;创建知识库/列出知识库&lt;br&gt;添加文档/列出文档&lt;br&gt;删除文档/对话" vertex="1">
+          <mxGeometry height="130" width="240" x="50" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="cmd-ai" parent="layer-backend" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e9ecef;strokeColor=#495057;fontSize=20;fontFamily=Times New Roman;" value="&lt;b&gt;&lt;font&gt;AI&lt;font face=&quot;宋体&quot;&gt;助手&lt;/font&gt;&lt;/font&gt;&lt;/b&gt;&lt;br&gt;ai_copilot&lt;br&gt;SiliconFlow API" vertex="1">
+          <mxGeometry height="130" width="190" x="300" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="cmd-git" parent="layer-backend" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e9ecef;strokeColor=#495057;fontSize=20;fontFamily=Times New Roman;" value="&lt;b&gt;Git &lt;font face=&quot;宋体&quot;&gt;历史&lt;/font&gt;&lt;/b&gt;&lt;br&gt;git_file_history&lt;br&gt;git_file_content" vertex="1">
+          <mxGeometry height="130" width="140" x="500" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="cmd-runner" parent="layer-backend" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e9ecef;strokeColor=#495057;fontSize=20;fontFamily=Times New Roman;" value="&lt;b&gt;&lt;font face=&quot;宋体&quot;&gt;代码执行&lt;/font&gt;&lt;/b&gt;&lt;br&gt;run_python&lt;br&gt;&lt;font face=&quot;宋体&quot;&gt;(沙箱环境)&lt;/font&gt;" vertex="1">
+          <mxGeometry height="130" width="130" x="650" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="cmd-tray" parent="layer-backend" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e9ecef;strokeColor=#495057;fontSize=20;fontFamily=Times New Roman;" value="&lt;b&gt;&lt;font face=&quot;宋体&quot;&gt;托盘与窗口&lt;/font&gt;&lt;/b&gt;&lt;br&gt;minimize_to_tray&lt;br&gt;show_capture_window&lt;br&gt;hide_capture_window" vertex="1">
+          <mxGeometry height="130" width="170" x="790" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="cmd-startup" parent="layer-backend" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e9ecef;strokeColor=#495057;fontSize=20;fontFamily=Times New Roman;" value="&lt;b&gt;&lt;font face=&quot;宋体&quot;&gt;启动管理&lt;/font&gt;&lt;/b&gt;&lt;br&gt;get_app_startup_args&lt;br&gt;&lt;font face=&quot;宋体&quot;&gt;文件关联&lt;/font&gt;" vertex="1">
+          <mxGeometry height="130" width="180" x="970" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="ext-supabase" parent="layer-backend" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f1f3f5;strokeColor=#868e96;fontSize=20;fontFamily=Times New Roman;dashed=1;" value="&lt;b&gt;Supabase&lt;/b&gt;&#xa;认证 (OAuth)&#xa;collab_documents&#xa;(云端)" vertex="1">
+          <mxGeometry height="130" width="180" x="1160" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="mod-editor" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#868e96;fontSize=20;fontFamily=Times New Roman;" target="store-editor" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="210" y="400" />
+              <mxPoint x="270" y="400" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="mod-kb" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#868e96;fontSize=20;fontFamily=Times New Roman;" target="store-kb" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#868e96;fontSize=20;fontFamily=Times New Roman;" target="store-auth" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1050" y="430" />
+              <mxPoint x="1115" y="430" />
+            </Array>
+            <mxPoint x="1050" y="213" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e5" edge="1" parent="1" source="store-kb" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.25;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#868e96;fontSize=20;fontFamily=Times New Roman;" target="bridge-invoke" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="515" y="570" />
+              <mxPoint x="365" y="570" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e6" edge="1" parent="1" source="store-kb" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.75;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#868e96;fontSize=20;fontFamily=Times New Roman;" target="bridge-listen" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="625" y="570" />
+              <mxPoint x="595" y="570" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e7" edge="1" parent="1" source="bridge-invoke" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.64;entryY=0.031;entryDx=0;entryDy=0;strokeColor=#868e96;fontSize=20;fontFamily=Times New Roman;entryPerimeter=0;" target="cmd-kb" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e8" edge="1" parent="1" source="bridge-plugins" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#868e96;fontSize=20;fontFamily=Times New Roman;" target="cmd-tray" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1160" y="730" />
+              <mxPoint x="955" y="730" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e9" edge="1" parent="1" source="cmd-kb" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#868e96;fontSize=20;fontFamily=Times New Roman;" target="db-sqlite" value="SQL">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e10" edge="1" parent="1" source="cmd-ai" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.75;entryY=0;entryDx=0;entryDy=0;strokeColor=#868e96;fontSize=20;fontFamily=Times New Roman;dashed=1;" target="ext-siliconflow" value="HTTP">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="475" y="950" />
+              <mxPoint x="550" y="950" />
+              <mxPoint x="550" y="980" />
+              <mxPoint x="525" y="980" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e12" edge="1" parent="1" source="cmd-startup" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;strokeColor=#868e96;fontSize=20;fontFamily=Times New Roman;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" target="fs-local" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1140" y="950" />
+              <mxPoint x="1140" y="950" />
+            </Array>
+            <mxPoint x="1280" y="950" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e13" edge="1" parent="1" source="mod-graph" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.878;entryY=-0.003;entryDx=0;entryDy=0;strokeColor=#adb5bd;fontSize=20;fontFamily=Times New Roman;entryPerimeter=0;" target="store-editor" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="970" y="177" />
+              <mxPoint x="970" y="430" />
+              <mxPoint x="360" y="430" />
+              <mxPoint x="360" y="480" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e14" edge="1" parent="1" source="mod-capture" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#adb5bd;fontSize=20;fontFamily=Times New Roman;" target="store-editor" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="960" y="265" />
+              <mxPoint x="960" y="380" />
+              <mxPoint x="440" y="380" />
+              <mxPoint x="440" y="515" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="1_DeqHiBFRh1fsYoy-l3-2" edge="1" parent="1" source="mod-collab" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#868e96;fontSize=20;fontFamily=Times New Roman;" target="store-collab" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="709" y="400" />
+              <mxPoint x="785" y="400" />
+            </Array>
+            <mxPoint x="792" y="310" as="sourcePoint" />
+            <mxPoint x="692" y="605" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ext-siliconflow" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f1f3f5;strokeColor=#868e96;fontSize=20;fontFamily=Times New Roman;dashed=1;" value="&lt;b&gt;SiliconFlow API&lt;/b&gt;&lt;br&gt;&lt;font face=&quot;宋体&quot;&gt;向量嵌入&lt;/font&gt;: BAAI/bge-m3&lt;br&gt;&lt;font face=&quot;宋体&quot;&gt;对话&lt;/font&gt;: GLM-4.1V-9B&lt;br&gt;&lt;font face=&quot;宋体&quot;&gt;(云端)&lt;/font&gt;" vertex="1">
+          <mxGeometry height="126.75" width="260" x="330" y="990" as="geometry" />
+        </mxCell>
+        <mxCell id="db-sqlite" parent="1" style="shape=cylinder3;whiteSpace=wrap;html=1;fillColor=#e9ecef;strokeColor=#495057;fontSize=20;fontFamily=Times New Roman;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" value="&lt;div&gt;&lt;b&gt;&lt;br&gt;&lt;/b&gt;&lt;/div&gt;&lt;b&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;SQLite (rusqlite)&lt;/b&gt;&lt;br&gt;knowledge_bases&lt;br&gt;documents&lt;br&gt;chunks (&lt;font face=&quot;宋体&quot;&gt;向量&lt;/font&gt;)" vertex="1">
+          <mxGeometry height="180" width="170" x="70" y="970" as="geometry" />
+        </mxCell>
+        <mxCell id="fs-local" parent="1" style="shape=cylinder3;whiteSpace=wrap;html=1;fillColor=#e9ecef;strokeColor=#495057;fontSize=20;fontFamily=宋体;" value="&lt;div&gt;&lt;b&gt;&lt;br&gt;&lt;/b&gt;&lt;/div&gt;&lt;b&gt;&lt;div&gt;&lt;b&gt;&lt;br&gt;&lt;/b&gt;&lt;/div&gt;本地文件系统&lt;/b&gt;&lt;br&gt;&lt;font face=&quot;Times New Roman&quot;&gt;Markdown &lt;/font&gt;文件&lt;br&gt;图片/资源" vertex="1">
+          <mxGeometry height="133" width="160" x="1060" y="975.75" as="geometry" />
+        </mxCell>
+        <mxCell id="1_DeqHiBFRh1fsYoy-l3-3" edge="1" parent="1" source="cmd-kb" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.474;exitY=0.998;exitDx=0;exitDy=0;entryX=0.443;entryY=0.022;entryDx=0;entryDy=0;strokeColor=#868e96;fontSize=20;fontFamily=Times New Roman;dashed=1;exitPerimeter=0;entryPerimeter=0;" target="ext-siliconflow" value="HTTP">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="515" y="935" as="sourcePoint" />
+            <mxPoint x="400" y="1105" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
 </mxfile>
