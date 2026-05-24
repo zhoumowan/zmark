@@ -1,0 +1,79 @@
+<mxfile host="Electron">
+  <diagram name="CodeBlock Recognition Flow" id="0">
+    <mxGraphModel dx="1037" dy="978" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1500" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=20;fontFamily=宋体;" value="开始" vertex="1">
+          <mxGeometry height="60" width="120" x="720" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="3" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=20;fontFamily=宋体;" value="&lt;span style=&quot;color: rgb(0, 0, 0); font-family: 宋体;&quot;&gt;注册 &lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;&lt;font face=&quot;Times New Roman&quot;&gt;CodeBlock&lt;/font&gt;&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-family: 宋体;&quot;&gt; 扩展&lt;/span&gt;&lt;br&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;&lt;font face=&quot;Times New Roman&quot;&gt;(CodeBlockLowlight + lowlight)&lt;/font&gt;&lt;/span&gt;" vertex="1">
+          <mxGeometry height="80" width="280" x="640" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="6" edge="1" parent="1" source="4" style="edgeStyle=none;html=1;fontSize=20;" target="5" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="4" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=20;fontFamily=宋体;" value="&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;&lt;font face=&quot;Times New Roman&quot;&gt;Tiptap Editor&lt;/font&gt;&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-family: 宋体;&quot;&gt; 初始化&lt;/span&gt;&lt;br&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;&lt;font face=&quot;Times New Roman&quot;&gt;CodeBlock&lt;/font&gt;&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-family: 宋体;&quot;&gt; 注册至 &lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;&lt;font face=&quot;Times New Roman&quot;&gt;ProseMirror Schema&lt;/font&gt;&lt;/span&gt;" vertex="1">
+          <mxGeometry height="80" width="350" x="605" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="9" edge="1" parent="1" source="eInput1" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=20;" target="eProc1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="eInput1" parent="1" style="shape=parallelogram;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=20;fontFamily=宋体;" value="用户键入 &lt;font face=&quot;Times New Roman&quot;&gt;```lang&lt;/font&gt;" vertex="1">
+          <mxGeometry height="60" width="200" x="680" y="560" as="geometry" />
+        </mxCell>
+        <mxCell id="10" edge="1" parent="1" source="eProc1" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=20;" target="eProc2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="eProc1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=20;fontFamily=宋体;" value="&lt;span&gt;&lt;font face=&quot;Times New Roman&quot;&gt;markdown-it fence&lt;/font&gt;&lt;/span&gt;&lt;br&gt;&lt;span&gt;&lt;font face=&quot;宋体&quot;&gt;原生解析规则&lt;/font&gt;&lt;/span&gt;" vertex="1">
+          <mxGeometry height="70" width="200" x="680" y="650" as="geometry" />
+        </mxCell>
+        <mxCell id="eProc2" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=20;fontFamily=宋体;" value="&lt;span&gt;&lt;font face=&quot;Times New Roman&quot;&gt;CodeBlockLowlight&lt;/font&gt;&lt;/span&gt;&lt;br&gt;&lt;span&gt;&lt;font face=&quot;Times New Roman&quot;&gt;ReactNodeViewRenderer&lt;/font&gt;&lt;/span&gt;" vertex="1">
+          <mxGeometry height="70" width="240" x="660" y="760" as="geometry" />
+        </mxCell>
+        <mxCell id="41" edge="1" parent="1" source="state" style="edgeStyle=none;html=1;fontSize=20;" target="40" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="state" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=20;fontFamily=宋体;" value="&lt;span&gt;&lt;font face=&quot;Times New Roman&quot;&gt;ProseMirror&lt;/font&gt;&lt;/span&gt;&lt;span style=&quot;font-family: 宋体;&quot;&gt; 文档状态 / 输出&lt;/span&gt;&lt;br&gt;&lt;span&gt;&lt;font face=&quot;Times New Roman&quot;&gt;codeBlock node: { language, content }&lt;/font&gt;&lt;/span&gt;" vertex="1">
+          <mxGeometry height="80" width="320" x="620" y="900" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="2" style="rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#000000;fontSize=20;" target="3" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="3" style="rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#000000;fontSize=20;" target="4" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8" edge="1" parent="1" source="eProc2" style="rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#000000;fontSize=20;" target="state" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="540" y="869.9999999999998" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="7" edge="1" parent="1" source="5" style="html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=20;" target="eInput1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="8" connectable="0" parent="7" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=20;fontFamily=宋体;" value="是" vertex="1">
+          <mxGeometry relative="1" x="-0.4186" y="1" as="geometry">
+            <mxPoint x="-1" y="7" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="38" edge="1" parent="1" source="5" style="edgeStyle=none;html=1;fontSize=20;" target="37" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="39" connectable="0" parent="38" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=20;fontFamily=宋体;" value="否" vertex="1">
+          <mxGeometry relative="1" x="0.0723" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="5" parent="1" style="rhombus;whiteSpace=wrap;html=1;fontSize=20;fontFamily=宋体;fillColor=#ffffff;strokeColor=#000000;rounded=0;" value="存在Editor实例" vertex="1">
+          <mxGeometry height="80" width="240" x="660" y="400" as="geometry" />
+        </mxCell>
+        <mxCell id="37" parent="1" style="whiteSpace=wrap;html=1;fontSize=20;fontFamily=宋体;fillColor=#ffffff;strokeColor=#000000;rounded=0;" value="不做处理" vertex="1">
+          <mxGeometry height="60" width="120" x="1040" y="410" as="geometry" />
+        </mxCell>
+        <mxCell id="40" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=20;fontFamily=宋体;" value="结束" vertex="1">
+          <mxGeometry height="60" width="120" x="1110" y="910" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

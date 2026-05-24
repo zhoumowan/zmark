@@ -1,0 +1,276 @@
+<mxfile host="Electron">
+  <diagram name="Link Recognition Flow" id="0">
+    <mxGraphModel dx="1382" dy="1304" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1400" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=22;fontFamily=宋体;" value="开始" vertex="1">
+          <mxGeometry height="60" width="120" x="720" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="3" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=22;fontFamily=宋体;" value="&lt;span style=&quot;color: rgb(0, 0, 0); font-family: 宋体;&quot;&gt;注册 &lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;&lt;font face=&quot;Times New Roman&quot;&gt;Link&lt;/font&gt;&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-family: 宋体;&quot;&gt; 扩展&lt;/span&gt;&lt;br&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;&lt;font face=&quot;Times New Roman&quot;&gt;(autolink, linkOnPaste, openOnClick: false)&lt;/font&gt;&lt;/span&gt;" vertex="1">
+          <mxGeometry height="80" width="380" x="590" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="6" edge="1" parent="1" source="4" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;fontSize=22;" target="input1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="7" edge="1" parent="1" source="4" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=22;" target="input2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="8" edge="1" parent="1" source="4" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;fontSize=22;" target="input3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="4" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=22;fontFamily=宋体;" value="&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;&lt;font face=&quot;Times New Roman&quot;&gt;Tiptap Editor&lt;/font&gt;&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-family: 宋体;&quot;&gt; 初始化&lt;/span&gt;&lt;br&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;&lt;font face=&quot;Times New Roman&quot;&gt;Link&lt;/font&gt;&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-family: 宋体;&quot;&gt; 注册至 &lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;&lt;font face=&quot;Times New Roman&quot;&gt;ProseMirror Schema&lt;/font&gt;&lt;/span&gt;" vertex="1">
+          <mxGeometry height="80" width="290" x="635" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="input1" parent="1" style="shape=parallelogram;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=22;fontFamily=宋体;" value="用户键入&lt;br&gt;&lt;font face=&quot;Times New Roman&quot;&gt;[text](url)&lt;/font&gt; 或 &lt;font face=&quot;Times New Roman&quot;&gt;&amp;lt;a&amp;gt;&amp;lt;img&amp;gt;&amp;lt;/a&amp;gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="70" width="380" x="250" y="370" as="geometry" />
+        </mxCell>
+        <mxCell id="17" edge="1" parent="1" source="input2" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=22;" target="proc2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="input2" parent="1" style="shape=parallelogram;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=22;fontFamily=宋体;" value="用户粘贴含链接内容&lt;br&gt;&lt;font face=&quot;Times New Roman&quot;&gt;(linkOnPaste: true)&lt;/font&gt;" vertex="1">
+          <mxGeometry height="70" width="300" x="630" y="370" as="geometry" />
+        </mxCell>
+        <mxCell id="input3" parent="1" style="shape=parallelogram;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=22;fontFamily=宋体;" value="&lt;font face=&quot;Times New Roman&quot;&gt;HTML&lt;/font&gt; 内容导入&lt;br&gt;&lt;font face=&quot;Times New Roman&quot;&gt;&amp;lt;a href=&quot;...&quot;&amp;gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="70" width="280" x="922.5" y="370" as="geometry" />
+        </mxCell>
+        <mxCell id="9" edge="1" parent="1" source="proc1" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=22;" target="dec1a">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="proc1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=22;fontFamily=宋体;" value="&lt;span&gt;&lt;font face=&quot;Times New Roman&quot;&gt;addInputRules()&lt;/font&gt;&lt;/span&gt;&lt;br&gt;&lt;span&gt;&lt;font face=&quot;Times New Roman&quot;&gt;2 &lt;/font&gt;&lt;/span&gt;&lt;span style=&quot;font-family: 宋体;&quot;&gt;条 &lt;/span&gt;&lt;span&gt;&lt;font face=&quot;Times New Roman&quot;&gt;InputRule&lt;/font&gt;&lt;/span&gt;" vertex="1">
+          <mxGeometry height="80" width="215" x="312.5" y="480" as="geometry" />
+        </mxCell>
+        <mxCell id="proc2" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=22;fontFamily=宋体;" value="&lt;span&gt;&lt;font face=&quot;Times New Roman&quot;&gt;linkOnPaste&lt;/font&gt;&lt;/span&gt;&lt;br&gt;&lt;span style=&quot;font-family: 宋体;&quot;&gt;自动识别并转换链接&lt;/span&gt;" vertex="1">
+          <mxGeometry height="80" width="200" x="680" y="480" as="geometry" />
+        </mxCell>
+        <mxCell id="proc3" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=22;fontFamily=宋体;" value="&lt;span&gt;&lt;font face=&quot;Times New Roman&quot;&gt;parseHTML()&lt;/font&gt;&lt;/span&gt;&lt;br&gt;&lt;span style=&quot;font-family: 宋体;&quot;&gt;解析 &lt;/span&gt;&lt;span&gt;&lt;font face=&quot;Times New Roman&quot;&gt;&amp;lt;a&amp;gt;&lt;/font&gt;&lt;/span&gt;&lt;span style=&quot;font-family: 宋体;&quot;&gt; 标签&lt;/span&gt;" vertex="1">
+          <mxGeometry height="80" width="200" x="962.5" y="480" as="geometry" />
+        </mxCell>
+        <mxCell id="dec1a" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=22;fontFamily=宋体;" value="&lt;span style=&quot;font-family: 宋体;&quot;&gt;恶意 &lt;/span&gt;&lt;span&gt;&lt;font face=&quot;Times New Roman&quot;&gt;URL?&lt;/font&gt;&lt;/span&gt;&lt;br&gt;&lt;span&gt;&lt;font face=&quot;Times New Roman&quot;&gt;(javascript:/vbscript:)&lt;/font&gt;&lt;/span&gt;" vertex="1">
+          <mxGeometry height="90" width="335" x="250" y="615" as="geometry" />
+        </mxCell>
+        <mxCell id="dec1b" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=22;fontFamily=宋体;" value="&lt;span style=&quot;font-family: 宋体;&quot;&gt;存在冲突 &lt;/span&gt;&lt;span&gt;&lt;font face=&quot;Times New Roman&quot;&gt;Marks?&lt;/font&gt;&lt;/span&gt;" vertex="1">
+          <mxGeometry height="80" width="180" x="330" y="770" as="geometry" />
+        </mxCell>
+        <mxCell id="15" edge="1" parent="1" source="detail1" style="edgeStyle=none;html=1;fontSize=22;" target="13" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="detail1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=22;fontFamily=宋体;" value="&lt;span style=&quot;font-family: 宋体;&quot;&gt;提取 &lt;/span&gt;&lt;span&gt;&lt;font face=&quot;Times New Roman&quot;&gt;text, url&lt;/font&gt;&lt;/span&gt;" vertex="1">
+          <mxGeometry height="45" width="160" x="340" y="900" as="geometry" />
+        </mxCell>
+        <mxCell id="clickProc" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=22;fontFamily=宋体;" value="&lt;span&gt;&lt;font face=&quot;Times New Roman&quot;&gt;click handler&lt;/font&gt;&lt;/span&gt;&lt;br&gt;&lt;span style=&quot;font-family: 宋体;&quot;&gt;点击链接时的分支处理&lt;/span&gt;" vertex="1">
+          <mxGeometry height="80" width="205" x="677.5" y="620" as="geometry" />
+        </mxCell>
+        <mxCell id="decClick" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=22;fontFamily=宋体;" value="&lt;span style=&quot;font-family: 宋体;&quot;&gt;点击链接?&lt;/span&gt;" vertex="1">
+          <mxGeometry height="80" width="180" x="690" y="760" as="geometry" />
+        </mxCell>
+        <mxCell id="19" edge="1" parent="1" source="decHref" style="edgeStyle=none;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;fontSize=22;" target="branch1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="20" connectable="0" parent="19" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=22;" value="&lt;font face=&quot;宋体&quot;&gt;是&lt;/font&gt;" vertex="1">
+          <mxGeometry relative="1" x="-0.2976" y="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="27" edge="1" parent="1" source="decHref" style="edgeStyle=none;html=1;fontSize=22;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="29" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="780" y="1200" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="28" connectable="0" parent="27" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=22;fontFamily=宋体;" value="否" vertex="1">
+          <mxGeometry relative="1" x="-0.0667" y="2" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="decHref" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=22;fontFamily=宋体;" value="&lt;span&gt;&lt;font face=&quot;Times New Roman&quot;&gt;href &lt;/font&gt;&lt;font face=&quot;宋体&quot;&gt;类型为锚点&lt;/font&gt;&lt;/span&gt;" vertex="1">
+          <mxGeometry height="100" width="180" x="690" y="1040" as="geometry" />
+        </mxCell>
+        <mxCell id="41" edge="1" parent="1" source="branch1" style="edgeStyle=orthogonalEdgeStyle;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;fontSize=22;" target="state">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1190" y="1090" />
+              <mxPoint x="1190" y="1600" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="branch1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=22;fontFamily=宋体;" value="&lt;span&gt;&lt;font face=&quot;Times New Roman&quot;&gt;#anchor&lt;/font&gt;&lt;/span&gt;&lt;br&gt;&lt;span style=&quot;font-family: 宋体;&quot;&gt;页内锚点跳转&lt;/span&gt;" vertex="1">
+          <mxGeometry height="60" width="160" x="922.5" y="1060" as="geometry" />
+        </mxCell>
+        <mxCell id="42" edge="1" parent="1" source="branch2" style="edgeStyle=orthogonalEdgeStyle;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;fontSize=22;" target="state">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1190" y="1260" />
+              <mxPoint x="1190" y="1600" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="branch2" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=22;fontFamily=宋体;" value="&lt;span style=&quot;font-family: 宋体;&quot;&gt;本地文档跳转&lt;/span&gt;" vertex="1">
+          <mxGeometry height="60" width="180" x="930" y="1230" as="geometry" />
+        </mxCell>
+        <mxCell id="40" edge="1" parent="1" source="branch3" style="edgeStyle=orthogonalEdgeStyle;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=22;" target="state">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1070" y="1510" />
+              <mxPoint x="830" y="1510" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="branch3" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=22;fontFamily=宋体;" value="&lt;span style=&quot;font-family: 宋体;&quot;&gt;浏览器外部链接打开&lt;/span&gt;" vertex="1">
+          <mxGeometry height="60" width="200" x="970" y="1410" as="geometry" />
+        </mxCell>
+        <mxCell id="43" edge="1" parent="1" source="detail3" style="edgeStyle=orthogonalEdgeStyle;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;fontSize=22;" target="state">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1190" y="655" />
+              <mxPoint x="1190" y="1600" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="detail3" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=22;fontFamily=宋体;" value="&lt;font face=&quot;Times New Roman&quot;&gt;href&lt;/font&gt;&lt;font face=&quot;宋体&quot;&gt;转为&lt;/font&gt;&lt;font face=&quot;Times New Roman&quot;&gt;mark link&lt;/font&gt;" vertex="1">
+          <mxGeometry height="60" width="170" x="977.5" y="625" as="geometry" />
+        </mxCell>
+        <mxCell id="state" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=22;fontFamily=宋体;" value="&lt;span&gt;&lt;font face=&quot;Times New Roman&quot;&gt;ProseMirror&lt;/font&gt;&lt;/span&gt;&lt;span style=&quot;font-family: 宋体;&quot;&gt; 文档状态&lt;/span&gt;&lt;br&gt;&lt;span&gt;&lt;font face=&quot;Times New Roman&quot;&gt;link mark: { href }&lt;/font&gt;&lt;/span&gt;" vertex="1">
+          <mxGeometry height="80" width="240" x="710" y="1560" as="geometry" />
+        </mxCell>
+        <mxCell id="ser" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=22;fontFamily=宋体;" value="&lt;span style=&quot;font-family: 宋体;&quot;&gt;序列化&lt;/span&gt;" vertex="1">
+          <mxGeometry height="60" width="140" x="760" y="1670" as="geometry" />
+        </mxCell>
+        <mxCell id="end" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=22;fontFamily=宋体;" value="结束" vertex="1">
+          <mxGeometry height="60" width="120" x="770" y="1770" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="2" style="rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#000000;fontSize=22;" target="3" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="3" style="rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#000000;fontSize=22;" target="4" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" edge="1" parent="1" source="input1" style="rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#000000;fontSize=22;" target="proc1" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8" edge="1" parent="1" source="input3" style="rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#000000;fontSize=22;" target="proc3" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e10" edge="1" parent="1" source="dec1a" style="rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#000000;fontSize=22;fontFamily=宋体;" target="11" value="否">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="140" y="659.9999999999998" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e11" edge="1" parent="1" source="dec1a" style="rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#000000;fontSize=22;fontFamily=宋体;" target="dec1b" value="是">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e12" edge="1" parent="1" source="dec1b" style="rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#000000;fontSize=22;fontFamily=宋体;" target="12" value="是">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="220" y="809.9999999999998" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e13" edge="1" parent="1" source="dec1b" style="rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#000000;fontSize=22;fontFamily=宋体;" target="detail1" value="否">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e14" edge="1" parent="1" source="proc2" style="rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#000000;fontSize=22;" target="clickProc" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e15" edge="1" parent="1" source="clickProc" style="rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#000000;fontSize=22;" target="decClick" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e16" edge="1" parent="1" source="decClick" style="rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;strokeColor=#000000;fontSize=22;fontFamily=宋体;" value="否">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="920" y="800" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e17" edge="1" parent="1" source="decClick" style="rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#000000;fontSize=22;fontFamily=宋体;" target="21" value="是">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e22" edge="1" parent="1" source="proc3" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#000000;fontSize=22;" target="detail3" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e29" edge="1" parent="1" source="state" style="rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#000000;fontSize=22;" target="ser" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e30" edge="1" parent="1" source="ser" style="rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#000000;fontSize=22;" target="end" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="11" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=22;fontFamily=宋体;" value="&lt;span style=&quot;color: rgb(63, 63, 63); scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251);&quot;&gt;仅保留纯文本&lt;/span&gt;" vertex="1">
+          <mxGeometry height="50" width="145" x="50" y="635" as="geometry" />
+        </mxCell>
+        <mxCell id="12" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=22;fontFamily=宋体;" value="&lt;span style=&quot;color: rgb(63, 63, 63); scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251);&quot;&gt;返回&lt;/span&gt;&lt;span style=&quot;color: rgb(63, 63, 63); scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251);&quot;&gt;&lt;font face=&quot;Times New Roman&quot; style=&quot;color: rgb(63, 63, 63); scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251);&quot;&gt;null&lt;/font&gt;&lt;/span&gt;&lt;br style=&quot;color: rgb(63, 63, 63); scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251);&quot;&gt;&lt;span style=&quot;color: rgb(63, 63, 63); scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251);&quot;&gt;不转换&lt;/span&gt;" vertex="1">
+          <mxGeometry height="50" width="145" x="80" y="785" as="geometry" />
+        </mxCell>
+        <mxCell id="16" edge="1" parent="1" source="13" style="edgeStyle=none;html=1;fontSize=22;" target="14" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="13" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=22;fontFamily=宋体;" value="&lt;span style=&quot;font-family: 宋体;&quot;&gt;删除 &lt;/span&gt;&lt;span&gt;&lt;font face=&quot;Times New Roman&quot;&gt;[]()&lt;/font&gt;&lt;/span&gt;&lt;span style=&quot;font-family: 宋体;&quot;&gt; 符号&lt;/span&gt;" vertex="1">
+          <mxGeometry height="50" width="180" x="330" y="990" as="geometry" />
+        </mxCell>
+        <mxCell id="39" edge="1" parent="1" source="14" style="edgeStyle=orthogonalEdgeStyle;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=22;" target="state">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="14" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=22;fontFamily=宋体;" value="&lt;span&gt;&lt;font face=&quot;Times New Roman&quot;&gt;addMark&lt;/font&gt;&lt;/span&gt;&lt;span style=&quot;font-family: 宋体;&quot;&gt; 创建 &lt;/span&gt;&lt;span&gt;&lt;font face=&quot;Times New Roman&quot;&gt;Link mark&lt;/font&gt;&lt;/span&gt;" vertex="1">
+          <mxGeometry height="60" width="230" x="305" y="1085" as="geometry" />
+        </mxCell>
+        <mxCell id="18" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=22;fontFamily=宋体;" value="&lt;span&gt;不处理&lt;/span&gt;" vertex="1">
+          <mxGeometry height="50" width="145" x="925" y="775" as="geometry" />
+        </mxCell>
+        <mxCell id="21" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=22;fontFamily=宋体;" value="&lt;font face=&quot;Times New Roman&quot;&gt;metaKey/ctrlKey&lt;/font&gt;&lt;font face=&quot;宋体&quot;&gt;触发&lt;/font&gt;" vertex="1">
+          <mxGeometry height="100" width="260" x="650" y="890" as="geometry" />
+        </mxCell>
+        <mxCell id="22" edge="1" parent="1" source="21" style="rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;strokeColor=#000000;fontSize=22;fontFamily=宋体;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="23" value="否">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="897.5" y="955" as="sourcePoint" />
+            <mxPoint x="947.5" y="955" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="23" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=22;fontFamily=宋体;" value="&lt;span&gt;不处理&lt;/span&gt;" vertex="1">
+          <mxGeometry height="50" width="145" x="977.5" y="915" as="geometry" />
+        </mxCell>
+        <mxCell id="24" edge="1" parent="1" source="21" style="rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#000000;fontSize=22;fontFamily=宋体;" target="decHref" value="是">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="779.71" y="990" as="sourcePoint" />
+            <mxPoint x="779.71" y="1040" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="33" edge="1" parent="1" source="29" style="edgeStyle=none;html=1;fontSize=22;" target="32" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="29" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=22;fontFamily=宋体;" value="&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;跳转链接为md/zmark文件&lt;/span&gt;" vertex="1">
+          <mxGeometry height="100" width="180" x="690" y="1210" as="geometry" />
+        </mxCell>
+        <mxCell id="30" edge="1" parent="1" source="29" style="edgeStyle=none;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;fontSize=22;" target="branch2">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="877" y="1270" as="sourcePoint" />
+            <mxPoint x="930" y="1270" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="31" connectable="0" parent="30" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=22;" value="&lt;font face=&quot;宋体&quot;&gt;是&lt;/font&gt;" vertex="1">
+          <mxGeometry relative="1" x="-0.2976" y="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="37" edge="1" parent="1" source="32" style="edgeStyle=none;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;fontSize=22;" target="36" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="38" connectable="0" parent="37" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=22;fontFamily=宋体;" value="否" vertex="1">
+          <mxGeometry relative="1" x="-0.0044" y="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="32" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=22;fontFamily=宋体;" value="&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;跳转链接为http&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;等协议链接&lt;/span&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="100" width="230" x="670" y="1390" as="geometry" />
+        </mxCell>
+        <mxCell id="34" edge="1" parent="1" source="32" style="edgeStyle=none;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;fontSize=22;" target="branch3">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="920" y="1439.29" as="sourcePoint" />
+            <mxPoint x="980" y="1439.29" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="35" connectable="0" parent="34" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=22;" value="&lt;font face=&quot;宋体&quot;&gt;是&lt;/font&gt;" vertex="1">
+          <mxGeometry relative="1" x="-0.2976" y="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="36" parent="1" style="whiteSpace=wrap;html=1;fontSize=22;fontFamily=宋体;fillColor=#ffffff;strokeColor=#000000;" value="不处理" vertex="1">
+          <mxGeometry height="60" width="120" x="470" y="1410" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
