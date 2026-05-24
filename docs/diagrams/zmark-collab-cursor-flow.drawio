@@ -1,0 +1,69 @@
+<mxfile host="65bd71144e">
+    <diagram name="Cursor Awareness Flow" id="0">
+        <mxGraphModel dx="455" dy="546" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="900" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="2" value="&lt;font face=&quot;宋体&quot;&gt;开始&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=20;fontFamily=宋体;" parent="1" vertex="1">
+                    <mxGeometry x="730" y="20" width="140" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="3" value="&lt;font face=&quot;宋体&quot;&gt;编辑器光标/选区变化&lt;/font&gt;" style="shape=parallelogram;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=20;fontFamily=宋体;" parent="1" vertex="1">
+                    <mxGeometry x="665" y="100" width="270" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="4" value="&lt;font face=&quot;宋体&quot;&gt;协作模式?&lt;/font&gt;" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=20;fontFamily=宋体;" parent="1" vertex="1">
+                    <mxGeometry x="640" y="190" width="320" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="10" value="&lt;font face=&quot;宋体&quot;&gt;本地光标直接渲染&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=20;fontFamily=宋体;" parent="1" vertex="1">
+                    <mxGeometry x="1070" y="190" width="260" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="5" value="&lt;font face=&quot;宋体&quot;&gt;相对位置计算&lt;/font&gt;&#xa;&lt;font face=&quot;Times New Roman&quot;&gt;createRelativePositionFromAbsolutePosition&lt;/font&gt;&#xa;&lt;font face=&quot;宋体&quot;&gt;绑定锚点节点&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=20;fontFamily=宋体;" parent="1" vertex="1">
+                    <mxGeometry x="600" y="300" width="400" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="6" value="&lt;font face=&quot;Times New Roman&quot;&gt;Awareness&lt;/font&gt; &lt;font face=&quot;宋体&quot;&gt;封装 +&lt;/font&gt; &lt;font face=&quot;Times New Roman&quot;&gt;WebSocket&lt;/font&gt; &lt;font face=&quot;宋体&quot;&gt;广播&lt;/font&gt;&#xa;&lt;font face=&quot;Times New Roman&quot;&gt;setLocalState(&lt;/font&gt;&lt;font face=&quot;宋体&quot;&gt;相对位置 + 用户信息&lt;/font&gt;&lt;font face=&quot;Times New Roman&quot;&gt;)&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=20;fontFamily=宋体;" parent="1" vertex="1">
+                    <mxGeometry x="640" y="400" width="320" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="7" value="&lt;font face=&quot;宋体&quot;&gt;对端接收 + 反推绝对位置&lt;/font&gt;&#xa;&lt;font face=&quot;Times New Roman&quot;&gt;Relative Position → Absolute Position&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=20;fontFamily=宋体;" parent="1" vertex="1">
+                    <mxGeometry x="640" y="500" width="320" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="8" value="&lt;font face=&quot;Times New Roman&quot;&gt;CollaborationCursor&lt;/font&gt; + &lt;font face=&quot;Times New Roman&quot;&gt;SCSS&lt;/font&gt;&lt;font face=&quot;宋体&quot;&gt; 渲染&lt;/font&gt;&lt;br&gt;&lt;font face=&quot;宋体&quot;&gt;光标&lt;/font&gt;&lt;font face=&quot;Times New Roman&quot;&gt;caret&lt;/font&gt;&lt;font face=&quot;宋体&quot;&gt; + 用户信息气泡&lt;/font&gt;&lt;font face=&quot;Times New Roman&quot;&gt;label&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=20;fontFamily=宋体;" parent="1" vertex="1">
+                    <mxGeometry x="640" y="590" width="320" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="9" value="&lt;font face=&quot;宋体&quot;&gt;结束&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=20;fontFamily=宋体;" parent="1" vertex="1">
+                    <mxGeometry x="730" y="680" width="140" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="e1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;fontSize=20;fontFamily=宋体;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="2" target="3" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;fontSize=20;fontFamily=宋体;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="3" target="4" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e3" value="&lt;font face=&quot;宋体&quot;&gt;是&lt;/font&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;fontSize=20;fontFamily=宋体;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="4" target="5" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e4" value="&lt;font face=&quot;宋体&quot;&gt;否&lt;/font&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;fontSize=20;fontFamily=宋体;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="4" target="10" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e9" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;fontSize=20;fontFamily=宋体;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="10" target="9" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="1150" y="710"/>
+                            <mxPoint x="870" y="710"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="e5" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;fontSize=20;fontFamily=宋体;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="5" target="6" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e6" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;fontSize=20;fontFamily=宋体;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="6" target="7" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e7" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;fontSize=20;fontFamily=宋体;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="7" target="8" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e8" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;fontSize=20;fontFamily=宋体;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="8" target="9" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

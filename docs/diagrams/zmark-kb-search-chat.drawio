@@ -1,0 +1,61 @@
+<mxfile host="65bd71144e">
+    <diagram name="RAG流程" id="rag-flow">
+        <mxGraphModel dx="800" dy="1908" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="2" value="开始" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=20;fontFamily=宋体;" parent="1" vertex="1">
+                    <mxGeometry x="765" y="-10" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="3" value="&lt;font face=&quot;宋体&quot;&gt;生成问题&lt;/font&gt;Embedding&lt;br&gt;&lt;font&gt;(get_embeddings)&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=20;fontFamily=Times New Roman;" parent="1" vertex="1">
+                    <mxGeometry x="695" y="90" width="260" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="4" value="查询&lt;font face=&quot;Times New Roman&quot;&gt;SQLite&lt;/font&gt;数据库&lt;br&gt;获取&lt;font face=&quot;Times New Roman&quot;&gt;chunks&lt;/font&gt;表数据" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=20;fontFamily=宋体;" parent="1" vertex="1">
+                    <mxGeometry x="695" y="210" width="260" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="5" value="计算余弦相似度&#xa;&lt;font face=&quot;Times New Roman&quot;&gt;(cosine_similarity)&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=20;fontFamily=宋体;" parent="1" vertex="1">
+                    <mxGeometry x="695" y="330" width="260" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="6" value="排序&lt;font face=&quot;Times New Roman&quot;&gt;&amp;amp;&lt;/font&gt;去重&lt;font face=&quot;Times New Roman&quot;&gt;&amp;amp;&lt;/font&gt;过滤&lt;br&gt;(阈值&lt;font face=&quot;Times New Roman&quot;&gt;0.5&lt;/font&gt;, 取&lt;font face=&quot;Times New Roman&quot;&gt;Top-5&lt;/font&gt;)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=20;fontFamily=宋体;" parent="1" vertex="1">
+                    <mxGeometry x="695" y="450" width="260" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="7" value="发送思考过程事件&#xa;&lt;font face=&quot;Times New Roman&quot;&gt;(chat-thinking)&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=20;fontFamily=宋体;" parent="1" vertex="1">
+                    <mxGeometry x="695" y="570" width="260" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="8" value="&lt;font face=&quot;宋体&quot;&gt;调用&lt;/font&gt;&lt;font&gt;SiliconFlow API&lt;/font&gt;&lt;br&gt;&lt;font&gt;(Qwen/Qwen3-8B)&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=20;fontFamily=Times New Roman;" parent="1" vertex="1">
+                    <mxGeometry x="695" y="690" width="260" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="9" value="流式返回响应&#xa;&lt;font face=&quot;Times New Roman&quot;&gt;(chat-stream)&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=20;fontFamily=宋体;" parent="1" vertex="1">
+                    <mxGeometry x="695" y="810" width="260" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="10" value="结束" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=20;fontFamily=宋体;" parent="1" vertex="1">
+                    <mxGeometry x="765" y="930" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="11" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#000000;fontSize=20;fontFamily=宋体;" parent="1" source="2" target="3" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="12" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#000000;fontSize=20;fontFamily=宋体;" parent="1" source="3" target="4" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="13" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#000000;fontSize=20;fontFamily=宋体;" parent="1" source="4" target="5" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="14" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#000000;fontSize=20;fontFamily=宋体;" parent="1" source="5" target="6" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="15" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#000000;fontSize=20;fontFamily=宋体;" parent="1" source="6" target="7" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="16" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#000000;fontSize=20;fontFamily=宋体;" parent="1" source="7" target="8" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="17" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#000000;fontSize=20;fontFamily=宋体;" parent="1" source="8" target="9" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="18" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#000000;fontSize=20;fontFamily=宋体;" parent="1" source="9" target="10" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
