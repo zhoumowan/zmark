@@ -8,6 +8,7 @@ import {
   ListOrdered,
   Minus,
   Quote,
+  Table2,
   Type,
 } from "lucide-react";
 import { forwardRef, useEffect, useImperativeHandle, useState } from "react";
@@ -189,6 +190,21 @@ export const getSuggestionItems: () => SuggestionItem[] = () => {
       icon: <Code size={16} />,
       run: ({ editor, range }) => {
         editor.chain().focus().deleteRange(range).toggleCodeBlock().run();
+      },
+    },
+    {
+      title: "Markdown Table",
+      description: "Insert a markdown table template (plain text).",
+      icon: <Table2 size={16} />,
+      run: ({ editor, range }) => {
+        editor
+          .chain()
+          .focus()
+          .deleteRange(range)
+          .insertContent(
+            "\n| Column 1 | Column 2 | Column 3 |\n| --- | --- | --- |\n| Value 1 | Value 2 | Value 3 |\n",
+          )
+          .run();
       },
     },
     {
